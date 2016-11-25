@@ -8,6 +8,7 @@ public class Person extends AbstractPersistable<Long>{
     
     private String studentNumber;
     private String name;
+    private Language language;
     
     public String getStudentNumber(){
         return studentNumber;
@@ -23,6 +24,14 @@ public class Person extends AbstractPersistable<Long>{
 
     public void setName(String nickname) {
         this.name = nickname;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
     
 }
