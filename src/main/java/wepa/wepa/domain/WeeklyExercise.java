@@ -10,14 +10,14 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class WeeklyExercise extends AbstractPersistable<Long> {
-    
+
     private String description;
-    
-    public String getWeeklyExercise(){
+
+    public String getWeeklyExercise() {
         return description;
     }
-    
-    public void setWeeklyExercise(String description){
+
+    public void setWeeklyExercise(String description) {
         this.description = description;
     }
 }
