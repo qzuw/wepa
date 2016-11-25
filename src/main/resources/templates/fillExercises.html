@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fill the form</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <div>Fill the form pls</div>
+        
+        <form th:action="@{/}" method="POST">
+            <input type="text" name="studentNumber"/>
+            <input type="text" name="name"/>
+            <input type="submit"/>
+        </form>
+        
+    </body>
+</html>
