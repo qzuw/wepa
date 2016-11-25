@@ -6,14 +6,14 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Person extends AbstractPersistable<Long>{
     
-    private int studentNumber;
+    private String studentNumber;
     private String name;
     
-    public int getStudentNumber(){
+    public String getStudentNumber(){
         return studentNumber;
     }
     
-    public void setStudentNumber(int number) {
+    public void setStudentNumber(String number) {
         this.studentNumber = number;
     }
     
