@@ -5,16 +5,20 @@
  */
 package wepa.wepa.domain;
 
-public class ExerciseMeeting {
+import javax.persistence.Entity;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+@Entity
+public class ExerciseMeeting extends AbstractPersistable<Long> {
     
-    private String id;
+    private String description;
     
     public String getExerciseMeeting(){
-        return id;
+        return description;
     }
     
     public void setExerciseMeeting(String id){
-        this.id = id;
+        this.description = id;
     }
     
 }

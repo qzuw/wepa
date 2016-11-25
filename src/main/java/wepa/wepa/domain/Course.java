@@ -5,7 +5,11 @@
  */
 package wepa.wepa.domain;
 
-public class Course {
+import javax.persistence.Entity;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+@Entity
+public class Course extends AbstractPersistable<Long> {
     
     private String name;
     
