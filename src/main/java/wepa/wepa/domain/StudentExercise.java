@@ -14,7 +14,7 @@ public class StudentExercise extends AbstractPersistable<Long>{
     
     private ExerciseMeeting meeting;
     
-    private int maara;
+    private int count;
     private boolean present;
 
     public Person getStudent() {
@@ -33,12 +33,12 @@ public class StudentExercise extends AbstractPersistable<Long>{
         this.meeting = meeting;
     }
 
-    public int getMaara() {
-        return maara;
+    public int getCount() {
+        return count;
     }
 
-    public void setMaara(int maara) {
-        this.maara = maara;
+    public void setCount(int maara) {
+        this.count = maara;
     }
 
     public boolean isPresent() {

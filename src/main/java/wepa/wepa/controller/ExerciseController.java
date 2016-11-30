@@ -19,22 +19,23 @@ public class ExerciseController {
     @Autowired
     private StudentExerciseRepository studentExerciseRepository;
 
-    @RequestMapping("/ex")
+    @RequestMapping("/exercises")
     public String handleDefault() {
         return "fillExercises";
     }
 
-    @RequestMapping(value = "/ex", method = RequestMethod.POST)
-    public String postExercises(@RequestParam String studentNumber, @RequestParam String name, @RequestParam Integer exercises) {
+    @RequestMapping(value = "/exercises", method = RequestMethod.POST)
+    public String postExercises(@RequestParam String studentNumber, @RequestParam String name, @RequestParam Integer exercises, Model model) {
         Person person = new Person();
         StudentExercise studentExercise = new StudentExercise();
         person.setStudentNumber(studentNumber);
         person.setName(name);
         studentExercise.setStudent(person);
-        studentExercise.setMaara(exercises);
+        studentExercise.setCount(exercises);
 
         studentExerciseRepository.save(person);
-
-        return "redirect:/ex";
+        model.addAttribute("person", person );
+        model.addAttribute("studentExercise", studentExercise);
+        return "exercisesFormFilled";
     }
 }
