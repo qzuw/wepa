@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>ExerciseApplication</title>
+    </head>
+
+    <body>
+        <h1>Student's information</h1>
+        
+        <p th:text="${person.studentNumber}">number</p>
+        <p th:text="${person.name}">number</p>
+        
+        <a th:href="@{/persons}">Back to the list</a>
+    </body>
+</html>
