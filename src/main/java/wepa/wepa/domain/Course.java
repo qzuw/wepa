@@ -13,7 +13,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Course extends AbstractPersistable<Long> {
     
     private String name;
+    @Temporal(TemporalType.DATE)
     private Date start;
+    @Temporal(TemporalType.DATE)
     private Date end;
     private int weeks;
     
