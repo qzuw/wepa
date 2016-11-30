@@ -2,15 +2,18 @@
 package wepa.wepa.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
 @Entity
 public class StudentExercise extends AbstractPersistable<Long>{
     
-    
+    @ManyToOne
     private Person student;
+    
     private ExerciseMeeting meeting;
+    
     private int maara;
     private boolean present;
 

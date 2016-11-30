@@ -6,13 +6,12 @@
     </head>
     <body>
         <div>Fill the form pls</div>
-        
+
         <form th:action="@{/ex}" method="POST">
-            <p> Opiskelijanumero <input type="text" name="studentNumber"/></p>
-            <p> Nimi <input type="text" name="name"/></p>
-            <p> Tehdyt tehtävät <input type="text" name="exercises"/></p>
+            <p> Student number <input type="text" name="studentNumber"/></p>
+            <p> Name <input type="text" name="name"/></p>
+            <p> Number of made exercises <input type="text" name="exercises"/></p>
             <input type="submit" value="Lähetä"/>
         </form>
-        
     </body>
 </html>
