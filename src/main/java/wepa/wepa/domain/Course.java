@@ -5,6 +5,7 @@
  */
 package wepa.wepa.domain;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -12,6 +13,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Course extends AbstractPersistable<Long> {
     
     private String name;
+    private Date start;
+    private Date end;
+    private int weeks;
     
     public String getName(){
         return name;
@@ -20,4 +24,30 @@ public class Course extends AbstractPersistable<Long> {
     public void setName(String name){
         this.name = name;
     }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public int getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(int weeks) {
+        this.weeks = weeks;
+    }
+    
+    
 }

@@ -5,11 +5,12 @@
     </head>
     <body>
         <div>
-            <h1>Hello Course</h1>
-            <h2>11.11.2016 - 12.12.2016</h2>
-            <h2>Students: 2</h2>
+            <h1 th:text="${course.name}"></h1>
+            <h2 th:text="${course.start} + ' - ' + ${course.end}"></h2>
+            <h2>Students: x</h2>
             <h3>Course Assistants: <a href="">a-ko</a>, <a href="">b-ko</a></h3>
-            <p><a href="">Modify course details</a></p>
+            <p><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
+
 
             <table>
                 <thead>
