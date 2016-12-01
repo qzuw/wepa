@@ -1,6 +1,9 @@
 package wepa.wepa.domain;
 
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -9,6 +12,10 @@ public class Person extends AbstractPersistable<Long>{
     private String studentNumber;
     private String name;
     private Language language;
+    private String password;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> authorities;
     
     public String getStudentNumber(){
         return studentNumber;
@@ -34,4 +41,20 @@ public class Person extends AbstractPersistable<Long>{
         this.language = language;
     }
     
+     public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+ 
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    }
+
 }

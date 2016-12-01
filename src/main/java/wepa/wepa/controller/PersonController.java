@@ -5,10 +5,12 @@
  */
 package wepa.wepa.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,20 +27,28 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() {
 
         Person user = new Person();
-        user.setName("Nakki");
+        user.setName("nakki");
         user.setStudentNumber("0000");
+        user.setPassword(passwordEncoder.encode("nakki"));
+        user.setAuthorities(Arrays.asList("TEACHER"));
+        
 
         user = personRepository.save(user);
 
         Person user1 = new Person();
-        user1.setName("Makkara");
+        user1.setName("makkara");
         user1.setStudentNumber("1111");
-
+        user1.setPassword(passwordEncoder.encode("makkara"));
+        user1.setAuthorities(Arrays.asList("STUDENT"));
+        
         user1 = personRepository.save(user1);
     }
 
@@ -67,6 +77,7 @@ public class PersonController {
         Person person = new Person();
         person.setName(name);
         person.setStudentNumber(studentNumber);
+        person.setAuthorities(Arrays.asList("STUDENT"));
         personRepository.save(person);
         model.addAttribute("addedperson", person);
         return "redirect:/addperson";
