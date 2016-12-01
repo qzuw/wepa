@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Person extends AbstractPersistable<Long>{
     
     @NotBlank
+    @Length(min = 9, max = 9)
     private String studentNumber;
     @NotBlank
     private String name;
