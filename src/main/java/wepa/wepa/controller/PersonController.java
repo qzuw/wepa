@@ -41,7 +41,7 @@ public class PersonController {
         user.setAuthorities(Arrays.asList("TEACHER"));
         
 
-        user = personRepository.save(user);
+        personRepository.save(user);
 
         Person user1 = new Person();
         user1.setName("makkara");
@@ -49,7 +49,7 @@ public class PersonController {
         user1.setPassword(passwordEncoder.encode("makkara"));
         user1.setAuthorities(Arrays.asList("STUDENT"));
         
-        user1 = personRepository.save(user1);
+        personRepository.save(user1);
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)

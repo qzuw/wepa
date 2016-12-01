@@ -31,11 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().hasAnyAuthority("TEACHER","ASSISTANT");
         http.formLogin()
                 .permitAll();
     }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());

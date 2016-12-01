@@ -4,12 +4,15 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Person extends AbstractPersistable<Long>{
     
+    @NotBlank
     private String studentNumber;
+    @NotBlank
     private String name;
     private Language language;
     private String password;
