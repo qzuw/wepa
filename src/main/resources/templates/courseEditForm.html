@@ -13,15 +13,14 @@
                 </div>
                 <div class="form-group">
                     <label>Start date:</label>
-                    <input type="date" name="start" th:field="${course.start}" class="form-control" />
+                    <input type="date" name="courseStart" th:field="${course.courseStart}" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>End date:</label>
-                    <input type="date" name="end" th:field="${course.end}" class="form-control" />
+                    <input type="date" name="courseEnd" th:field="${course.courseEnd}" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label>How many weeks:</label>
-                    <input type="text" name="weeks" th:field="${course.weeks}" class="form-control" />
+                    <input type="hidden" name="numOfWeeks" th:field="${course.numOfWeeks}" class="form-control" />
                 </div>
                 <input type="submit" value="Submit"/>
             </form>

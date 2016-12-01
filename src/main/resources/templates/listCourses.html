@@ -5,6 +5,7 @@
     </head>
     <body>
         <div>
+            <p><a th:href="@{/courses/new}">add new course</a></p>
             <table>
                 <thead>
                     <tr>
@@ -15,11 +16,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="">Hello Course</a></td>
-                        <td>11.11.2016</td>
-                        <td>12.12.2016</td>
-                        <td>3</td>
+                    <tr th:each="course : ${courses}">
+                        <td><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}">Hello Course</a></td>
+                        <td th:text="${course.courseStart}"></td>
+                        <td th:text="${course.courseEnd}"></td>
+                        <td th:text="${course.numOfWeeks}"></td>
                     </tr>
                 </tbody>
             </table>

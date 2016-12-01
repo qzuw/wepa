@@ -1,5 +1,6 @@
 package wepa.wepa.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Course;
+import wepa.wepa.domain.WeeklyExercise;
 import wepa.wepa.repository.CourseRepository;
+import wepa.wepa.repository.WeeklyExerciseRepository;
 
 @Controller
 
@@ -19,6 +22,9 @@ public class CourseController {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private WeeklyExerciseRepository weeklyExerciseRepository;
 
     @RequestMapping("/courses")
     public String listCourses(Model model) {
@@ -40,12 +46,21 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
-    public String addCourse(@RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end, @RequestParam Integer weeks) {
+    public String addCourse(@RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer weeks) {
         Course course = new Course();
         course.setName(name);
-        course.setStart(start);
-        course.setEnd(end);
-        course.setWeeks(weeks);
+        course.setCourseStart(courseStart);
+        course.setCourseEnd(courseEnd);
+        courseRepository.save(course);
+        List<WeeklyExercise> weeklist = new ArrayList<>();
+        for (int i = 1; i <= weeks; i++) {
+            WeeklyExercise we = new WeeklyExercise();
+            we.setWeek(i);
+            we.setCourse(course);
+            weeklyExerciseRepository.save(we);
+            weeklist.add(we);
+        }
+        course.setWeeks(weeklist);
 
         courseRepository.save(course);
 
@@ -60,12 +75,11 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/courses/{id}/edit", method = RequestMethod.POST)
-    public String editCourse(@PathVariable Long id, @RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end, @RequestParam Integer weeks) {
+    public String editCourse(@PathVariable Long id, @RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer numOfWeeks) {
         Course course = courseRepository.findOne(id);
         course.setName(name);
-        course.setStart(start);
-        course.setEnd(end);
-        course.setWeeks(weeks);
+        course.setCourseStart(courseStart);
+        course.setCourseEnd(courseEnd);
 
         courseRepository.save(course);
 

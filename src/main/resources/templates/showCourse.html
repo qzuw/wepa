@@ -6,7 +6,7 @@
     <body>
         <div>
             <h1 th:text="${course.name}"></h1>
-            <h2 th:text="${course.start} + ' - ' + ${course.end}"></h2>
+            <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
             <h2>Students: x</h2>
             <h3>Course Assistants: <a href="">a-ko</a>, <a href="">b-ko</a></h3>
             <p><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
