@@ -23,10 +23,10 @@ public class PersonTest {
     public void testPerson() {
         Person person = new Person();
         person.setName("Nakki");
-        person.setStudentNumber("00000000");
+        person.setStudentNumber("000000000");
 
         assertEquals("Nakki", person.getName());
-        assertEquals("00000000", person.getStudentNumber());
+        assertEquals("000000000", person.getStudentNumber());
 
     }
 
@@ -34,14 +34,14 @@ public class PersonTest {
     public void testSavePerson() {
         Person person = new Person();
         person.setName("Nakki");
-        person.setStudentNumber("00000000");
+        person.setStudentNumber("000000000");
 
         pRepo.save(person);
 
         Person retrieved = pRepo.findOne(person.getId());
         assertNotNull(retrieved);
         assertEquals("Nakki", retrieved.getName());
-        assertEquals("00000000", retrieved.getStudentNumber());
+        assertEquals("000000000", retrieved.getStudentNumber());
 
     }
 }
