@@ -6,13 +6,6 @@
 
     <body>
         <h1>Students on this course</h1>
-        
-        <ul>
-            <c:forEach var="person" persons="${persons}">
-                <li th:each="person : ${persons}"><span th:text="${person.studentNumber}">person</span>: <span th:text="${person.name}">name</span></li>
-            </c:forEach>
-        </ul>
-        
         <table>
             <tr>
                 <th></th>
@@ -20,8 +13,10 @@
             </tr>
 
             <tr th:each="person : ${persons}">
-                <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.name}">Item name</a></td>
+                <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
             </tr>
         </table> 
+        
+        <p><a th:href="@{/addperson}">Add person to the course</a></p>
     </body>
 </html>

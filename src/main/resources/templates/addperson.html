@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fill the form</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h1>Fill the form pls</h1>
+
+        <form th:action="@{/addperson}" method="POST">
+            <p> Student number <input type="text" name="studentNumber"/></p>
+            <p> Name <input type="text" name="name"/></p>
+            <input type="submit" value="Send"/>
+        </form>
+        
+        <a th:href="@{/persons}">Back to the list</a>
+    </body>
+</html>
