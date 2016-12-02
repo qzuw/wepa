@@ -1,4 +1,3 @@
-
 package wepa.wepa.domain;
 
 import java.util.List;
@@ -18,6 +17,8 @@ public class WeeklyExercise extends AbstractPersistable<Long> {
     private Course course;
     @OneToMany
     private List<ExerciseMeeting> meetings;
+    @OneToMany
+    private List<Exercise> exercises;
 
     public String getDescription() {
         return description;
@@ -50,5 +51,13 @@ public class WeeklyExercise extends AbstractPersistable<Long> {
     public void setWeek(int week) {
         this.week = week;
     }
-    
+
+    public int getNumOfStudents() {
+        return 0;
+    }
+
+    public int getNumOfExercises() {
+        return exercises.size();
+    }
+
 }

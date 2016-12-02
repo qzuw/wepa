@@ -8,6 +8,7 @@ package wepa.wepa.domain;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,9 +24,9 @@ public class Course extends AbstractPersistable<Long> {
     private Date courseEnd;
     @OneToMany
     private List<WeeklyExercise> weeks;
-    @OneToMany
+    @ManyToMany
     private List<Person> assistants;
-    @OneToMany
+    @ManyToMany
     private List<Person> students;
     
     public String getName(){
