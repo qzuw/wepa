@@ -30,7 +30,14 @@ public class PersonTest extends FluentTest {
     private Integer port;
 
     @Test
-    public void fillForm() {
+    public void addingExercisesNewStudent() {
+//        goTo("http://localhost:" + port + "/login");
+//        
+//        fill(find("#username")).with("nakki");
+//        fill(find("#password")).with("nakki");
+//        submit(find("form").first());
+//        
+//        
 //        goTo("http://localhost:" + port + "/persons");
 //
 //
@@ -40,15 +47,15 @@ public class PersonTest extends FluentTest {
 //        goTo("http://localhost:" + port + "/exercises");
 //
 //        fill(find("#studentNumber")).with("555555555");
-//        fill(find("#name")).with("555555555");
+//        fill(find("#name")).with("Maija");
+//        fill(find("#exercises")).with("4");
 //        submit(find("form").first());
 //
-//
-//        assertTrue(pageSource().contains("Van Damme"));
-//
-//
-//        submit(find("ol").find("form").first());
-//        assertFalse(pageSource().contains("Van Damme"));
+//        goTo("http://localhost:" + port + "/persons");
+//        
+//        assertTrue(pageSource().contains("555555555"));
+//        assertTrue(pageSource().contains("Maija"));
+
     }
 
     
