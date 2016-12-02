@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.StudentExercise;
+import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.StudentExerciseRepository;
 
 @Controller
@@ -19,6 +20,9 @@ public class ExerciseController {
     @Autowired
     private StudentExerciseRepository studentExerciseRepository;
 
+    @Autowired
+    private PersonRepository personRepository;
+
     @RequestMapping("/exercises")
     public String handleDefault() {
         return "fillExercises";
@@ -26,15 +30,21 @@ public class ExerciseController {
 
     @RequestMapping(value = "/exercises", method = RequestMethod.POST)
     public String postExercises(@RequestParam String studentNumber, @RequestParam String name, @RequestParam Integer exercises, Model model) {
-        Person person = new Person();
+        Person person = personRepository.findByName(name);
+        if (person == null) {
+            person = new Person();
+            person.setStudentNumber(studentNumber);
+            person.setName(name);
+            personRepository.save(person);
+        }
+        
         StudentExercise studentExercise = new StudentExercise();
-        person.setStudentNumber(studentNumber);
-        person.setName(name);
+
         studentExercise.setStudent(person);
         studentExercise.setExerciseCount(exercises);
 
-        studentExerciseRepository.save(person);
-        model.addAttribute("person", person );
+        studentExerciseRepository.save(studentExercise);
+        model.addAttribute("person", person);
         model.addAttribute("studentExercise", studentExercise);
         return "exercisesFormFilled";
     }

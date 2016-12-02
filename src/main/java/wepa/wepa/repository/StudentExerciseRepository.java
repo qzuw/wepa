@@ -2,8 +2,8 @@
 package wepa.wepa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import wepa.wepa.domain.Person;
+import wepa.wepa.domain.StudentExercise;
 
-public interface StudentExerciseRepository extends JpaRepository<Person, Long> {
+public interface StudentExerciseRepository extends JpaRepository<StudentExercise, Long> {
     
 }
