@@ -41,7 +41,7 @@ public class ExerciseController {
         StudentExercise studentExercise = new StudentExercise();
 
         studentExercise.setStudent(person);
-        studentExercise.setCount(exercises);
+        studentExercise.setExerciseCount(exercises);
 
         studentExerciseRepository.save(studentExercise);
         model.addAttribute("person", person);

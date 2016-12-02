@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -18,6 +19,11 @@ public class Person extends AbstractPersistable<Long>{
     private String name;
     private Language language;
     private String password;
+    @ManyToMany
+    private List<Course> coursesAttended;
+    @ManyToMany
+    private List<Course> coursesAssisted;
+    
     
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
@@ -60,6 +66,22 @@ public class Person extends AbstractPersistable<Long>{
  
     public void setAuthorities(List<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public List<Course> getCoursesAttended() {
+        return coursesAttended;
+    }
+
+    public void setCoursesAttended(List<Course> coursesAttended) {
+        this.coursesAttended = coursesAttended;
+    }
+
+    public List<Course> getCoursesAssisted() {
+        return coursesAssisted;
+    }
+
+    public void setCoursesAssisted(List<Course> coursesAssisted) {
+        this.coursesAssisted = coursesAssisted;
     }
 
 }

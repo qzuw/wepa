@@ -7,8 +7,11 @@
         <div>
             <h1 th:text="${course.name}"></h1>
             <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
-            <h2>Students: x</h2>
-            <h3>Course Assistants: <a href="">a-ko</a>, <a href="">b-ko</a></h3>
+            <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
+            <h3>Course Assistants: </h3>
+            <div th:each="assistant : ${assistants}">
+                <a th:href="@{/persons/${assistant.id}}" th:text="${assistant.name}"></a>
+            </div>
             <p><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
 
 
@@ -21,20 +24,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="">1</a></td>
-                        <td>6</td>
-                        <td><a href="">2</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="">2</a></td>
-                        <td>8</td>
-                        <td><a href=""></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="">3</a></td>
-                        <td>9</td>
-                        <td><a href=""></a></td>
+                    <tr th:each="week : ${course.weeks}">
+                        <td><a th:href="@{/course/{courseid}/week/{weekid}(courseid=${course.id}, weekid=${week.id})}" th:text="${week.week}"></a></td>
+                        <td th:text="${week.numOfExercises}"></td>
+                        <td th:text="${week.numOfStudents}"></td>
                     </tr>
                 </tbody>
             </table>

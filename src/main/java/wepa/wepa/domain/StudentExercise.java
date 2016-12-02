@@ -11,10 +11,10 @@ public class StudentExercise extends AbstractPersistable<Long>{
     
     @ManyToOne
     private Person student;
-    
+    @ManyToOne
     private ExerciseMeeting meeting;
     
-    private int count;
+    private int exerciseCount;
     private boolean present;
 
     public Person getStudent() {
@@ -33,20 +33,20 @@ public class StudentExercise extends AbstractPersistable<Long>{
         this.meeting = meeting;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int maara) {
-        this.count = maara;
-    }
-
     public boolean isPresent() {
         return present;
     }
 
     public void setPresent(boolean present) {
         this.present = present;
+    }
+
+    public int getExerciseCount() {
+        return exerciseCount;
+    }
+
+    public void setExerciseCount(int exerciseCount) {
+        this.exerciseCount = exerciseCount;
     }
     
     
