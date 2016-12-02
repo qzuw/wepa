@@ -9,8 +9,8 @@
             <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
             <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
             <h3>Course Assistants: </h3>
-            <div th:each="assistant : ${assistants}">
-                <a th:href="@{/persons/${assistant.id}}" th:text="${assistant.name}"></a>
+            <div th:each="assistant : ${course.assistants}">
+                <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
             </div>
             <p><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
 
