@@ -31,27 +31,6 @@ public class PersonController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    public void init() {
-
-        Person user = new Person();
-        user.setName("nakki");
-        user.setStudentNumber("000000000");
-        user.setPassword(passwordEncoder.encode("nakki"));
-        user.setAuthorities(Arrays.asList("TEACHER"));
-        
-
-        personRepository.save(user);
-
-        Person user1 = new Person();
-        user1.setName("makkara");
-        user1.setStudentNumber("111111111");
-        user1.setPassword(passwordEncoder.encode("makkara"));
-        user1.setAuthorities(Arrays.asList("STUDENT"));
-        
-        personRepository.save(user1);
-    }
-
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String getPersons(Model model) {
 
