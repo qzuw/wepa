@@ -45,9 +45,9 @@ public class SandboxController {
         personRepository.save(user);
 
         Person user1 = new Person();
-        user1.setName("student");
+        user1.setName("assistant");
         user1.setStudentNumber("111111111");
-        user1.setPassword(passwordEncoder.encode("student"));
+        user1.setPassword(passwordEncoder.encode("assistant"));
         user1.setAuthorities(Arrays.asList("ASSISTANT"));
         personRepository.save(user1);
         List<Person> assistants = new ArrayList<>();
@@ -55,7 +55,7 @@ public class SandboxController {
 
         Person user2 = new Person();
         user2.setName("student");
-        user2.setStudentNumber("111111111");
+        user2.setStudentNumber("222222222");
         user2.setPassword(passwordEncoder.encode("student"));
         user2.setAuthorities(Arrays.asList("STUDENT"));
         personRepository.save(user2);
