@@ -37,12 +37,12 @@ public class SandboxController {
     @PostConstruct
     public void init() {
 
-        Person user = new Person();
-        user.setName("teach");
-        user.setStudentNumber("000000000");
-        user.setPassword(passwordEncoder.encode("teach"));
-        user.setAuthorities(Arrays.asList("TEACHER"));
-        personRepository.save(user);
+//        Person user = new Person();
+//        user.setName("teach");
+//        user.setStudentNumber("000000000");
+//        user.setPassword(passwordEncoder.encode("teach"));
+//        user.setAuthorities(Arrays.asList("TEACHER"));
+//        personRepository.save(user);
 
         Person user1 = new Person();
         user1.setName("assistant");
