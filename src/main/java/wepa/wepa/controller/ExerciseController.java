@@ -27,7 +27,7 @@ public class ExerciseController {
 
     @RequestMapping("/exercises")
     public String handleDefault() {
-        return "fillExercises";
+        return "studentexercise/fillExercises";
     }
 
     @RequestMapping(value = "/exercises", method = RequestMethod.POST)
@@ -48,6 +48,6 @@ public class ExerciseController {
         studentExerciseRepository.save(studentExercise);
         model.addAttribute("person", person);
         model.addAttribute("studentExercise", studentExercise);
-        return "exercisesFormFilled";
+        return "studentexercise/exercisesFormFilled";
     }
 }

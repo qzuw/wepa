@@ -37,18 +37,18 @@ public class PersonController {
         List<Person> persons = personRepository.findAll();
 
         model.addAttribute("persons", persons);
-        return "personList";
+        return "person/personList";
     }
 
     @RequestMapping(value = "/persons/{id}", method = RequestMethod.GET)
     public String getOnePerson(Model model, @PathVariable Long id) {
         model.addAttribute("person", personRepository.findOne(id));
-        return "personInfo";
+        return "person/personInfo";
     }
     
     @RequestMapping(value = "/addperson", method = RequestMethod.GET)
     public String addPersonForm() {
-        return "addperson";
+        return "person/addperson";
     }
     
     @RequestMapping(value = "/addperson", method = RequestMethod.POST)

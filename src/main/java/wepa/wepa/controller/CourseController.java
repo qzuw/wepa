@@ -17,7 +17,6 @@ import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.WeeklyExerciseRepository;
 
 @Controller
-
 public class CourseController {
 
     @Autowired
@@ -30,19 +29,19 @@ public class CourseController {
     public String listCourses(Model model) {
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
-        return "listCourses";
+        return "course/listCourses";
     }
 
     @RequestMapping("/courses/{id}")
     public String showCourse(Model model, @PathVariable Long id) {
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
-        return "showCourse";
+        return "course/showCourse";
     }
 
     @RequestMapping("/courses/new")
     public String courseAddForm() {
-        return "courseAddForm";
+        return "course/courseAddForm";
     }
 
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
@@ -71,7 +70,7 @@ public class CourseController {
     public String courseEditForm(@PathVariable Long id, Model model) {
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
-        return "courseEditForm";
+        return "course/courseEditForm";
     }
 
     @RequestMapping(value = "/courses/{id}/edit", method = RequestMethod.POST)
