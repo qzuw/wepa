@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fill the form</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <h1>Fill the form pls</h1>
+
+        <form th:action="@{/exercises}" method="POST">
+            <div>
+                <label>Student number</label> 
+                <input type="text" name="studentNumber"/>
+                <!--<div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"> SSN Virheviesti</div>-->
+            </div>
+            
+            <div>
+                <label>Name</label> 
+                <input type="text" name="name"/>
+                <!--<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> SSN Virheviesti</div> -->               
+            </div>
+            
+            <div>
+                <label>Number of made exercises</label> 
+                <input type="text" name="exercises"/>
+            </div>
+            
+            <input type="submit" value="Send"/>
+        </form>
+    </body>
+</html>

@@ -103,6 +103,6 @@ public class SandboxController {
 
     @RequestMapping("/sandbox")
     public String handleDefault() {
-        return "showWeek";
+        return "week/showWeek";
     }
 }

@@ -22,19 +22,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-   private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
-        
+
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .anyRequest().hasAnyAuthority("TEACHER","ASSISTANT");
+                .anyRequest().hasAnyAuthority("TEACHER", "ASSISTANT");
         http.formLogin()
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
