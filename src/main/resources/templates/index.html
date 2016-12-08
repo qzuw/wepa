@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Lascari-apu</title>
@@ -6,9 +5,11 @@
     </head>
     <body>
         <div>
-            <h2>Tämän hetkinen kurssi</h2>
-            <h3>11.11.2016 - 12.12.2016</h3>
-            <p>Menossa viikko 2</p>
+            <h1>Currently active courses:</h1>
+            <div th:each="course : ${currentCourses}">
+                <h2><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}"></a></h2>
+                <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
+            </div>
         </div>
     </body>
 </html>
