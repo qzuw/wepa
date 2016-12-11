@@ -8,7 +8,7 @@
             <h1>Hello Course: week 1</h1>
             <h2>11.11.2016 - 12.12.2016</h2>
             <h2>6 exercises</h2>
-            <p><a href="">Modify week details</a></p>
+            <p><a th:href="@{/course/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
 
             <table>
                 <thead>
