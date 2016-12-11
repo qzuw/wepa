@@ -5,6 +5,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -17,6 +18,7 @@ public class Person extends AbstractPersistable<Long>{
     private String studentNumber;
     @NotBlank
     private String name;
+    @ManyToOne
     private Language language;
     private String password;
     @ManyToMany(mappedBy = "students")

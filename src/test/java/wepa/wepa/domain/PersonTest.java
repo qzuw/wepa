@@ -68,20 +68,21 @@ public class PersonTest {
         assertEquals("TEACHER", retrieved.getAuthorities().get(0));
     }
     
-//    @Test
-//    public void insertLanguage(){
-//        Language l = new Language();
-//        l.setLanguageName("Klingon");
-//        languageRepository.save(l);
-//        
-//        Person person1 = new Person();
-//        person1.setName("Patti");
-//        person1.setStudentNumber("999999999");
-//        person1.setLanguage(l);
-//
-//        personRepository.save(person1);
-//        
-//        Person retrieved = personRepository.findOne(person1.getId());
-//        assertEquals("Klingon", retrieved.getLanguage().getLanguageName());
-//    }
+    @Test
+    public void insertLanguage(){
+        Language l = new Language();
+        l.setLanguageName("Klingon");
+        l = languageRepository.save(l);
+        
+        Person person1 = new Person();
+        person1.setName("Patti");
+        person1.setStudentNumber("999999999");
+        person1.setLanguage(l);
+
+        Person p = personRepository.save(person1);
+        
+        Person retrieved = personRepository.findOne(person1.getId());
+        String lang = retrieved.getLanguage().getLanguageName();
+        assertEquals("Klingon", lang);
+    }
 }
