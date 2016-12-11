@@ -31,6 +31,24 @@
                     </tr>
                 </tbody>
             </table>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Student number</th>
+                        <th>Exercises done</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${course.students}">
+                        <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
+                        <td th:text="${student.studentNumber}"></td>
+                        <td th:text="${student.studentNumber}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </body>
 </html>
