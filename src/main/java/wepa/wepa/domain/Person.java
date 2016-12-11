@@ -19,9 +19,9 @@ public class Person extends AbstractPersistable<Long>{
     private String name;
     private Language language;
     private String password;
-    @ManyToMany
+    @ManyToMany(mappedBy = "students")
     private List<Course> coursesAttended;
-    @ManyToMany
+    @ManyToMany(mappedBy = "assistants")
     private List<Course> coursesAssisted;
     
     
