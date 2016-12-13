@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Course;
+import wepa.wepa.domain.Log;
+import wepa.wepa.domain.Person;
 import wepa.wepa.domain.WeeklyExercise;
 import wepa.wepa.repository.CourseRepository;
+import wepa.wepa.repository.LogRepository;
+import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeeklyExerciseRepository;
 
 @Controller
@@ -22,6 +28,12 @@ public class CourseController {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private PersonRepository personRepository;
+    
+    @Autowired
+    private LogRepository logRepository;
+    
     @Autowired
     private WeeklyExerciseRepository weeklyExerciseRepository;
 
@@ -62,7 +74,19 @@ public class CourseController {
         course.setWeeks(weeklist);
 
         courseRepository.save(course);
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        Person loggedIn = personRepository.findByName(auth.getName());
 
+        Log log = new Log();
+        
+        log.setLogMessage("Course \"" + course.getName() + "\" was added.");
+        log.setPerson(loggedIn);
+        log.setDate(new Date(System.currentTimeMillis()));
+        
+        logRepository.save(log);
+        
         return "redirect:/courses/" + course.getId();
     }
 

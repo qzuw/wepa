@@ -1,5 +1,6 @@
 package wepa.wepa.domain;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,8 @@ public class Log extends AbstractPersistable<Long> {
     @ManyToOne
     @JoinColumn
     private Person person;
+    
+    private Date date;
 
     public String getLogMessage() {
         return logMessage;
@@ -27,6 +30,14 @@ public class Log extends AbstractPersistable<Long> {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     
