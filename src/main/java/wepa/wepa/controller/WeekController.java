@@ -32,10 +32,10 @@ import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
 
 @Controller
-public class WeeklyExerciseController {
+public class WeekController {
     
     @Autowired
-    private WeekRepository weeklyExerciseRepository;
+    private WeekRepository weekRepository;
     
     @Autowired
     private CourseRepository courseRepository;
@@ -48,14 +48,14 @@ public class WeeklyExerciseController {
     
     @RequestMapping("/course/{idC}/week/{idW}")
     public String handleDefault(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
-        model.addAttribute("week", weeklyExerciseRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
+        model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         return "week/showWeek";
     }
     
      @RequestMapping(value = "/course/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
-        model.addAttribute("week", weeklyExerciseRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
+        model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         
         return "week/modifyWeek";
     }
@@ -63,13 +63,13 @@ public class WeeklyExerciseController {
     @RequestMapping(value = "/course/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(@RequestParam String description, Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         
-        Week week = weeklyExerciseRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
+        Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
         
         String oldDescription = week.getDescription();
         
         week.setDescription(description);
         
-        weeklyExerciseRepository.save(week);
+        weekRepository.save(week);
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
