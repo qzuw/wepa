@@ -9,11 +9,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import wepa.wepa.Wepa;
 import wepa.wepa.domain.Person;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.PersonRepository;
@@ -28,6 +30,8 @@ public class DefaultController {
     @Autowired
     private CourseRepository courseRepository;
 
+    static Logger log = Logger.getLogger(Wepa.class.getName());
+    
     @PostConstruct
     public void init() {
 
@@ -39,6 +43,7 @@ public class DefaultController {
             user.setPassword(passwordEncoder.encode("teach"));
             user.setAuthorities(Arrays.asList("TEACHER"));
             personRepository.save(user);
+            log.info("No users found. Creating default user.");
         }
     }
 
