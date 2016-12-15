@@ -2,6 +2,7 @@
 package wepa.wepa.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -11,9 +12,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class StudentExercise extends AbstractPersistable<Long>{
     
     @ManyToOne
+    @JoinColumn
     private Person student;
     @ManyToOne
-    private ExerciseMeeting meeting;
+    @JoinColumn
+    private Week week;
     
     @Min(0)
     private int exerciseCount;
@@ -28,12 +31,12 @@ public class StudentExercise extends AbstractPersistable<Long>{
         this.student = student;
     }
 
-    public ExerciseMeeting getMeeting() {
-        return meeting;
+    public Week getWeek() {
+        return week;
     }
 
-    public void setMeeting(ExerciseMeeting meeting) {
-        this.meeting = meeting;
+    public void setWeek(Week week) {
+        this.week = week;
     }
 
     public boolean isPresent() {

@@ -10,14 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import wepa.wepa.domain.Course;
-import wepa.wepa.domain.ExerciseMeeting;
 import wepa.wepa.domain.Person;
-import wepa.wepa.domain.WeeklyExercise;
+import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
-import wepa.wepa.repository.ExerciseMeetingRepository;
 import wepa.wepa.repository.ExerciseRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.WeeklyExerciseRepository;
+import wepa.wepa.repository.WeekRepository;
 
 @Profile("default")
 @Controller
@@ -30,9 +28,7 @@ public class SandboxController {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private WeeklyExerciseRepository weRepository;
-    @Autowired
-    private ExerciseMeetingRepository meetingRepository;
+    private WeekRepository weekRepository;
     @Autowired
     private ExerciseRepository exerciseRepository;
 
@@ -71,23 +67,23 @@ public class SandboxController {
         c.setCourseStart(new Date(System.currentTimeMillis() - 100000000));
         c.setCourseEnd(new Date(System.currentTimeMillis() + 100000000));
         courseRepository.save(c);
-        List<WeeklyExercise> welist = new ArrayList<>();
+        List<Week> welist = new ArrayList<>();
         for (int i = 1; i <= 6; i++) {
-            WeeklyExercise we = new WeeklyExercise();
+            Week we = new Week();
             we.setCourse(c);
             we.setDescription("Test week " + i);
             we.setWeek(i);
-            weRepository.save(we);
-            List<ExerciseMeeting> emlist = new ArrayList<>();
-            for (int j = 1; j <= 3; j++) {
-                ExerciseMeeting em = new ExerciseMeeting();
-                em.setWeek(we);
-                em.setDescription("Meeting " + j + " for week " + i);
-                meetingRepository.save(em);
-                emlist.add(em);
-            }
-            we.setMeetings(emlist);
-            weRepository.save(we);
+            weekRepository.save(we);
+//            List<ExerciseMeeting> emlist = new ArrayList<>();
+//            for (int j = 1; j <= 3; j++) {
+//                ExerciseMeeting em = new ExerciseMeeting();
+//                em.setWeek(we);
+//                em.setDescription("Meeting " + j + " for week " + i);
+//                meetingRepository.save(em);
+//                emlist.add(em);
+//            }
+//            we.setMeetings(emlist);
+//            weekRepository.save(we);
             welist.add(we);
         }
         c.setWeeks(welist);

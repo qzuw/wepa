@@ -8,6 +8,7 @@ package wepa.wepa.domain;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -22,8 +23,8 @@ public class Course extends AbstractPersistable<Long> {
     private Date courseStart;
     @Temporal(TemporalType.DATE)
     private Date courseEnd;
-    @OneToMany
-    private List<WeeklyExercise> weeks;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
+    private List<Week> weeks;
     @ManyToMany
     private List<Person> assistants;
     @ManyToMany
@@ -61,11 +62,11 @@ public class Course extends AbstractPersistable<Long> {
         return students.size();
     }
     
-    public List<WeeklyExercise> getWeeks() {
+    public List<Week> getWeeks() {
         return weeks;
     }
 
-    public void setWeeks(List<WeeklyExercise> weeks) {
+    public void setWeeks(List<Week> weeks) {
         this.weeks = weeks;
     }
 
@@ -83,6 +84,11 @@ public class Course extends AbstractPersistable<Long> {
 
     public void setStudents(List<Person> students) {
         this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Course name: " + name + ", courseStart:" + courseStart + ", courseEnd:" + courseEnd + ", weeks: " + weeks.size();
     }
     
     

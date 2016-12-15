@@ -12,21 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import wepa.wepa.repository.ExerciseRepository;
-import wepa.wepa.repository.WeeklyExerciseRepository;
+import wepa.wepa.repository.WeekRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ExerciseTest {
     
     @Autowired
-    WeeklyExerciseRepository weRepo;
+    WeekRepository weRepo;
     
     @Autowired
     ExerciseRepository exRepo;
     
     @Test
     public void test1(){
-        WeeklyExercise we = new WeeklyExercise();
+        Week we = new Week();
         we.setWeek(1);
         we = weRepo.save(we);
         Exercise ex = new Exercise();

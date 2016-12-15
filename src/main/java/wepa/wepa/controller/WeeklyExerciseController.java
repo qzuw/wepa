@@ -25,17 +25,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.StudentExercise;
-import wepa.wepa.domain.WeeklyExercise;
+import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.WeeklyExerciseRepository;
+import wepa.wepa.repository.WeekRepository;
 
 @Controller
 public class WeeklyExerciseController {
     
     @Autowired
-    private WeeklyExerciseRepository weeklyExerciseRepository;
+    private WeekRepository weeklyExerciseRepository;
     
     @Autowired
     private CourseRepository courseRepository;
@@ -63,7 +63,7 @@ public class WeeklyExerciseController {
     @RequestMapping(value = "/course/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(@RequestParam String description, Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         
-        WeeklyExercise week = weeklyExerciseRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
+        Week week = weeklyExerciseRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
         
         String oldDescription = week.getDescription();
         

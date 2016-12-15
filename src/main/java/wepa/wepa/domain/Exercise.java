@@ -1,6 +1,7 @@
 package wepa.wepa.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -9,7 +10,8 @@ public class Exercise extends AbstractPersistable<Long> {
     
     private String description;
     @ManyToOne
-    private WeeklyExercise week;
+    @JoinColumn
+    private Week week;
 
     public String getDescription() {
         return description;
@@ -19,11 +21,11 @@ public class Exercise extends AbstractPersistable<Long> {
         this.description = description;
     }
 
-    public WeeklyExercise getWeek() {
+    public Week getWeek() {
         return week;
     }
 
-    public void setWeek(WeeklyExercise week) {
+    public void setWeek(Week week) {
         this.week = week;
     }
     

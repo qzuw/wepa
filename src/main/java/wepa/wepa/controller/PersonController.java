@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
-import wepa.wepa.domain.StudentExercise;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 

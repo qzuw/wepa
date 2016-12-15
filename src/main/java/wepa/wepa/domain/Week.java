@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class WeeklyExercise extends AbstractPersistable<Long> {
+public class Week extends AbstractPersistable<Long> {
 
     private int week;
     private String description;
@@ -16,9 +16,9 @@ public class WeeklyExercise extends AbstractPersistable<Long> {
     @JoinColumn
     private Course course;
     @OneToMany
-    private List<ExerciseMeeting> meetings;
-    @OneToMany
     private List<Exercise> exercises;
+    @OneToMany
+    private List<StudentExercise> studentExercises;
 
     public String getDescription() {
         return description;
@@ -36,14 +36,6 @@ public class WeeklyExercise extends AbstractPersistable<Long> {
         this.course = course;
     }
 
-    public List<ExerciseMeeting> getMeetings() {
-        return meetings;
-    }
-
-    public void setMeetings(List<ExerciseMeeting> meetings) {
-        this.meetings = meetings;
-    }
-
     public int getWeek() {
         return week;
     }
@@ -59,5 +51,22 @@ public class WeeklyExercise extends AbstractPersistable<Long> {
     public int getNumOfExercises() {
         return exercises.size();
     }
+
+    public List<StudentExercise> getStudentExercises() {
+        return studentExercises;
+    }
+
+    public void setStudentExercises(List<StudentExercise> studentExercises) {
+        this.studentExercises = studentExercises;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+    
 
 }

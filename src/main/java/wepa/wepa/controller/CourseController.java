@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Course;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
-import wepa.wepa.domain.WeeklyExercise;
+import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.WeeklyExerciseRepository;
+import wepa.wepa.repository.WeekRepository;
 
 @Controller
 public class CourseController {
@@ -35,7 +35,7 @@ public class CourseController {
     private LogRepository logRepository;
     
     @Autowired
-    private WeeklyExerciseRepository weeklyExerciseRepository;
+    private WeekRepository weeklyExerciseRepository;
 
     @RequestMapping("/courses")
     public String listCourses(Model model) {
@@ -63,9 +63,9 @@ public class CourseController {
         course.setCourseStart(courseStart);
         course.setCourseEnd(courseEnd);
         courseRepository.save(course);
-        List<WeeklyExercise> weeklist = new ArrayList<>();
+        List<Week> weeklist = new ArrayList<>();
         for (int i = 1; i <= weeks; i++) {
-            WeeklyExercise we = new WeeklyExercise();
+            Week we = new Week();
             we.setWeek(i);
             we.setCourse(course);
             weeklyExerciseRepository.save(we);
