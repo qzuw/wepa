@@ -16,13 +16,18 @@ public class Person extends AbstractPersistable<Long>{
     @NotBlank
     @Length(min = 9, max = 9)
     private String studentNumber;
+    
     @NotBlank
     private String name;
+    
     @ManyToOne
     private Language language;
+    
     private String password;
+    
     @ManyToMany(mappedBy = "students")
     private List<Course> coursesAttended;
+    
     @ManyToMany(mappedBy = "assistants")
     private List<Course> coursesAssisted;
     

@@ -3,6 +3,7 @@ package wepa.wepa.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
@@ -14,7 +15,9 @@ public class StudentExercise extends AbstractPersistable<Long>{
     @ManyToOne
     private ExerciseMeeting meeting;
     
+    @Min(0)
     private int exerciseCount;
+    
     private boolean present;
 
     public Person getStudent() {

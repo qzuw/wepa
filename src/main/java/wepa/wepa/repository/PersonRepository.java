@@ -6,4 +6,6 @@ import wepa.wepa.domain.Person;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Person findByName(String name);
+    
+    Person findByStudentNumber(String studentNumber);
 }
