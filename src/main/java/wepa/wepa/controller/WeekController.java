@@ -46,13 +46,13 @@ public class WeekController {
     @Autowired
     private PersonRepository personRepository;
     
-    @RequestMapping("/course/{idC}/week/{idW}")
+    @RequestMapping("/courses/{idC}/week/{idW}")
     public String handleDefault(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         return "week/showWeek";
     }
     
-     @RequestMapping(value = "/course/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
+     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
@@ -60,7 +60,7 @@ public class WeekController {
         return "week/modifyWeek";
     }
     
-    @RequestMapping(value = "/course/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
+    @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(@RequestParam String description, Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         
         Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);

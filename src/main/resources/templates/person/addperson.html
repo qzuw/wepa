@@ -5,6 +5,9 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         <h1>Fill the form pls</h1>
 
         <form th:action="@{/addperson}" method="POST">
@@ -12,7 +15,7 @@
             <p> Name <input type="text" name="name"/></p>
             <input type="submit" value="Send"/>
         </form>
-        
+
         <a th:href="@{/persons}">Back to the list</a>
     </body>
 </html>

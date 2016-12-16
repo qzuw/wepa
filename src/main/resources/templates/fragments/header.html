@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+    <div class="header" th:fragment="header"> 
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a  th:href="@{/persons}">Student listing</a></li>
+            <li sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a  th:href="@{/courses}">Course listing</a></li>
+            <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">Logout</a></li><!--TODO:näkyy vain kirjautuneena-->
+        </ul>
+    </div>
+    </body>
+</html>

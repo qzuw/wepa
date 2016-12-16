@@ -5,13 +5,17 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
+
         <h1>Fill the form pls</h1>
 
         <form th:action="@{/modifyWeek}" method="POST">
             <p> Description <input type="text" name="description" th:field="${week.description}"/></p>
             <input type="submit" value="Send"/>
         </form>
-        
+
         <a th:href="@{/course/{id}/week/{week}(id=${week.course.id}, week=${week.week})}">Back</a>
     </body>
 </html>

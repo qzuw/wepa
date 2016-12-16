@@ -5,6 +5,10 @@
     </head>
 
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
+
         <h1>Students on this course</h1>
         <table>
             <tr>
@@ -16,7 +20,7 @@
                 <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
             </tr>
         </table> 
-        
+
         <p><a th:href="@{/addperson}">Add person to the course</a></p>
     </body>
 </html>

@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         <div>
             <form method="post" th:action="@{/courses/new}">
                 <div class="form-group">

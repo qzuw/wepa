@@ -4,16 +4,19 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         <div>
             <h1 th:text="${student.name}"></h1>
             <h2 th:text="${student.studentNumber}"></h2>
-            
+
             <h2 th:text="'Participation: ' + ${course.name} + ' ' + ${course.startDate} + ' ' + ${course.endDate}"></h2>
             <table>
                 <thead>
                     <tr>
-                    <th>Week</th>
-                    <th>Exercises</th>
+                        <th>Week</th>
+                        <th>Exercises</th>
                     </tr>
                 </thead>
                 <tbody>
