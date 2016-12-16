@@ -17,41 +17,19 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Exercise #</th>
+                        <!--<th>Exercise #</th>-->
                         <th>Exercise name</th>
+                        <th>Modify</th>
                         <!-- <th>done</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="@{/exercise/{idE}">1</a></td>
-                        <td>Reservations</td>
-                        <!-- <td><a href="">2</a></td> -->
-                    </tr>
-                    <tr>
-                        <td><a href="">2</a></td>
-                        <td>Only for</td>
-                        <!-- <td><a href="">2</a></td> -->
-                    </tr>
-                    <tr>
-                        <td><a href="">3</a></td>
-                        <td>ScoreService</td>
-                        <!-- <td><a href="">2</a></td> -->
-                    </tr>
-                    <tr>
-                        <td><a href="">4</a></td>
-                        <td>GameRater</td>
-                        <!-- <td><a href="">2</a></td> -->
-                    </tr>
-                    <tr>
-                        <td><a href="">5</a></td>
-                        <td>RestItem</td>
-                        <!-- <td><a href="">2</a></td> -->
-                    </tr>
-                    <tr>
-                        <td><a href="">6</a></td>
-                        <td>MessageApi</td>
-                        <!-- <td><a href="">2</a></td> -->
+                    <tr th:each="exercise : ${week.exercises}">
+                        <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
+                        <td th:text="${exercise.description}"></td>
+                        <td>
+                           <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercise/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

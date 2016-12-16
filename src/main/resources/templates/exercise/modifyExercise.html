@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fill the form</title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
+
+        <h1>Fill the form pls</h1>
+
+        <form th:action="@{/exercise/{idE}/edit(idE=${exercise.id})}" method="POST">
+            <p> Description <input type="text" name="description" th:field="${exercise.description}"/></p>
+            <input type="submit" value="Send"/>
+        </form>
+
+       <!-- <a th:href="@{/course/{id}/week/{week}(id=${week.course.id}, week=${week.week})}">Back</a>-->
+    </body>
+</html>
