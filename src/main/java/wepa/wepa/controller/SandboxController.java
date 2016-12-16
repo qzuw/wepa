@@ -2,6 +2,7 @@ package wepa.wepa.controller;
 
 import java.util.*;
 import javax.annotation.PostConstruct;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import wepa.wepa.Wepa;
 import wepa.wepa.domain.Course;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Week;
@@ -32,6 +34,8 @@ public class SandboxController {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
+    static Logger log = Logger.getLogger(Wepa.class.getName());
+
     @PostConstruct
     public void init() {
 
@@ -41,7 +45,8 @@ public class SandboxController {
 //        user.setPassword(passwordEncoder.encode("teach"));
 //        user.setAuthorities(Arrays.asList("TEACHER"));
 //        personRepository.save(user);
-
+        log.info("Inserting test data.");
+        
         Person user1 = new Person();
         user1.setName("assistant");
         user1.setStudentNumber("111111111");
@@ -101,7 +106,7 @@ public class SandboxController {
 
     @RequestMapping("/sandbox")
     public String handleDefault() {
-        
+
         return "week/showWeek";
     }
 }
