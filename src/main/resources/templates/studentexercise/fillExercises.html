@@ -5,6 +5,10 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
+
         <h1>Fill the form pls</h1>
 
         <form action="#" th:action="@{/exercises}" th:object="${formObject}" method="POST">
@@ -13,19 +17,19 @@
                 <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
                 <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
             </div>
-            
+
             <div>
                 <label>Name</label> 
                 <input type="text" th:field="*{name}" name="name"/>
                 <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
             </div>
-            
+
             <div>
                 <label>Number of made exercises</label> 
                 <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
                 <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
             </div>
-            
+
             <input type="submit" value="Send"/>
         </form>
     </body>

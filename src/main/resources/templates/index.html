@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         <div>
             <h1>Currently active courses:</h1>
             <div th:each="course : ${currentCourses}">

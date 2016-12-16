@@ -4,15 +4,23 @@
         <meta charset="UTF-8" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         <div>
             <h1 th:text="${course.name}"></h1>
             <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
             <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
             <h3>Course Assistants: </h3>
             <div th:each="assistant : ${course.assistants}">
-                <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
+                <div sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"> 
+                    <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
+                </div>
+                <div sec:authorize="hasAuthority('STUDENT')">
+                    <a th:text="${assistant.name}"></a>
+                </div>
             </div>
-            <p><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
+            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
 
 
             <table>
@@ -25,14 +33,14 @@
                 </thead>
                 <tbody>
                     <tr th:each="week : ${course.weeks}">
-                        <td><a th:href="@{/course/{courseid}/week/{weekid}(courseid=${course.id}, weekid=${week.id})}" th:text="${week.week}"></a></td>
+                        <td><a th:href="@{/courses/{courseid}/week/{weekid}(courseid=${course.id}, weekid=${week.week})}" th:text="${week.week}"></a></td>
                         <td th:text="${week.numOfExercises}"></td>
                         <td th:text="${week.numOfStudents}"></td>
                     </tr>
                 </tbody>
             </table>
 
-            <table>
+            <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
                 <thead>
                     <tr>
                         <th>Student</th>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import wepa.wepa.Wepa;
 import wepa.wepa.domain.Course;
+import wepa.wepa.domain.Exercise;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
@@ -79,16 +80,16 @@ public class SandboxController {
             we.setDescription("Test week " + i);
             we.setWeek(i);
             weekRepository.save(we);
-//            List<ExerciseMeeting> emlist = new ArrayList<>();
-//            for (int j = 1; j <= 3; j++) {
-//                ExerciseMeeting em = new ExerciseMeeting();
-//                em.setWeek(we);
-//                em.setDescription("Meeting " + j + " for week " + i);
-//                meetingRepository.save(em);
-//                emlist.add(em);
-//            }
-//            we.setMeetings(emlist);
-//            weekRepository.save(we);
+            List<Exercise> exerciselist = new ArrayList<>();
+            for (int j = 1; j <= 3; j++) {
+                Exercise em = new Exercise();
+                em.setWeek(we);
+                em.setDescription("Exercise " + j + " for week " + i);
+                exerciseRepository.save(em);
+                exerciselist.add(em);
+            }
+            we.setExercises(exerciselist);
+            weekRepository.save(we);
             welist.add(we);
         }
         c.setWeeks(welist);

@@ -5,11 +5,15 @@
     </head>
 
     <body>
-        <h1>Student's information</h1>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
         
+        <h1>Student's information</h1>
+
         <p th:text="${person.studentNumber}">number</p>
         <p th:text="${person.name}">number</p>
-        
+
         <a th:href="@{/persons}">Back to the list</a>
     </body>
 </html>
