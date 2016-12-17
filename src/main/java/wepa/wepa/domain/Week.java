@@ -18,7 +18,7 @@ public class Week extends AbstractPersistable<Long> {
     @OneToMany
     private List<Exercise> exercises;
     @OneToMany
-    private List<StudentExercise> studentExercises;
+    private List<Submission> submissions;
 
     public String getDescription() {
         return description;
@@ -52,12 +52,12 @@ public class Week extends AbstractPersistable<Long> {
         return exercises.size();
     }
 
-    public List<StudentExercise> getStudentExercises() {
-        return studentExercises;
+    public List<Submission> getSubmissions() {
+        return submissions;
     }
 
-    public void setStudentExercises(List<StudentExercise> studentExercises) {
-        this.studentExercises = studentExercises;
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
     }
 
     public List<Exercise> getExercises() {

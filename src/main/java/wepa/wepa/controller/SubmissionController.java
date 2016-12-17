@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import wepa.wepa.domain.FormObject;
+import wepa.wepa.domain.SubmissionFormObject;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
-import wepa.wepa.domain.StudentExercise;
+import wepa.wepa.domain.Submission;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.StudentExerciseRepository;
+import wepa.wepa.repository.SubmissionRepository;
 
 @Controller
-public class StudentExerciseController {
+public class SubmissionController {
 
     @Autowired
-    private StudentExerciseRepository studentExerciseRepository;
+    private SubmissionRepository submissionRepository;
 
     @Autowired
     private PersonRepository personRepository;
@@ -36,38 +36,38 @@ public class StudentExerciseController {
     private LogRepository logRepository;
 
     @ModelAttribute
-    private FormObject getFormObject() {
-        return new FormObject();
+    private SubmissionFormObject getFormObject() {
+        return new SubmissionFormObject();
     }
 
     @RequestMapping("/exercises")
     public String handleDefault() {
-        return "studentexercise/fillExercises";
+        return "submission/fillExercises";
     }
 
     @RequestMapping(value = "/exercises", method = RequestMethod.POST)
-    public String postExercises(@Valid @ModelAttribute FormObject formObject, BindingResult bindingResult, Model model) {
+    public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "studentexercise/fillExercises";
+            return "submission/fillExercises";
         }
 
-        Person person = personRepository.findByStudentNumber(formObject.getStudentNumber());
+        Person person = personRepository.findByStudentNumber(submissionFormObject.getStudentNumber());
         if (person == null) {
             person = new Person();
-            person.setStudentNumber(formObject.getStudentNumber());
-            person.setName(formObject.getName());
+            person.setStudentNumber(submissionFormObject.getStudentNumber());
+            person.setName(submissionFormObject.getName());
             personRepository.save(person);
         }
 
-        StudentExercise studentExercise = new StudentExercise();
+        Submission submission = new Submission();
 
-        studentExercise.setStudent(person);
-        studentExercise.setExerciseCount(formObject.getExerciseCount());
+        submission.setStudent(person);
+        submission.setExerciseCount(submissionFormObject.getExerciseCount());
 
-        studentExerciseRepository.save(studentExercise);
+        submissionRepository.save(submission);
         
         model.addAttribute("person", person);
-        model.addAttribute("studentExercise", studentExercise);
+        model.addAttribute("submission", submission);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -75,12 +75,12 @@ public class StudentExerciseController {
 
         Log log = new Log();
 
-        log.setLogMessage("Person " + person.getName() + " added made exercises.");
+        log.setLogMessage("Person " + person.getName() + " submitted exercises.");
         log.setPerson(loggedIn);
         log.setDate(new Date(System.currentTimeMillis()));
 
         logRepository.save(log);
 
-        return "studentexercise/exercisesFormFilled";
+        return "submission/exercisesFormFilled";
     }
 }

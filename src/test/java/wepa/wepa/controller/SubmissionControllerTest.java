@@ -23,16 +23,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.StudentExerciseRepository;
+import wepa.wepa.repository.SubmissionRepository;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class StudentExerciseControllerTest {
+public class SubmissionControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private StudentExerciseRepository studentExerciseRepository;
+    private SubmissionRepository submissionRepository;
 
     @Autowired
     private PersonRepository personRepository;
