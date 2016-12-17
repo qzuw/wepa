@@ -2,6 +2,7 @@ package wepa.wepa.domain;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,9 +16,9 @@ public class Week extends AbstractPersistable<Long> {
     @ManyToOne
     @JoinColumn
     private Course course;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "week")
     private List<Exercise> exercises;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "week")
     private List<Submission> submissions;
 
     public String getDescription() {
