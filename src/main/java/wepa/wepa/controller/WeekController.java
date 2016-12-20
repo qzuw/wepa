@@ -32,58 +32,58 @@ import wepa.wepa.repository.WeekRepository;
 
 @Controller
 public class WeekController {
-    
+
     @Autowired
     private WeekRepository weekRepository;
-    
+
     @Autowired
     private CourseRepository courseRepository;
-    
+
     @Autowired
     private LogRepository logRepository;
-    
+
     @Autowired
     private PersonRepository personRepository;
-    
+
     @RequestMapping("/courses/{idC}/week/{idW}")
     public String handleDefault(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         return "week/showWeek";
     }
-    
-     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
-        
+
         return "week/modifyWeek";
     }
-    
+
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(@RequestParam String description, Model model, @PathVariable Long idC, @PathVariable Integer idW) {
-        
+
         Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
-        
+
         String oldDescription = week.getDescription();
-        
+
         week.setDescription(description);
-        
+
         weekRepository.save(week);
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         Person loggedIn = personRepository.findByName(auth.getName());
-        
+
         Log log = new Log();
-        
-        log.setLogMessage("\"" + week.getCourse().getName() + "\"-course's week \"" 
-                + week.getWeek() + "\" was modified. Old description: " 
+
+        log.setLogMessage("\"" + week.getCourse().getName() + "\"-course's week \""
+                + week.getWeek() + "\" was modified. Old description: "
                 + oldDescription + " New description: " + week.getDescription());
         log.setPerson(loggedIn);
         log.setDate(new Date(System.currentTimeMillis()));
-        
+
         logRepository.save(log);
         return "week/modifyWeek";
     }
-    
+
 }

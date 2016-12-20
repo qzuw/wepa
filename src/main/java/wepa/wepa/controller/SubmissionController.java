@@ -65,7 +65,7 @@ public class SubmissionController {
         submission.setExerciseCount(submissionFormObject.getExerciseCount());
 
         submissionRepository.save(submission);
-        
+
         model.addAttribute("person", person);
         model.addAttribute("submission", submission);
 
