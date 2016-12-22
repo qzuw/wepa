@@ -11,7 +11,7 @@
             <h1 th:text="${course.name}"></h1>
             <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
             <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
-            <h3>Course Assistants: </h3>
+            <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
             <div th:each="assistant : ${course.assistants}">
                 <div sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"> 
                     <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
@@ -20,15 +20,15 @@
                     <a th:text="${assistant.name}"></a>
                 </div>
             </div>
-            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}">Modify course details</a></p>
+            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
 
 
             <table>
                 <thead>
                     <tr>
-                        <th>Week</th>
-                        <th>Exercises</th>
-                        <th>Students present</th>
+                        <th th:text="#{message.week}">Week</th>
+                        <th th:text="#{message.exercises}">Exercises</th>
+                        <th th:text="#{message.students}">Students present</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,9 +43,9 @@
             <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
                 <thead>
                     <tr>
-                        <th>Student</th>
-                        <th>Student number</th>
-                        <th>Exercises done</th>
+                        <th th:text="#{message.student}">Student</th>
+                        <th th:text="#{message.studentnumber}">Student number</th>
+                        <th th:text="#{message.exercisesdone}">Exercises done</th>
                     </tr>
                 </thead>
                 <tbody>
