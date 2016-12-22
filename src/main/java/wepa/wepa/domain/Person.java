@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import wepa.wepa.repository.LogHandleRepository;
 
 @Entity
 public class Person extends AbstractPersistable<Long> {
@@ -33,6 +34,8 @@ public class Person extends AbstractPersistable<Long> {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
+
+    private LogHandle logHandle;
 
     public String getStudentNumber() {
         return studentNumber;
@@ -88,6 +91,14 @@ public class Person extends AbstractPersistable<Long> {
 
     public void setCoursesAssisted(List<Course> coursesAssisted) {
         this.coursesAssisted = coursesAssisted;
+    }
+
+    public LogHandle getLogHandle() {
+        return logHandle;
+    }
+
+    public void setLogHandle(LogHandle logHandle) {
+        this.logHandle = logHandle;
     }
 
 }

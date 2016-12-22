@@ -14,6 +14,10 @@ public class Log extends AbstractPersistable<Long> {
     @JoinColumn
     private Person person;
     
+    @ManyToOne
+    @JoinColumn
+    private LogHandle logHandle;
+    
     private Date date;
 
     public String getLogMessage() {
@@ -38,6 +42,14 @@ public class Log extends AbstractPersistable<Long> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public LogHandle getLogHandle() {
+        return logHandle;
+    }
+
+    public void setLogHandle(LogHandle logHandle) {
+        this.logHandle = logHandle;
     }
 
     

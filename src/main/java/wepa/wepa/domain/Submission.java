@@ -23,6 +23,8 @@ public class Submission extends AbstractPersistable<Long>{
     
     private boolean present;
 
+    private LogHandle logHandle;
+    
     public Person getStudent() {
         return student;
     }
@@ -53,6 +55,14 @@ public class Submission extends AbstractPersistable<Long>{
 
     public void setExerciseCount(int exerciseCount) {
         this.exerciseCount = exerciseCount;
+    }
+
+    public LogHandle getLogHandle() {
+        return logHandle;
+    }
+
+    public void setLogHandle(LogHandle logHandle) {
+        this.logHandle = logHandle;
     }
     
     

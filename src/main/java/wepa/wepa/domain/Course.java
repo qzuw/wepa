@@ -30,6 +30,8 @@ public class Course extends AbstractPersistable<Long> {
     @ManyToMany
     private List<Person> students;
 
+    private LogHandle logHandle;
+
     public String getName() {
         return name;
     }
@@ -89,6 +91,14 @@ public class Course extends AbstractPersistable<Long> {
     @Override
     public String toString() {
         return "Course name: " + name + ", courseStart:" + courseStart + ", courseEnd:" + courseEnd + ", weeks: " + weeks.size();
+    }
+
+    public LogHandle getLogHandle() {
+        return logHandle;
+    }
+
+    public void setLogHandle(LogHandle logHandle) {
+        this.logHandle = logHandle;
     }
 
 }
