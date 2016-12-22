@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class LogHandle extends AbstractPersistable<Long> {
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "loghandle")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Log> logs;
 
     public List<Log> getLogs() {
