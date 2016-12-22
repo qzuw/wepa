@@ -1,5 +1,5 @@
 INSERT INTO Person (id, name, password, student_number) VALUES (1, 'Teacher A', '$2a$10$.jdTkIapRyBg/VeFNGTMCO/Ffrses5N3z.QoZRn2ahzZj3m0U8ntS', '000000000');
-INSERT INTO Person (id, name, password, student_number) VALUES (2, 'Teacher A', '$2a$10$.jdTkIapRyBg/VeFNGTMCO/Ffrses5N3z.QoZRn2ahzZj3m0U8ntS', '000000001');
+INSERT INTO Person (id, name, password, student_number) VALUES (2, 'Teacher B', '$2a$10$.jdTkIapRyBg/VeFNGTMCO/Ffrses5N3z.QoZRn2ahzZj3m0U8ntS', '000000001');
 
 INSERT INTO Person (id, name, password, student_number) VALUES (3, 'Assistant A', '$2a$10$vlyZ/cJkHbYFiUm8oD4np.JO4VI0J3HBOoiVpSbMnf/JIh2E1CAku', '111111111');
 INSERT INTO Person (id, name, password, student_number) VALUES (4, 'Assistant B', '$2a$10$vlyZ/cJkHbYFiUm8oD4np.JO4VI0J3HBOoiVpSbMnf/JIh2E1CAku', '111111112');
