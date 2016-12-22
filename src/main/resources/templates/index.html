@@ -8,7 +8,7 @@
             Header
         </div>
         <div>
-            <h1>Currently active courses:</h1>
+            <h1 th:text="#{message.activecourses} + ':'"></h1>
             <div th:each="course : ${currentCourses}">
                 <h2><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}"></a></h2>
                 <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
