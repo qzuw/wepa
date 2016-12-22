@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Profile("default")
 @Configuration
 @EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -34,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/courses/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/submission/**").permitAll()
                 .anyRequest().hasAnyAuthority("TEACHER", "ASSISTANT");
         http.formLogin()
                 .permitAll()
@@ -65,4 +67,4 @@ protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .permitAll();
     }
-*/
+ */
