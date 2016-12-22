@@ -25,6 +25,8 @@ public class Submission extends AbstractPersistable<Long>{
 
     private LogHandle logHandle;
     
+    private String exerciseSubmission;
+    
     public Person getStudent() {
         return student;
     }
@@ -65,5 +67,12 @@ public class Submission extends AbstractPersistable<Long>{
         this.logHandle = logHandle;
     }
     
-    
+    public String getExerciseSubmission() {
+        return exerciseSubmission;
+    }
+
+    public void setExerciseSubmission(String exerciseSubmission) {
+        this.exerciseSubmission = exerciseSubmission;
+    }
+  
 }

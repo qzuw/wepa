@@ -1,5 +1,6 @@
 package wepa.wepa.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.SubmissionFormObject;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Submission;
+import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.SubmissionRepository;
+import wepa.wepa.repository.WeekRepository;
 
 @Controller
 @RequestMapping("/submissions")
@@ -29,6 +31,12 @@ public class SubmissionController {
 
     @Autowired
     private SubmissionRepository submissionRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private WeekRepository weekRepository;
 
     @Autowired
     private PersonRepository personRepository;
@@ -43,13 +51,18 @@ public class SubmissionController {
 
     @RequestMapping()
     public String handleDefault() {
-        return "submission/addSubmission";
+        return "week/showWeek";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = "/courses/{idC}/week/{idW}", method = RequestMethod.POST)
+    public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject,
+            BindingResult bindingResult,
+            Model model,
+            @PathVariable Long idC,
+            @PathVariable Integer idW){
+        model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         if (bindingResult.hasErrors()) {
-            return "submission/addSubmission";
+            return "week/showWeek";
         }
 
         Person person = personRepository.findByStudentNumber(submissionFormObject.getStudentNumber());
@@ -60,10 +73,12 @@ public class SubmissionController {
             personRepository.save(person);
         }
 
+        
         Submission submission = new Submission();
 
         submission.setStudent(person);
         submission.setExerciseCount(submissionFormObject.getExerciseCount());
+        submission.setExerciseSubmission(submissionFormObject.getExerciseSubmission());
 
         submissionRepository.save(submission);
 

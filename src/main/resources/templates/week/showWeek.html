@@ -14,8 +14,6 @@
             <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
             <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
 
-            <p><a th:href="@{/submissions}">Submit exercises for this week</a></p>
-            
             <table>
                 <thead>
                     <tr>
@@ -30,7 +28,7 @@
                         <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
                         <td th:text="${exercise.description}"></td>
                         <td>
-                           <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
+                            <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
                         </td>
                     </tr>
                 </tbody>
@@ -74,6 +72,38 @@
                     </tr>
                 </tbody>
             </table>
+            <p>
+                <h3>Submit this week's exercises</h3>
+                <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
+                      th:object="${submissionFormObject}" 
+                      method="POST" 
+                      id="subForm">
+                    <div>
+                        <label>Student number</label> 
+                        <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
+                        <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+                    </div>
+
+                    <div>
+                        <label>Name</label> 
+                        <input type="text" th:field="*{name}" name="name"/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
+                    </div>
+
+                    <div>
+                        <label>Number of made exercises</label> 
+                        <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
+                        <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
+                    </div>
+
+                    <div>
+                        <label>Exercises</label> 
+                        <textarea name="exerciseSubmission" form="subForm"></textarea>
+                    </div>
+                    <input type="submit" value="Send"/>
+                </form>
+
+            </p>
         </div>
     </body>
 </html>
