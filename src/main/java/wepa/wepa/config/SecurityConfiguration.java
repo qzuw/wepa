@@ -35,8 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/submission/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/submissions/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/submissions").permitAll()
                 .anyRequest().hasAnyAuthority("TEACHER", "ASSISTANT");
         http.formLogin()
                 .permitAll()
