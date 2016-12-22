@@ -45,7 +45,5 @@ public class ExerciseController {
         exercise1.setDescription(exercise.getDescription());
         exerciseRepository.save(exercise1);
         return "redirect:/courses/"+ exercise1.getWeek().getCourse().getId() + "/week/" + exercise1.getWeek().getId();
-    }
-    
-    
+    } 
 }
