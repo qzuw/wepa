@@ -24,6 +24,7 @@ import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.SubmissionRepository;
 
 @Controller
+@RequestMapping("/submissions")
 public class SubmissionController {
 
     @Autowired
@@ -40,15 +41,15 @@ public class SubmissionController {
         return new SubmissionFormObject();
     }
 
-    @RequestMapping("/exercises")
+    @RequestMapping()
     public String handleDefault() {
-        return "submission/fillExercises";
+        return "submission/addSubmission";
     }
 
-    @RequestMapping(value = "/exercises", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "submission/fillExercises";
+            return "submission/addSubmission";
         }
 
         Person person = personRepository.findByStudentNumber(submissionFormObject.getStudentNumber());
@@ -81,6 +82,6 @@ public class SubmissionController {
 
         logRepository.save(log);
 
-        return "submission/exercisesFormFilled";
+        return "submission/submissionFormFilled";
     }
 }

@@ -27,6 +27,7 @@ import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 
 @Controller
+@RequestMapping("/persons")
 public class PersonController {
 
     @Autowired
@@ -38,7 +39,7 @@ public class PersonController {
     @Autowired
     private LogRepository logRepository;
 
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String getPersons(Model model) {
 
         List<Person> persons = personRepository.findAll();
@@ -47,18 +48,18 @@ public class PersonController {
         return "person/personList";
     }
 
-    @RequestMapping(value = "/persons/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getOnePerson(Model model, @PathVariable Long id) {
         model.addAttribute("person", personRepository.findOne(id));
         return "person/personInfo";
     }
 
-    @RequestMapping(value = "/addperson", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPersonForm() {
         return "person/addperson";
     }
 
-    @RequestMapping(value = "/addperson", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String postPerson(Model model, @RequestParam String studentNumber, @RequestParam String name) {
         Person person = new Person();
         person.setName(name);
@@ -81,6 +82,6 @@ public class PersonController {
             logRepository.save(log);
         }
 
-        return "redirect:/addperson";
+        return "redirect:/persons";
     }
 }
