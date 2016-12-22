@@ -27,7 +27,7 @@ public class ExerciseController {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
-    @RolesAllowed({"TEACHER", "ASSISTANT"})
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/{idE}/edit", method = RequestMethod.GET)
     public String showExerciseEdit(Model model, @PathVariable Long idE) {
         Exercise exercise = exerciseRepository.findOne(idE);
@@ -35,7 +35,7 @@ public class ExerciseController {
         return "exercise/modifyExercise";
     }
 
-    @RolesAllowed({"TEACHER", "ASSISTANT"})
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/{idE}/edit", method = RequestMethod.POST)
     public String editExercise(@PathVariable Long idE, @Valid @ModelAttribute Exercise exercise, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
