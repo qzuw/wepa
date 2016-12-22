@@ -96,7 +96,7 @@ public class CourseController {
     }
 
     //@PreAuthorize("hasRole('TEACHER')")
-    @Secured("TEACHER")
+    //@Secured("TEACHER")
     //@Secured("hasAnyRole{'ROLE_TEACHER', 'ROLE_ASSISTANT'}")
     //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping("/courses/{id}/edit")
