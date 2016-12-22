@@ -9,7 +9,10 @@
             Header
         </div>
 
-        <h1>Students on this course</h1>
+        <h1>All students</h1>
+        
+        <p><a th:href="@{/persons/add}">Add person</a></p>
+        
         <table>
             <tr>
                 <th></th>
@@ -20,7 +23,5 @@
                 <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
             </tr>
         </table> 
-
-        <p><a th:href="@{/persons/add}">Add person to the course</a></p>
     </body>
 </html>

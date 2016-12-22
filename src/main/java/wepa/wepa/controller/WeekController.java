@@ -18,12 +18,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
+import wepa.wepa.domain.SubmissionFormObject;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
@@ -45,8 +47,13 @@ public class WeekController {
     @Autowired
     private PersonRepository personRepository;
 
+    @ModelAttribute
+    private SubmissionFormObject getFormObject() {
+        return new SubmissionFormObject();
+    }
+
     @RequestMapping("/courses/{idC}/week/{idW}")
-    public String handleDefault(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
+    public String handleDefault(@PathVariable Long idC, @PathVariable Integer idW, Model model) {
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
         return "week/showWeek";
     }

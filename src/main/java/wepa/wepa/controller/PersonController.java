@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,11 @@ public class PersonController {
     @Autowired
     private LogRepository logRepository;
 
+    @ModelAttribute
+    private Person getPerson() {
+        return new Person();
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String getPersons(Model model) {
 
@@ -60,10 +66,17 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String postPerson(Model model, @RequestParam String studentNumber, @RequestParam String name) {
-        Person person = new Person();
-        person.setName(name);
-        person.setStudentNumber(studentNumber);
+    public String postPerson(Model model, 
+            @RequestParam String studentNumber, 
+            @RequestParam String name, 
+            @Valid @ModelAttribute Person addedPerson, 
+            BindingResult bindingResult) {
+        
+        if (bindingResult.hasErrors()) {
+            return "person/addperson";
+        }
+        
+        Person person = addedPerson;
         person.setAuthorities(Arrays.asList("STUDENT"));
         personRepository.save(person);
         model.addAttribute("addedperson", person);
