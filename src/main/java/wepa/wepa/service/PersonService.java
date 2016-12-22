@@ -20,7 +20,7 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Page<Person> getPersonLog(Integer pageNumber) {
+    public Page<Person> getPersonPage(Integer pageNumber) {
         Pageable request = new PageRequest(pageNumber, 10, Sort.Direction.ASC, "studentNumber");
         return personRepository.findAll(request);
     }

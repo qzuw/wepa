@@ -50,12 +50,17 @@ public class PersonController {
         return new Person();
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String getPersons() {
+        return "redirect:/persons/page/1";
+    }
+    
     @RequestMapping(value = "/page/{pageNumber}", method = RequestMethod.GET)
     public String getPersons(@PathVariable Integer pageNumber, Model model) {
         if (pageNumber < 1) {
             return "redirect:/persons/page/1";
         }
-        Page<Person> page = personService.getPersonLog(pageNumber - 1);
+        Page<Person> page = personService.getPersonPage(pageNumber - 1);
         int current = page.getNumber() + 1;
         int previous = current - 1;
         int next = current + 1;

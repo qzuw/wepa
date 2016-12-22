@@ -42,7 +42,12 @@ public class PersonControllerTest {
     
     @Test
     public void getOk() throws Exception {
-        mock.perform(get("/persons")).andExpect(status().is2xxSuccessful());
+        mock.perform(get("/persons/page/1")).andExpect(status().is2xxSuccessful());
+    }
+    
+    @Test
+    public void getRedirect() throws Exception {
+        mock.perform(get("/persons")).andExpect(status().is3xxRedirection());
     }
     
     @Test
@@ -52,7 +57,7 @@ public class PersonControllerTest {
     
     @Test
     public void getContainsPersons() throws Exception {
-        mock.perform(get("/persons")).andExpect(model().attributeExists("persons"));
+        mock.perform(get("/persons/page/1")).andExpect(model().attributeExists("persons"));
     }
     
     @Test
