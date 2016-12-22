@@ -3,8 +3,11 @@ package wepa.wepa.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -51,11 +54,13 @@ public class CourseController {
         return "course/showCourse";
     }
 
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping("/courses/new")
     public String courseAddForm() {
         return "course/courseAddForm";
     }
 
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
     public String addCourse(@RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer weeks) {
         Course course = new Course();
@@ -90,6 +95,10 @@ public class CourseController {
         return "redirect:/courses/" + course.getId();
     }
 
+    //@PreAuthorize("hasRole('TEACHER')")
+    @Secured("TEACHER")
+    //@Secured("hasAnyRole{'ROLE_TEACHER', 'ROLE_ASSISTANT'}")
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping("/courses/{id}/edit")
     public String courseEditForm(@PathVariable Long id, Model model) {
         Course course = courseRepository.findOne(id);
@@ -97,6 +106,7 @@ public class CourseController {
         return "course/courseEditForm";
     }
 
+    //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/courses/{id}/edit", method = RequestMethod.POST)
     public String editCourse(@PathVariable Long id, @RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer numOfWeeks) {
         Course course = courseRepository.findOne(id);
