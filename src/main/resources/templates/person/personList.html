@@ -23,5 +23,9 @@
                 <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
             </tr>
         </table> 
+        <a th:href="@{/persons/page/{page}(page=${beginIndex})}">Start</a> 
+        <a th:if="${previous}" th:href="@{/persons/page/{page}(page=${previous})}">Previous</a> 
+        <a th:if="${next}" th:href="@{/persons/page/{page}(page=${next})}">Next</a> 
+        <a th:href="@{/persons/page/{page}(page=${endIndex})}">End</a>
     </body>
 </html>

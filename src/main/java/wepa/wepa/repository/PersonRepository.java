@@ -1,5 +1,7 @@
 package wepa.wepa.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import wepa.wepa.domain.Person;
 
@@ -8,4 +10,5 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     Person findByName(String name);
     
     Person findByStudentNumber(String studentNumber);
+    
 }
