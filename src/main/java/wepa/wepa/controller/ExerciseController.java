@@ -22,28 +22,29 @@ import wepa.wepa.repository.ExerciseRepository;
 
 @Controller
 public class ExerciseController {
-    
+
     @Autowired
     private ExerciseRepository exerciseRepository;
-    
+
     @RolesAllowed({"TEACHER", "ASSISTANT"})
-    @RequestMapping(value="/exercise/{idE}/edit", method=RequestMethod.GET)
-    public String showExerciseEdit(Model model, @PathVariable Long idE){
+    @RequestMapping(value = "/exercise/{idE}/edit", method = RequestMethod.GET)
+    public String showExerciseEdit(Model model, @PathVariable Long idE) {
         Exercise exercise = exerciseRepository.findOne(idE);
         model.addAttribute("exercise", exercise);
         return "exercise/modifyExercise";
     }
-    
+
     @RolesAllowed({"TEACHER", "ASSISTANT"})
-    @RequestMapping(value="/exercise/{idE}/edit", method=RequestMethod.POST)
-    public String editExercise(@PathVariable Long idE, @Valid @ModelAttribute Exercise exercise, BindingResult bindingResult){
+    @RequestMapping(value = "/exercise/{idE}/edit", method = RequestMethod.POST)
+    public String editExercise(@PathVariable Long idE, @Valid @ModelAttribute Exercise exercise, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "exercise/modifyExercise";
         }
-        
+
         Exercise exercise1 = exerciseRepository.findOne(idE);
         exercise1.setDescription(exercise.getDescription());
         exerciseRepository.save(exercise1);
         return "redirect:/courses/"+ exercise1.getWeek().getCourse().getId() + "/week/" + exercise1.getWeek().getId();
     } 
+
 }

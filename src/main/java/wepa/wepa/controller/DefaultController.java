@@ -38,7 +38,7 @@ public class DefaultController {
         List<Person> users = personRepository.findAll();
         if (users.isEmpty()) {
             Person user = new Person();
-            user.setName("teach");
+            user.setName("Teacher");
             user.setStudentNumber("000000000");
             user.setPassword(passwordEncoder.encode("teach"));
             user.setAuthorities(Arrays.asList("TEACHER"));

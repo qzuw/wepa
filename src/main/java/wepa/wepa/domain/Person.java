@@ -11,38 +11,37 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
-public class Person extends AbstractPersistable<Long>{
-    
+public class Person extends AbstractPersistable<Long> {
+
     @NotBlank
     @Length(min = 9, max = 9)
     private String studentNumber;
-    
+
     @NotBlank
     private String name;
-    
+
     @ManyToOne
     private Language language;
-    
+
     private String password;
-    
+
     @ManyToMany(mappedBy = "students")
     private List<Course> coursesAttended;
-    
+
     @ManyToMany(mappedBy = "assistants")
     private List<Course> coursesAssisted;
-    
-    
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
-    
-    public String getStudentNumber(){
+
+    public String getStudentNumber() {
         return studentNumber;
     }
-    
+
     public void setStudentNumber(String number) {
         this.studentNumber = number;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -58,19 +57,19 @@ public class Person extends AbstractPersistable<Long>{
     public void setLanguage(Language language) {
         this.language = language;
     }
-    
-     public String getPassword() {
+
+    public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public List<String> getAuthorities() {
         return authorities;
     }
- 
+
     public void setAuthorities(List<String> authorities) {
         this.authorities = authorities;
     }

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 
 @Entity
-public class StudentExercise extends AbstractPersistable<Long>{
+public class Submission extends AbstractPersistable<Long>{
     
     @ManyToOne
     @JoinColumn

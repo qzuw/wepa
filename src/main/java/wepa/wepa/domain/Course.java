@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Course extends AbstractPersistable<Long> {
-    
+
     private String name;
     @Temporal(TemporalType.DATE)
     private Date courseStart;
@@ -29,12 +29,12 @@ public class Course extends AbstractPersistable<Long> {
     private List<Person> assistants;
     @ManyToMany
     private List<Person> students;
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -54,14 +54,14 @@ public class Course extends AbstractPersistable<Long> {
         this.courseEnd = courseEnd;
     }
 
-    public int getNumOfWeeks(){
+    public int getNumOfWeeks() {
         return weeks.size();
     }
 
-    public int getNumOfStudents(){
+    public int getNumOfStudents() {
         return students.size();
     }
-    
+
     public List<Week> getWeeks() {
         return weeks;
     }
@@ -90,6 +90,5 @@ public class Course extends AbstractPersistable<Long> {
     public String toString() {
         return "Course name: " + name + ", courseStart:" + courseStart + ", courseEnd:" + courseEnd + ", weeks: " + weeks.size();
     }
-    
-    
+
 }
