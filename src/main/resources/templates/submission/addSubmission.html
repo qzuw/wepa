@@ -11,7 +11,7 @@
 
         <h1>Fill the form pls</h1>
 
-        <form action="#" th:action="@{/exercises}" th:object="${submissionFormObject}" method="POST">
+        <form action="#" th:action="@{/submissions}" th:object="${submissionFormObject}" method="POST">
             <div>
                 <label>Student number</label> 
                 <input type="text" th:field="*{studentNumber}" name="studentNumber"/>

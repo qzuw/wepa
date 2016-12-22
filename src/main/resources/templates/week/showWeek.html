@@ -9,11 +9,13 @@
         </div>
 
         <div>
-            <h1>Hello Course: week 1</h1>
-            <h2>11.11.2016 - 12.12.2016</h2>
-            <h2>6 exercises</h2>
-            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/course/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
+            <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
+            <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
+            <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
+            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
 
+            <p><a th:href="@{/submissions}">Submit exercises for this week</a></p>
+            
             <table>
                 <thead>
                     <tr>
@@ -28,7 +30,7 @@
                         <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
                         <td th:text="${exercise.description}"></td>
                         <td>
-                           <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercise/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
+                           <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
                         </td>
                     </tr>
                 </tbody>

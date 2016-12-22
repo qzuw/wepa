@@ -21,13 +21,14 @@ import wepa.wepa.domain.Exercise;
 import wepa.wepa.repository.ExerciseRepository;
 
 @Controller
+@RequestMapping("/exercises")
 public class ExerciseController {
 
     @Autowired
     private ExerciseRepository exerciseRepository;
 
     @RolesAllowed({"TEACHER", "ASSISTANT"})
-    @RequestMapping(value = "/exercise/{idE}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/{idE}/edit", method = RequestMethod.GET)
     public String showExerciseEdit(Model model, @PathVariable Long idE) {
         Exercise exercise = exerciseRepository.findOne(idE);
         model.addAttribute("exercise", exercise);
@@ -35,7 +36,7 @@ public class ExerciseController {
     }
 
     @RolesAllowed({"TEACHER", "ASSISTANT"})
-    @RequestMapping(value = "/exercise/{idE}/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/{idE}/edit", method = RequestMethod.POST)
     public String editExercise(@PathVariable Long idE, @Valid @ModelAttribute Exercise exercise, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "exercise/modifyExercise";

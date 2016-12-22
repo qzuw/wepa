@@ -47,7 +47,7 @@ public class PersonControllerTest {
     
     @Test
     public void getAddFormOk() throws Exception {
-        mock.perform(get("/addperson")).andExpect(status().is2xxSuccessful());
+        mock.perform(get("/persons/add")).andExpect(status().is2xxSuccessful());
     }
     
     @Test
@@ -66,7 +66,7 @@ public class PersonControllerTest {
     
     @Test
     public void postPerson() throws Exception {
-        mock.perform(post("/addperson").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", "888888888").param("name", "Maija"));
+        mock.perform(post("/persons/add").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", "888888888").param("name", "Maija"));
         
         List<Person> persons = personRepository.findAll();
         
