@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
 
-        <title >Edit course</title> 
+        <title th:text="#{message.editcourse}">Edit course</title> 
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -11,15 +11,15 @@
         <div>
             <form method="post" th:action="@{/courses/{id}/edit(id=${course.id})}">
                 <div class="form-group">
-                    <label>Course name:</label>
+                    <label th:text="#{message.coursename}">Course name:</label>
                     <input type="text" name="name" th:field="${course.name}" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label>Start date:</label>
+                    <label th:text="#{message.startdate}">Start date:</label>
                     <input type="date" name="courseStart" th:field="${course.courseStart}" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label>End date:</label>
+                    <label th:text="#{message.enddate}">End date:</label>
                     <input type="date" name="courseEnd" th:field="${course.courseEnd}" class="form-control" />
                 </div>
                 <div class="form-group">

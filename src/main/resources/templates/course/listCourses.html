@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>List all courses</title>
+        <title th:text="#{message.listcourses}">List all courses</title>
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -8,14 +8,14 @@
             Header
         </div>
         <div>
-            <p><a th:href="@{/courses/new}">Add new course</a></p>
+            <p><a th:href="@{/courses/new}" th:text="#{message.addnewcourse}">Add new course</a></p>
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Weeks</th>
+                        <th th:text="#{message.coursename}">Name</th>
+                        <th th:text="#{message.startdate}">Start</th>
+                        <th th:text="#{message.enddate}">End</th>
+                        <th th:text="#{message.coursemanyweeks}">Weeks</th>
                     </tr>
                 </thead>
                 <tbody>

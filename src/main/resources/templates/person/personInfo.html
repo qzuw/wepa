@@ -9,11 +9,11 @@
             Header
         </div>
         
-        <h1>Student's information</h1>
+        <h1  th:text="#{message.studentinfo}">Student's information</h1>
 
         <p th:text="${person.studentNumber}">number</p>
         <p th:text="${person.name}">number</p>
 
-        <a th:href="@{/persons}">To the list</a>
+        <a th:href="@{/persons}" th:text="#{message.personlist}">To the list</a>
     </body>
 </html>
