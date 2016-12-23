@@ -19,6 +19,7 @@ import wepa.wepa.domain.SubmissionFormObject;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Submission;
+import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
@@ -54,13 +55,21 @@ public class SubmissionController {
         return "week/showWeek";
     }
 
+    @RequestMapping("/{id}")
+    public String showSubmission(Model model, @PathVariable Long id){
+        Submission submission = submissionRepository.findOne(id);
+        model.addAttribute("submission", submission);
+        return "submission/showSubmission";
+    }
+    
     @RequestMapping(value = "/courses/{idC}/week/{idW}", method = RequestMethod.POST)
     public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject,
             BindingResult bindingResult,
             Model model,
             @PathVariable Long idC,
             @PathVariable Integer idW){
-        model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
+        Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
+        model.addAttribute("week", week);
         if (bindingResult.hasErrors()) {
             return "week/showWeek";
         }
@@ -79,6 +88,7 @@ public class SubmissionController {
         submission.setStudent(person);
         submission.setExerciseCount(submissionFormObject.getExerciseCount());
         submission.setExerciseSubmission(submissionFormObject.getExerciseSubmission());
+        submission.setWeek(week);
 
         submissionRepository.save(submission);
 

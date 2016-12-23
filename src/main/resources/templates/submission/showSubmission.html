@@ -1,10 +1,37 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ExerciseApplication</title>
     </head>
+
     <body>
-        <div>TODO write content</div>
+        <div th:replace="fragments/header :: header ">
+            Header
+        </div>
+
+        <h1>Submission information</h1>
+        <div>
+            <label>Student number:</label> 
+            <span th:text="${submission.student.studentNumber}">number</span>
+        </div>    
+        <div>
+            <label>Name:</label> 
+            <span th:text="${submission.student.name}">number</span>  
+        </div>
+        <div>
+            <label>Week:</label> 
+            <span th:text="${submission.week.week}">number</span>
+        </div>
+        <div>
+            <label>Exercise count:</label> 
+            <span th:text="${submission.exerciseCount}">number</span>
+        </div>
+        <div>    
+            <label>Exercise Submission:</label> 
+            <span th:text="${submission.exerciseSubmission}">number</span> 
+        </div>
+
+
+        <!--<a th:href="@{/persons}">To the list</a>-->
     </body>
 </html>
