@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
+import wepa.wepa.service.CourseService;
 
 @Controller
 public class CourseController {
@@ -30,12 +32,15 @@ public class CourseController {
 
     @Autowired
     private PersonRepository personRepository;
-    
+
     @Autowired
     private LogRepository logRepository;
-    
+
     @Autowired
     private WeekRepository weeklyExerciseRepository;
+    
+    @Autowired
+    private CourseService courseService;
 
     @RequestMapping("/courses")
     public String listCourses(Model model) {
@@ -44,10 +49,37 @@ public class CourseController {
         return "course/listCourses";
     }
 
-    @RequestMapping("/courses/{id}")
-    public String showCourse(Model model, @PathVariable Long id) {
+    @RequestMapping("/courses/{id}/page/{pageNumber}")
+    public String showCourse(Model model, @PathVariable Long id, @PathVariable Integer pageNumber) {
+        if (pageNumber < 1) {
+            return "redirect:/courses/" + id + "/page/1";
+        }
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
+        
+        Page<Person> page = courseService.getPersonPage(pageNumber - 1, id);
+        List<Person> students = page.getContent();
+        model.addAttribute("students", students);
+        
+        int current = page.getNumber() + 1;
+        int previous = current - 1;
+        int next = current + 1;
+        if (previous >= 1) {
+            model.addAttribute("previous", previous);
+        }
+
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
+        
+        if (next <= end) {
+            model.addAttribute("next", next);
+        }
+
+        model.addAttribute("personLog", page);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        
         return "course/showCourse";
     }
 
@@ -76,19 +108,19 @@ public class CourseController {
         course.setWeeks(weeklist);
 
         courseRepository.save(course);
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         Person loggedIn = personRepository.findByName(auth.getName());
 
         Log log = new Log();
-        
+
         log.setLogMessage("Course \"" + course.getName() + "\" was added.");
         log.setPerson(loggedIn);
         log.setDate(new Date(System.currentTimeMillis()));
-        
+
         logRepository.save(log);
-        
+
         return "redirect:/courses/" + course.getId();
     }
 

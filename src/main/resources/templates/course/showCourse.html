@@ -49,14 +49,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="student : ${course.students}">
+                    <tr th:each="student : ${students}">
                         <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
                         <td th:text="${student.studentNumber}"></td>
                         <td th:text="${student.studentNumber}"></td>
                     </tr>
                 </tbody>
             </table>
-
+            <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${beginIndex})}">Start</a> 
+            <a th:if="${previous}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${previous})}">Previous</a> 
+            <a th:if="${next}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${next})}">Next</a> 
+            <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${endIndex})}">End</a>
         </div>
     </body>
 </html>

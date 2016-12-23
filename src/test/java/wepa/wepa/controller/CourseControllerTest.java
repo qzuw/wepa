@@ -112,7 +112,7 @@ public class CourseControllerTest {
         String content = res.getResponse().getContentAsString();
         assertTrue(content.contains(name));
 
-        res = mockMvc.perform(get("/courses/" + c.getId())).andReturn();
+        res = mockMvc.perform(get("/courses/" + c.getId() + "/page/1")).andReturn();
         content = res.getResponse().getContentAsString();
         assertTrue(content.contains(name));
 
