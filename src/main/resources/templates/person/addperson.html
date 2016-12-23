@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Fill the form</title>
+        <title th:text="#{message.addstudent}">Fill the form</title>
         <meta charset="UTF-8" />
     </head>
     <body>
         <div th:replace="fragments/header :: header ">
             Header
         </div>
-        <h1>Fill the form pls</h1>
+        <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
         <form action="#" th:action="@{/persons/add}" th:object="${person}" method="POST">
             <div>
-                <label>Student number</label> 
+                <label th:text="#{message.studentnumber}">Student number</label> 
                 <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
                 <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
             </div>
 
             <div>
-                <label>Name</label> 
+                <label  th:text="#{message.name}">Name</label> 
                 <input type="text" th:field="*{name}" name="name"/>
                 <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>         
             </div>
