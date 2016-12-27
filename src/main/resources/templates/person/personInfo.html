@@ -18,21 +18,26 @@
                 <p th:text="${person.studentNumber}">number</p>
                 <p th:text="${person.name}">number</p>
 
-                <h3 th:text="#{message.assistantoncourses}"></h3>
-                <table>
-                    <tr th:each="course : ${person.coursesAssisted}">
-                        <td th:text="${course.name}"></td>
-                        <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
-                    </tr>
-                </table>
+                <div th:if="${not #lists.isEmpty(person.coursesAssisted)}">
+                    <h3 th:text="#{message.assistantoncourses}"></h3>
+                    <table>
+                        <tr th:each="course : ${person.coursesAssisted}">
+                            <td th:text="${course.name}"></td>
+                            <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
+                            <td sec:authorize="hasAuthority('TEACHER')"><a href="">Remove</a></td>
+                        </tr>
+                    </table>
+                </div>
 
-                <h3 th:text="#{message.studentoncourses}"></h3>
-                <table>
-                    <tr th:each="course : ${person.coursesAttended}">
-                        <td th:text="${course.name}"></td>
-                        <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
-                    </tr>
-                </table>
+                <div th:if="${not #lists.isEmpty(person.coursesAttended)}">
+                    <h3 th:text="#{message.studentoncourses}"></h3>
+                    <table>
+                        <tr th:each="course : ${person.coursesAttended}">
+                            <td th:text="${course.name}"></td>
+                            <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
+                        </tr>
+                    </table>
+                </div>
 
                 <a th:href="@{/persons}" th:text="#{message.studentlist}">To the list</a>
             </div>
