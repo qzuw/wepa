@@ -5,7 +5,7 @@
     </head>
     <body>
 
-    <div class="header" th:fragment="header"> 
+    <div class="header" th:fragment="navbar"> 
         <ul>
             <li><a th:href="@{/}">Home</a></li>
             <li sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a  th:href="@{/persons/page/1}" th:text="#{message.studentlist}">Student listing</a></li>
