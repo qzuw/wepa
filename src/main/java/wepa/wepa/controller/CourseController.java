@@ -49,6 +49,18 @@ public class CourseController {
         return "course/listCourses";
     }
 
+    @RequestMapping("/courses/{id}")
+    public String showCourse(Model model, @PathVariable Long id) {
+        if (false) {
+            // redirect teacher/assistant
+            return "redirect:/courses/" + id + "/page/1";
+        }
+        Course course = courseRepository.findOne(id);
+        model.addAttribute("course", course);
+                
+        return "course/showCourse";
+    }
+
     @RequestMapping("/courses/{id}/page/{pageNumber}")
     public String showCourse(Model model, @PathVariable Long id, @PathVariable Integer pageNumber) {
         if (pageNumber < 1) {
