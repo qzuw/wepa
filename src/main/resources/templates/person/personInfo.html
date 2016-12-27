@@ -13,10 +13,26 @@
             </div>
             <div>
 
-                <h1  th:text="#{message.studentinfo}">Student's information</h1>
+                <h1 th:text="#{message.studentinfo}">Student's information</h1>
 
                 <p th:text="${person.studentNumber}">number</p>
                 <p th:text="${person.name}">number</p>
+
+                <h3 th:text="#{message.assistantoncourses}"></h3>
+                <table>
+                    <tr th:each="course : ${person.coursesAssisted}">
+                        <td th:text="${course.name}"></td>
+                        <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
+                    </tr>
+                </table>
+
+                <h3 th:text="#{message.studentoncourses}"></h3>
+                <table>
+                    <tr th:each="course : ${person.coursesAttended}">
+                        <td th:text="${course.name}"></td>
+                        <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
+                    </tr>
+                </table>
 
                 <a th:href="@{/persons}" th:text="#{message.studentlist}">To the list</a>
             </div>
