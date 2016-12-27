@@ -2,18 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Nice job!</title>
-        <meta charset="UTF-8" />
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+            <div>
+
+                <h1>Your exercises were successfully saved! :)</h1>
+
+                <h2 th:text="${person.studentNumber}">number</h2>
+
+                <p>You have done <span th:text="${submission.exerciseCount}">-1</span> exercises this week. Nice job! </p>
+
+                <a th:href="@{/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}">Back to the form</a>
+            </div>
         </div>
-        <h1>Your exercises were successfully saved! :)</h1>
 
-        <h2 th:text="${person.studentNumber}">number</h2>
-
-        <p>You have done <span th:text="${submission.exerciseCount}">-1</span> exercises this week. Nice job! </p>
-
-        <a th:href="@{/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}">Back to the form</a>
     </body>
 </html>

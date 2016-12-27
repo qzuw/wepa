@@ -1,65 +1,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="#{message.showcoursedetails}">Show course details</title>
-        <meta charset="UTF-8" />
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
-        </div>
-        <div>
-            <h1 th:text="${course.name}"></h1>
-            <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
-            <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
-            <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
-            <div th:each="assistant : ${course.assistants}">
-                <div sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"> 
-                    <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
-                </div>
-                <div sec:authorize="hasAuthority('STUDENT')">
-                    <a th:text="${assistant.name}"></a>
-                </div>
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
             </div>
-            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
+            <div>
+
+                <h1 th:text="${course.name}"></h1>
+                <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
+                <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
+                <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
+                <div th:each="assistant : ${course.assistants}">
+                    <div sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"> 
+                        <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
+                    </div>
+                    <div sec:authorize="hasAuthority('STUDENT')">
+                        <a th:text="${assistant.name}"></a>
+                    </div>
+                </div>
+                <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
 
 
-            <table>
-                <thead>
-                    <tr>
-                        <th th:text="#{message.week}">Week</th>
-                        <th th:text="#{message.exercises}">Exercises</th>
-                        <th th:text="#{message.students}">Students present</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="week : ${course.weeks}">
-                        <td><a th:href="@{/courses/{courseid}/week/{weekid}(courseid=${course.id}, weekid=${week.week})}" th:text="${week.week}"></a></td>
-                        <td th:text="${week.numOfExercises}"></td>
-                        <td th:text="${week.numOfStudents}"></td>
-                    </tr>
-                </tbody>
-            </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th th:text="#{message.week}">Week</th>
+                            <th th:text="#{message.exercises}">Exercises</th>
+                            <th th:text="#{message.students}">Students present</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="week : ${course.weeks}">
+                            <td><a th:href="@{/courses/{courseid}/week/{weekid}(courseid=${course.id}, weekid=${week.week})}" th:text="${week.week}"></a></td>
+                            <td th:text="${week.numOfExercises}"></td>
+                            <td th:text="${week.numOfStudents}"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
-                <thead>
-                    <tr>
-                        <th th:text="#{message.student}">Student</th>
-                        <th th:text="#{message.studentnumber}">Student number</th>
-                        <th th:text="#{message.exercisesdone}">Exercises done</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="student : ${students}">
-                        <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
-                        <td th:text="${student.studentNumber}"></td>
-                        <td th:text="${student.studentNumber}"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${beginIndex})}">Start</a> 
-            <a th:if="${previous}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${previous})}">Previous</a> 
-            <a th:if="${next}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${next})}">Next</a> 
-            <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${endIndex})}">End</a>
+                <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
+                    <thead>
+                        <tr>
+                            <th th:text="#{message.student}">Student</th>
+                            <th th:text="#{message.studentnumber}">Student number</th>
+                            <th th:text="#{message.exercisesdone}">Exercises done</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="student : ${students}">
+                            <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
+                            <td th:text="${student.studentNumber}"></td>
+                            <td th:text="${student.studentNumber}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${beginIndex})}">Start</a> 
+                <a th:if="${previous}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${previous})}">Previous</a> 
+                <a th:if="${next}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${next})}">Next</a> 
+                <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${endIndex})}">End</a>
+            </div>
         </div>
     </body>
 </html>

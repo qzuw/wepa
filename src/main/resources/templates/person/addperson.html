@@ -2,28 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="#{message.addstudent}">Fill the form</title>
-        <meta charset="UTF-8" />
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+            <div>
+
+                <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
+
+                <form action="#" th:action="@{/persons/add}" th:object="${person}" method="POST">
+                    <div>
+                        <label th:text="#{message.studentnumber}">Student number</label> 
+                        <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
+                        <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+                    </div>
+
+                    <div>
+                        <label  th:text="#{message.name}">Name</label> 
+                        <input type="text" th:field="*{name}" name="name"/>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>         
+                    </div>
+                    <input type="submit" value="Send"/>
+                </form>
+            </div>
         </div>
-
-        <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
-
-        <form action="#" th:action="@{/persons/add}" th:object="${person}" method="POST">
-            <div>
-                <label th:text="#{message.studentnumber}">Student number</label> 
-                <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
-                <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
-            </div>
-
-            <div>
-                <label  th:text="#{message.name}">Name</label> 
-                <input type="text" th:field="*{name}" name="name"/>
-                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>         
-            </div>
-            <input type="submit" value="Send"/>
-        </form>
     </body>
 </html>

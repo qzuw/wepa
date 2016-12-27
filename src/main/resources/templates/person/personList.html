@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>ExerciseApplication</title>
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
 
     <body>
+        <div class="container">
         <div th:replace="fragments/navbar :: navbar ">
             Navbar
         </div>
 
+        <div>
         <h1 th:text="#{message.allstudents}">All students</h1>
 
         <p><a th:href="@{/persons/add}" th:text="#{message.addperson}">Add person</a></p>
@@ -27,5 +30,8 @@
         <a th:if="${previous}" th:href="@{/persons/page/{page}(page=${previous})}">Previous</a> 
         <a th:if="${next}" th:href="@{/persons/page/{page}(page=${next})}">Next</a> 
         <a th:href="@{/persons/page/{page}(page=${endIndex})}">End</a>
+                </div>
+        </div>
+
     </body>
 </html>

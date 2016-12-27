@@ -2,36 +2,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>ExerciseApplication</title>
+        <object th:include="fragments/header :: header " th:remove="tag" />        
     </head>
 
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+
+            <h1>Submission information</h1>
+            <div>
+                <label>Student number:</label> 
+                <span th:text="${submission.student.studentNumber}">number</span>
+            </div>    
+            <div>
+                <label>Name:</label> 
+                <span th:text="${submission.student.name}">number</span>  
+            </div>
+            <div>
+                <label>Week:</label> 
+                <span th:text="${submission.week.week}">number</span>
+            </div>
+            <div>
+                <label>Exercise count:</label> 
+                <span th:text="${submission.exerciseCount}">number</span>
+            </div>
+            <div>    
+                <label>Exercise Submission:</label> 
+                <span th:text="${submission.exerciseSubmission}">number</span> 
+            </div>
+
+
+            <!--<a th:href="@{/persons}">To the list</a>-->
         </div>
 
-        <h1>Submission information</h1>
-        <div>
-            <label>Student number:</label> 
-            <span th:text="${submission.student.studentNumber}">number</span>
-        </div>    
-        <div>
-            <label>Name:</label> 
-            <span th:text="${submission.student.name}">number</span>  
-        </div>
-        <div>
-            <label>Week:</label> 
-            <span th:text="${submission.week.week}">number</span>
-        </div>
-        <div>
-            <label>Exercise count:</label> 
-            <span th:text="${submission.exerciseCount}">number</span>
-        </div>
-        <div>    
-            <label>Exercise Submission:</label> 
-            <span th:text="${submission.exerciseSubmission}">number</span> 
-        </div>
-
-
-        <!--<a th:href="@{/persons}">To the list</a>-->
     </body>
 </html>

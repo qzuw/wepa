@@ -1,18 +1,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Lascari-apu</title>
-        <meta charset="UTF-8" />
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
-        </div>
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
 
-        <div>
-            <h1 th:text="#{message.activecourses} + ':'"></h1>
-            <div th:each="course : ${currentCourses}">
-                <h2><a th:href="@{/courses/{id}/page/1(id=${course.id})}" th:text="${course.name}"></a></h2>
-                <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
+            <div>
+                <h1 th:text="#{message.activecourses} + ':'"></h1>
+                <div th:each="course : ${currentCourses}">
+                    <h2><a th:href="@{/courses/{id}/page/1(id=${course.id})}" th:text="${course.name}"></a></h2>
+                    <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
+                </div>
             </div>
         </div>
     </body>

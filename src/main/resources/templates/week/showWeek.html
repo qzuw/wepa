@@ -1,106 +1,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Show details for week: 1</title>
-        <meta charset="UTF-8" />
+        <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
-        </div>
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
 
-        <div>
-            <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
-            <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
-            <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
-            <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
+            <div>
+                <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
+                <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
+                <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
+                <p sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <!--<th>Exercise #</th>-->
-                        <th>Exercise name</th>
-                        <th>Modify</th>
-                        <!-- <th>done</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="exercise : ${week.exercises}">
-                        <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
-                        <td th:text="${exercise.description}"></td>
-                        <td>
-                            <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Exercises done</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="">c-ko</a></td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td><a href="">d-ko</a></td>
-                        <td>6</td>
-                    </tr>
-                </tbody>
-            </table>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>present</th>
-                        <th>with ex</th>
-                        <th>ex done</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>total</th>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>12</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>
-                <h3>Submit this week's exercises</h3>
-                <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
-                      th:object="${submissionFormObject}" 
-                      method="POST" 
-                      id="subForm">
-                    <div>
-                        <label>Student number</label> 
-                        <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
-                        <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
-                    </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <!--<th>Exercise #</th>-->
+                            <th>Exercise name</th>
+                            <th>Modify</th>
+                            <!-- <th>done</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="exercise : ${week.exercises}">
+                            <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
+                            <td th:text="${exercise.description}"></td>
+                            <td>
+                                <a sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table sec:authorize="hasAnyAuthority('TEACHER', 'ASSISTANT')">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Exercises done</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="">c-ko</a></td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">d-ko</a></td>
+                            <td>6</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>present</th>
+                            <th>with ex</th>
+                            <th>ex done</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>total</th>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>12</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <h3>Submit this week's exercises</h3>
+                    <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
+                          th:object="${submissionFormObject}" 
+                          method="POST" 
+                          id="subForm">
+                        <div>
+                            <label>Student number</label> 
+                            <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
+                            <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+                        </div>
 
-                    <div>
-                        <label>Name</label> 
-                        <input type="text" th:field="*{name}" name="name"/>
-                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
-                    </div>
+                        <div>
+                            <label>Name</label> 
+                            <input type="text" th:field="*{name}" name="name"/>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
+                        </div>
 
-                    <div>
-                        <label>Number of made exercises</label> 
-                        <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
-                        <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
-                    </div>
+                        <div>
+                            <label>Number of made exercises</label> 
+                            <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
+                            <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
+                        </div>
 
-                    <div>
-                        <label>Exercises</label> 
-                        <textarea name="exerciseSubmission" form="subForm"></textarea>
-                    </div>
-                    <input type="submit" value="Send"/>
-                </form>
+                        <div>
+                            <label>Exercises</label> 
+                            <textarea name="exerciseSubmission" form="subForm"></textarea>
+                        </div>
+                        <input type="submit" value="Send"/>
+                    </form>
 
-            </p>
+                </p>
+            </div>
         </div>
     </body>
 </html>
