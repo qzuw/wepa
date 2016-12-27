@@ -32,7 +32,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**", "/css/**", "/images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/submission/**").permitAll()
                 .anyRequest().hasAnyAuthority("TEACHER", "ASSISTANT");
         http.formLogin()
