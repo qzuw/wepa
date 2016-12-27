@@ -24,6 +24,7 @@ public class LanguageTest {
     public void testLanguage() {
         Language l = new Language();
         l.setLanguageName("Klingon");
+        l.setLanguageCode("k4");
         assertEquals("Klingon", l.getLanguageName());
         languageRepository.save(l);
 

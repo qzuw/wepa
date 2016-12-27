@@ -20,19 +20,18 @@ public class PersonTest {
 
     @Autowired
     PersonRepository personRepository;
-    
+
     @Autowired
     LanguageRepository languageRepository;
 
-    
     @Test
     public void testPerson() {
         Person person = new Person();
         person.setName("Nakki");
-        person.setStudentNumber("000000000");
+        person.setStudentNumber("001000000");
 
         assertEquals("Nakki", person.getName());
-        assertEquals("000000000", person.getStudentNumber());
+        assertEquals("001000000", person.getStudentNumber());
 
     }
 
@@ -40,25 +39,25 @@ public class PersonTest {
     public void testSavePerson() {
         Person person = new Person();
         person.setName("Nakki");
-        person.setStudentNumber("000000000");
+        person.setStudentNumber("001000001");
 
         personRepository.save(person);
 
         Person retrieved = personRepository.findOne(person.getId());
         assertNotNull(retrieved);
         assertEquals("Nakki", retrieved.getName());
-        assertEquals("000000000", retrieved.getStudentNumber());
+        assertEquals("001000001", retrieved.getStudentNumber());
 
     }
-    
+
     @Test
-    public void insertPasswordandAuthority(){
+    public void insertPasswordandAuthority() {
         Person user = new Person();
         user.setName("Vellu");
         user.setStudentNumber("777777777");
         user.setPassword("vellu");
         user.setAuthorities(Arrays.asList("TEACHER"));
-        
+
         personRepository.save(user);
         Person retrieved = personRepository.findOne(user.getId());
         assertNotNull(retrieved);
@@ -67,20 +66,21 @@ public class PersonTest {
         assertEquals("vellu", retrieved.getPassword());
         assertEquals("TEACHER", retrieved.getAuthorities().get(0));
     }
-    
+
     @Test
-    public void insertLanguage(){
+    public void insertLanguage() {
         Language l = new Language();
         l.setLanguageName("Klingon");
+        l.setLanguageCode("k2");
         l = languageRepository.save(l);
-        
+
         Person person1 = new Person();
         person1.setName("Patti");
         person1.setStudentNumber("999999999");
         person1.setLanguage(l);
 
         Person p = personRepository.save(person1);
-        
+
         Person retrieved = personRepository.findOne(person1.getId());
         String lang = retrieved.getLanguage().getLanguageName();
         assertEquals("Klingon", lang);

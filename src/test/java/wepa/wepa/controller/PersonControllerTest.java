@@ -63,7 +63,7 @@ public class PersonControllerTest {
     @Test
     public void getFindsPerson() throws Exception {  
         Person person = new Person();
-        person.setStudentNumber("000000000");
+        person.setStudentNumber("020000000");
         person.setName("Matti");
         personRepository.save(person);
         mock.perform(get("/persons/1")).andExpect(model().attributeExists("person"));

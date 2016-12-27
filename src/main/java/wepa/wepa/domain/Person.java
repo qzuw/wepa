@@ -1,6 +1,7 @@
 package wepa.wepa.domain;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ public class Person extends AbstractPersistable<Long> {
 
     @NotBlank
     @Length(min = 9, max = 9)
+    @Column(unique = true)
     private String studentNumber;
 
     @NotBlank
