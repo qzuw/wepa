@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
     </head>
     <body>
-        <div th:replace="fragments/header :: header ">
-            Header
+        <div th:replace="fragments/navbar :: navbar ">
+            Navbar
         </div>
         <div>
             <p><a th:href="@{/courses/new}" th:text="#{message.addnewcourse}">Add new course</a></p>

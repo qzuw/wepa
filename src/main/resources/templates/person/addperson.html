@@ -5,9 +5,10 @@
         <meta charset="UTF-8" />
     </head>
     <body>
-        <div th:replace="fragments/header :: header ">
-            Header
+        <div th:replace="fragments/navbar :: navbar ">
+            Navbar
         </div>
+
         <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
         <form action="#" th:action="@{/persons/add}" th:object="${person}" method="POST">
