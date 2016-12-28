@@ -15,6 +15,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockFilterChain;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.web.FilterChainProxy;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,13 +35,14 @@ import wepa.wepa.repository.PersonRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("nosec")
 public class CourseControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
     private CourseRepository courseRepository;
-    
+
     @Autowired
     private PersonRepository personRepository;
 
@@ -57,50 +63,52 @@ public class CourseControllerTest {
     public void getContainsCourses() throws Exception {
         mockMvc.perform(get("/courses")).andExpect(model().attributeExists("courses"));
     }
-    
+
     @Test
     public void getAddFormOk() throws Exception {
         mockMvc.perform(get("/courses/new")).andExpect(status().is2xxSuccessful());
     }
-    
+
     @Test
     public void getEditFormOk() throws Exception {
         Course course = new Course();
         course.setName("Testikurssi");
         courseRepository.save(course);
 
-        mockMvc.perform(get("/courses/"+ course.getId() +"/edit")).andExpect(status().is2xxSuccessful());
+        mockMvc.perform(get("/courses/" + course.getId() + "/edit")).andExpect(status().is2xxSuccessful());
     }
-    
-    //@Test
-    public void editCourseOk()throws Exception{
+
+    @Test
+    public void editCourseOk() throws Exception {
         Course course = new Course();
         course.setName("Testikurssii");
+        course.setCourseStart(new Date(System.currentTimeMillis()));
+        course.setCourseEnd(new Date(System.currentTimeMillis() + 1000000));
         course = courseRepository.save(course);
-        
-        mockMvc.perform(post("/courses/"+ course.getId()+"/edit")
+
+        mockMvc.perform(post("/courses/" + course.getId() + "/edit")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "UusiTesti"));
-//                .param("courseStart", "2017-07-07")
-//                .param("courseEnd", "2017-08-08"));
-        
-        
+                .param("name", "UusiTesti")
+                .param("courseStart", "2017-07-07")
+                .param("courseEnd", "2017-08-08")
+                .param("numOfWeeks", "0"));
+
         Course course2 = courseRepository.findOne(course.getId());
-        
+
         assertNotNull(course2);
         assertEquals("UusiTesti", course2.getName());
-        
+
     }
 
     @Test
     public void getContainsEditedCourse() throws Exception {
-         Course course = new Course();
+        Course course = new Course();
         course.setName("Testikurssi");
         courseRepository.save(course);
 
-        mockMvc.perform(get("/courses/"+ course.getId() +"/edit")).andExpect(model().attributeExists("course"));
+        mockMvc.perform(get("/courses/" + course.getId() + "/edit")).andExpect(model().attributeExists("course"));
     }
-    
+
     @Test
     public void addedCourseIsListed() throws Exception {
         Course c = new Course();
