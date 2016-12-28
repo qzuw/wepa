@@ -28,7 +28,7 @@ import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.service.PaginationService;
+import wepa.wepa.service.HelperService;
 import wepa.wepa.service.PersonService;
 
 @Controller
@@ -48,7 +48,7 @@ public class PersonController {
     private PersonService personService;
 
     @Autowired
-    private PaginationService paginationService;
+    private HelperService paginationService;
 
     @ModelAttribute
     private Person getPerson() {

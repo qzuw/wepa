@@ -1,13 +1,21 @@
 package wepa.wepa.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import wepa.wepa.domain.Course;
 import wepa.wepa.domain.Person;
+import wepa.wepa.domain.Week;
+import wepa.wepa.repository.WeekRepository;
 
 @Service
-public class PaginationService {
+public class HelperService {
+
+    @Autowired
+    private WeekRepository weeklyExerciseRepository;
 
     public Model countPagination(int pageNum, int pageTotal, Model model, String path) {
         int current = pageNum + 1;
@@ -55,5 +63,21 @@ public class PaginationService {
 //
 //        return model;
 //    }
+    public List<Week> generateWeekList(Integer weeks, Course course) {
 
+        if (weeks == null) {
+            weeks = 0;
+        }
+
+        List<Week> weeklist = new ArrayList<>();
+        for (int i = 1; i <= weeks; i++) {
+            Week we = new Week();
+            we.setWeek(i);
+            we.setDescription("" + i);
+            we.setCourse(course);
+            weeklyExerciseRepository.save(we);
+            weeklist.add(we);
+        }
+        return weeklist;
+    }
 }

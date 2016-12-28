@@ -26,7 +26,7 @@ import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
 import wepa.wepa.service.CourseService;
 import wepa.wepa.service.LogService;
-import wepa.wepa.service.PaginationService;
+import wepa.wepa.service.HelperService;
 import wepa.wepa.service.PersonService;
 
 @Controller
@@ -35,20 +35,17 @@ public class CourseController {
     @Autowired
     private CourseRepository courseRepository;
     
-    @Autowired
-    private PersonRepository personRepository;
+//    @Autowired
+//    private PersonRepository personRepository;
     
     @Autowired
     private LogService logService;
     
     @Autowired
-    private WeekRepository weeklyExerciseRepository;
-    
-    @Autowired
     private PersonService personService;
     
     @Autowired
-    private PaginationService paginationService;
+    private HelperService helperService;
     
     @ModelAttribute
     private Course getCourse() {
@@ -86,7 +83,7 @@ public class CourseController {
         List<Person> students = page.getContent();
         model.addAttribute("students", students);
         
-        model = paginationService.countPagination(page.getNumber(), page.getTotalPages(), model, "courses/" + course.getId());
+        model = helperService.countPagination(page.getNumber(), page.getTotalPages(), model, "courses/" + course.getId());
         
         return "course/showCourse";
     }
@@ -129,15 +126,11 @@ public class CourseController {
             return "course/courseAddForm";
         }
         
-        if (weeks == null) {
-            weeks = 0;
-        }
-        
         Course course = addedCourse;
         courseRepository.save(course);
 
 //        List<Week> weeklist = generateWeekList(weeks, course);
-        course.setWeeks(generateWeekList(weeks, course));
+        course.setWeeks(helperService.generateWeekList(weeks, course));
         
         courseRepository.save(course);
         
@@ -148,18 +141,7 @@ public class CourseController {
         return "redirect:/courses/" + course.getId();
     }
     
-    private List<Week> generateWeekList(Integer weeks, Course course) {
-        List<Week> weeklist = new ArrayList<>();
-        for (int i = 1; i <= weeks; i++) {
-            Week we = new Week();
-            we.setWeek(i);
-            we.setDescription("" + i);
-            we.setCourse(course);
-            weeklyExerciseRepository.save(we);
-            weeklist.add(we);
-        }
-        return weeklist;
-    }
+    
     
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/courses/{id}/edit")
