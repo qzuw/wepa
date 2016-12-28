@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -119,13 +120,13 @@ public class CourseController {
             return "course/courseAddForm";
         }
 
-        if(weeks==null){
+        if (weeks == null) {
             weeks = 0;
         }
-        
+
         Course course = addedCourse;
         courseRepository.save(course);
-        
+
         List<Week> weeklist = new ArrayList<>();
         for (int i = 1; i <= weeks; i++) {
             Week we = new Week();
@@ -139,7 +140,7 @@ public class CourseController {
         courseRepository.save(course);
 
         logService.log(course.getLogHandle(), "Course \"" + course.getName() + "\" was added.");
-        
+
         model.addAttribute("course", addedCourse);
 
         return "redirect:/courses/" + course.getId();
@@ -148,6 +149,8 @@ public class CourseController {
     //@PreAuthorize("hasRole('TEACHER')")
     //@Secured("TEACHER")
     //@Secured("hasAnyRole{'ROLE_TEACHER', 'ROLE_ASSISTANT'}")
+    //@Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    //@Secured({"TEACHER", "ASSISTANT"})
     //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping("/courses/{id}/edit")
     public String courseEditForm(@PathVariable Long id, Model model) {

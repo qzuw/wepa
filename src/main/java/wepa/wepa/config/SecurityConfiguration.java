@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package wepa.wepa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +52,3 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
-/*
-protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/happypath").permitAll()
-                .antMatchers("/secretpath").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/adminpath").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
-         
-        http.formLogin()
-                .permitAll();
-    }
- */
