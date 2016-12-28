@@ -24,4 +24,10 @@ public class PersonService {
         Pageable request = new PageRequest(pageNumber, 10, Sort.Direction.ASC, "studentNumber");
         return personRepository.findAll(request);
     }
+
+    public Page<Person> findPageByCourse(Integer pageNumber, Long courseId) {
+        Pageable request = new PageRequest(pageNumber, 10, Sort.Direction.ASC, "studentNumber");
+        return personRepository.findByCoursesAttended(courseId, request);
+    }
+
 }

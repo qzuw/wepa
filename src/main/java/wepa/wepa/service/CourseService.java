@@ -13,11 +13,5 @@ import wepa.wepa.repository.PersonRepository;
 @Service
 public class CourseService {
 
-    @Autowired
-    private PersonRepository personRepository;
 
-    public Page<Person> getPersonPage(Integer pageNumber, Long courseId) {
-        Pageable request = new PageRequest(pageNumber, 10, Sort.Direction.ASC, "studentNumber");
-        return personRepository.findByCoursesAttended(courseId, request);
-    }
 }

@@ -27,6 +27,7 @@ import wepa.wepa.repository.WeekRepository;
 import wepa.wepa.service.CourseService;
 import wepa.wepa.service.LogService;
 import wepa.wepa.service.PaginationService;
+import wepa.wepa.service.PersonService;
 
 @Controller
 public class CourseController {
@@ -44,7 +45,7 @@ public class CourseController {
     private WeekRepository weeklyExerciseRepository;
     
     @Autowired
-    private CourseService courseService;
+    private PersonService personService;
     
     @Autowired
     private PaginationService paginationService;
@@ -81,7 +82,7 @@ public class CourseController {
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
         
-        Page<Person> page = courseService.getPersonPage(pageNumber - 1, id);
+        Page<Person> page = personService.findPageByCourse(pageNumber - 1, id);
         List<Person> students = page.getContent();
         model.addAttribute("students", students);
         
