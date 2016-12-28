@@ -97,11 +97,6 @@ public class Course extends AbstractPersistable<Long> {
         this.students = students;
     }
 
-    @Override
-    public String toString() {
-        return "Course name: " + name + ", courseStart:" + courseStart + ", courseEnd:" + courseEnd + ", weeks: " + weeks.size();
-    }
-
     public LogHandle getLogHandle() {
         return logHandle;
     }
