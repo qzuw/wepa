@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,11 +51,13 @@ public class PersonController {
         return new Person();
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(method = RequestMethod.GET)
     public String getPersons() {
         return "redirect:/persons/page/1";
     }
-    
+
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/page/{pageNumber}", method = RequestMethod.GET)
     public String getPersons(@PathVariable Integer pageNumber, Model model) {
         if (pageNumber < 1) {
@@ -70,7 +73,7 @@ public class PersonController {
 
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, page.getTotalPages());
-        
+
         if (next <= end) {
             model.addAttribute("next", next);
         }
@@ -86,18 +89,21 @@ public class PersonController {
         return "person/personList";
 
     }
-
+    
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getOnePerson(Model model, @PathVariable Long id) {
         model.addAttribute("person", personRepository.findOne(id));
         return "person/personInfo";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addPersonForm() {
         return "person/addperson";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String postPerson(Model model,
             @RequestParam String studentNumber,

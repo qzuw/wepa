@@ -1,4 +1,3 @@
-
 package wepa.wepa.service;
 
 import java.util.ArrayList;
@@ -15,22 +14,24 @@ import wepa.wepa.repository.PersonRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    
+
     @Autowired
     private PersonRepository personRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person user = personRepository.findByName(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
-        
+
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (String authority : user.getAuthorities()) {
-            authorities.add(new SimpleGrantedAuthority(authority));
+            
+            //simplest fix, better is to refactor authorities to include ROLE_
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + authority));
         }
-        
+
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),
                 user.getPassword(),

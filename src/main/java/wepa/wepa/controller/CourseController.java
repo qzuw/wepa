@@ -103,13 +103,13 @@ public class CourseController {
         return "course/showCourse";
     }
 
-    //@RolesAllowed({"TEACHER", "ASSISTANT"})
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/courses/new")
     public String courseAddForm() {
         return "course/courseAddForm";
     }
 
-    //@RolesAllowed({"TEACHER", "ASSISTANT"})
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
     public String addCourse(Model model,
             @RequestParam Integer weeks,
@@ -146,12 +146,7 @@ public class CourseController {
         return "redirect:/courses/" + course.getId();
     }
 
-    //@PreAuthorize("hasRole('TEACHER')")
-    //@Secured("TEACHER")
-    //@Secured("hasAnyRole{'ROLE_TEACHER', 'ROLE_ASSISTANT'}")
-    //@Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
-    //@Secured({"TEACHER", "ASSISTANT"})
-    //@RolesAllowed({"TEACHER", "ASSISTANT"})
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/courses/{id}/edit")
     public String courseEditForm(@PathVariable Long id, Model model) {
         Course course = courseRepository.findOne(id);
@@ -159,7 +154,7 @@ public class CourseController {
         return "course/courseEditForm";
     }
 
-    //@RolesAllowed({"TEACHER", "ASSISTANT"})
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{id}/edit", method = RequestMethod.POST)
     public String editCourse(@PathVariable Long id, @RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer numOfWeeks) {
         Course course = courseRepository.findOne(id);

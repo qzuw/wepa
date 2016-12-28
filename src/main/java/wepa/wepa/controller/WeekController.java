@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,6 +64,7 @@ public class WeekController {
         return "week/showWeek";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
         //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
@@ -71,6 +73,7 @@ public class WeekController {
         return "week/modifyWeek";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(Model model,
             @RequestParam String description,
@@ -83,7 +86,7 @@ public class WeekController {
 
         week.setWeek(oldWeek.getWeek());
         week.setCourse(oldWeek.getCourse());
-        
+
         String oldDescription = oldWeek.getDescription();
 
         oldWeek.setDescription(week.getDescription());
