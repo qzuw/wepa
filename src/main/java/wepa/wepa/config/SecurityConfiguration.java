@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/", "/courses/**", "/submissions/**", "/css/**", "/images/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/submissions/**").permitAll()
-                .anyRequest().hasAnyAuthority("TEACHER", "ASSISTANT");
+                .anyRequest().hasAnyAuthority("ROLE_TEACHER", "ROLE_ASSISTANT");
         http.formLogin()
                 .permitAll()
                 .and()

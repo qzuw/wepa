@@ -24,7 +24,7 @@
                         <tr th:each="course : ${person.coursesAssisted}">
                             <td th:text="${course.name}"></td>
                             <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
-                            <td sec:authorize="hasAuthority('TEACHER')"><a href="">Remove</a></td>
+                            <td sec:authorize="hasAuthority('ROLE_TEACHER')"><a href="">Remove</a></td>
                         </tr>
                     </table>
                 </div>
