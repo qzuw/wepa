@@ -1,10 +1,10 @@
-
 package wepa.wepa.domain;
 
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -16,23 +16,26 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Course extends AbstractPersistable<Long> {
 
+    @Id
+    private Long id;
+
     @NotBlank
     private String name;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date courseStart;
-    
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date courseEnd;
-    
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
     private List<Week> weeks;
-    
+
     @ManyToMany
     private List<Person> assistants;
-    
+
     @ManyToMany
     private List<Person> students;
 
@@ -105,6 +108,16 @@ public class Course extends AbstractPersistable<Long> {
 
     public void setLogHandle(LogHandle logHandle) {
         this.logHandle = logHandle;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }
