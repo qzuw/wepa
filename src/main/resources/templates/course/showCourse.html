@@ -58,10 +58,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${beginIndex})}">Start</a> 
-                <a th:if="${previous}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${previous})}">Previous</a> 
-                <a th:if="${next}" th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${next})}">Next</a> 
-                <a th:href="@{/courses/{courseid}/page/{page}(courseid=${course.id}, page=${endIndex})}">End</a>
+                <div th:replace="fragments/paging :: paging ">
+                    Paging
+                </div>    
             </div>
         </div>
     </body>

@@ -3,6 +3,7 @@ package wepa.wepa.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,9 +41,14 @@ public class CourseController {
 
     @Autowired
     private WeekRepository weeklyExerciseRepository;
-    
+
     @Autowired
     private CourseService courseService;
+
+    @ModelAttribute
+    private Course getCourse() {
+        return new Course();
+    }
 
     @RequestMapping("/courses")
     public String listCourses(Model model) {
@@ -57,7 +65,7 @@ public class CourseController {
         }
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
-                
+
         return "course/showCourse";
     }
 
@@ -68,11 +76,11 @@ public class CourseController {
         }
         Course course = courseRepository.findOne(id);
         model.addAttribute("course", course);
-        
+
         Page<Person> page = courseService.getPersonPage(pageNumber - 1, id);
         List<Person> students = page.getContent();
         model.addAttribute("students", students);
-        
+
         int current = page.getNumber() + 1;
         int previous = current - 1;
         int next = current + 1;
@@ -82,7 +90,7 @@ public class CourseController {
 
         int begin = Math.max(1, current - 5);
         int end = Math.min(begin + 10, page.getTotalPages());
-        
+
         if (next <= end) {
             model.addAttribute("next", next);
         }
@@ -91,7 +99,7 @@ public class CourseController {
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
-        
+
         return "course/showCourse";
     }
 
@@ -103,12 +111,23 @@ public class CourseController {
 
     //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
-    public String addCourse(@RequestParam String name, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseStart, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date courseEnd, @RequestParam Integer weeks) {
-        Course course = new Course();
-        course.setName(name);
-        course.setCourseStart(courseStart);
-        course.setCourseEnd(courseEnd);
+    public String addCourse(Model model,
+            @RequestParam Integer weeks,
+            @ModelAttribute Course addedCourse,
+            BindingResult bindingResult) {
+
+        System.out.println("----> " + addedCourse.getName());
+        if (bindingResult.hasErrors()) {
+            return "course/courseAddForm";
+        }
+
+        if(weeks==null){
+            weeks = 0;
+        }
+        
+        Course course = addedCourse;
         courseRepository.save(course);
+        
         List<Week> weeklist = new ArrayList<>();
         for (int i = 1; i <= weeks; i++) {
             Week we = new Week();
@@ -132,6 +151,8 @@ public class CourseController {
         log.setDate(new Date(System.currentTimeMillis()));
 
         logRepository.save(log);
+        
+        model.addAttribute("course", addedCourse);
 
         return "redirect:/courses/" + course.getId();
     }

@@ -7,30 +7,29 @@
 
     <body>
         <div class="container">
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
-        </div>
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
 
-        <div>
-        <h1 th:text="#{message.allstudents}">All students</h1>
+            <div>
+                <h1 th:text="#{message.allstudents}">All students</h1>
 
-        <p><a th:href="@{/persons/add}" th:text="#{message.addperson}">Add person</a></p>
+                <p><a th:href="@{/persons/add}" th:text="#{message.addperson}">Add person</a></p>
 
-        <table>
-            <tr>
-                <th></th>
-                <th></th>
-            </tr>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
 
-            <tr th:each="person : ${persons}">
-                <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
-            </tr>
-        </table> 
-        <a th:href="@{/persons/page/{page}(page=${beginIndex})}">Start</a> 
-        <a th:if="${previous}" th:href="@{/persons/page/{page}(page=${previous})}">Previous</a> 
-        <a th:if="${next}" th:href="@{/persons/page/{page}(page=${next})}">Next</a> 
-        <a th:href="@{/persons/page/{page}(page=${endIndex})}">End</a>
+                    <tr th:each="person : ${persons}">
+                        <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
+                    </tr>
+                </table> 
+                <div th:replace="fragments/paging :: paging ">
+                    Paging
                 </div>
+            </div>
         </div>
 
     </body>

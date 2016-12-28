@@ -11,18 +11,21 @@
             </div>
 
             <div>
-                <form method="post" th:action="@{/courses/new}">
+                <form action="#" method="post" th:action="@{/courses/new}" th:object="${course}">
                     <div class="form-group">
                         <label th:text="#{message.coursename} + ':'">Course name:</label>
                         <input type="text" name="name" class="form-control" />
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                     </div>
                     <div class="form-group">
                         <label th:text="#{message.startdate} + ':'">Start date:</label>
                         <input type="date" name="courseStart" class="form-control" />
+                        <div th:if="${#fields.hasErrors('courseStart')}" th:errors="*{courseStart}"></div>
                     </div>
                     <div class="form-group">
                         <label th:text="#{message.enddate} + ':'">End date:</label>
                         <input type="date" name="courseEnd" class="form-control" />
+                        <div th:if="${#fields.hasErrors('courseEnd')}" th:errors="*{courseEnd}"></div>
                     </div>
                     <div class="form-group">
                         <label th:text="#{message.coursemanyweeks} + ':'">How many weeks:</label>

@@ -40,6 +40,8 @@ public class CourseTest {
     @Test
     public void courseWeeks() {
         Course c = new Course();
+        String name = "asdf course";
+        c.setName(name);
         courseRepository.save(c);
         List<Week> weeks = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
@@ -57,6 +59,8 @@ public class CourseTest {
     @Test
     public void courseWeeksWithRepo() {
         Course c = new Course();
+        String name = "asdf course";
+        c.setName(name);
         c = courseRepository.save(c);
         List<Week> weeks = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {

@@ -13,20 +13,30 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Course extends AbstractPersistable<Long> {
 
+    @NotBlank
     private String name;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date courseStart;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date courseEnd;
+    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
     private List<Week> weeks;
+    
     @ManyToMany
     private List<Person> assistants;
+    
     @ManyToMany
     private List<Person> students;
 

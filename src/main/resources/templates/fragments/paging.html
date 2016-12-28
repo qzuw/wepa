@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <div th:fragment="paging"> 
+            <a th:href="@{/persons/page/{page}(page=${beginIndex})}">&lt;&lt;</a> 
+            <a th:if="${previous}" th:href="@{/persons/page/{page}(page=${previous})}">&lt;</a> 
+            <span th:text="${currentIndex}"></span> 
+            <a th:if="${next}" th:href="@{/persons/page/{page}(page=${next})}">&gt;</a> 
+            <a th:href="@{/persons/page/{page}(page=${endIndex})}">&gt;&gt;</a>
+        </div>
+    </body>
+</html>
