@@ -28,6 +28,7 @@ import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
+import wepa.wepa.service.PaginationService;
 import wepa.wepa.service.PersonService;
 
 @Controller
@@ -45,6 +46,9 @@ public class PersonController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private PaginationService paginationService;
 
     @ModelAttribute
     private Person getPerson() {
@@ -64,25 +68,8 @@ public class PersonController {
             return "redirect:/persons/page/1";
         }
         Page<Person> page = personService.getPersonPage(pageNumber - 1);
-        int current = page.getNumber() + 1;
-        int previous = current - 1;
-        int next = current + 1;
-        if (previous >= 1) {
-            model.addAttribute("previous", previous);
-        }
 
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        if (next <= end) {
-            model.addAttribute("next", next);
-        }
-
-        model.addAttribute("personLog", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("pagePath", "persons");
+        model = paginationService.countPagination(page.getNumber(), page.getTotalPages(), model, "persons");
 
         List<Person> persons = page.getContent();
 
@@ -90,7 +77,7 @@ public class PersonController {
         return "person/personList";
 
     }
-    
+
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getOnePerson(Model model, @PathVariable Long id) {

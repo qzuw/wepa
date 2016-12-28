@@ -43,24 +43,26 @@
                         </tbody>
                     </table>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th th:text="#{message.student}">Student</th>
-                                <th th:text="#{message.studentnumber}">Student number</th>
-                                <th th:text="#{message.exercisesdone}">Exercises done</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="student : ${students}">
-                                <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
-                                <td th:text="${student.studentNumber}"></td>
-                                <td th:text="${student.studentNumber}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div th:replace="fragments/paging :: paging ">
-                        Paging
+                    <div th:if="${students}">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th th:text="#{message.student}">Student</th>
+                                    <th th:text="#{message.studentnumber}">Student number</th>
+                                    <th th:text="#{message.exercisesdone}">Exercises done</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="student : ${students}">
+                                    <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
+                                    <td th:text="${student.studentNumber}"></td>
+                                    <td th:text="${student.studentNumber}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:replace="fragments/paging :: paging ">
+                            Paging
+                        </div>
                     </div>
                 </div>
             </div>

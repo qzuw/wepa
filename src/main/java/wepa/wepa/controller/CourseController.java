@@ -26,6 +26,7 @@ import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
 import wepa.wepa.service.CourseService;
 import wepa.wepa.service.LogService;
+import wepa.wepa.service.PaginationService;
 
 @Controller
 public class CourseController {
@@ -44,6 +45,9 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private PaginationService paginationService;
 
     @ModelAttribute
     private Course getCourse() {
@@ -81,29 +85,32 @@ public class CourseController {
         List<Person> students = page.getContent();
         model.addAttribute("students", students);
 
-        int current = page.getNumber() + 1;
-        int previous = current - 1;
-        int next = current + 1;
-        if (previous >= 1) {
-            model.addAttribute("previous", previous);
-        }
-
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        if (next <= end) {
-            model.addAttribute("next", next);
-        }
-
-        model.addAttribute("personLog", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("pagePath", "courses/" + course.getId());
+        model = paginationService.countPagination(page.getNumber(), page.getTotalPages(), model, "courses/" + course.getId());
 
         return "course/showCourse";
     }
 
+//    private void pagination(Page<Person> page, Model model, Course course) {
+//        int current = page.getNumber() + 1;
+//        int previous = current - 1;
+//        int next = current + 1;
+//        if (previous >= 1) {
+//            model.addAttribute("previous", previous);
+//        }
+//
+//        int begin = Math.max(1, current - 5);
+//        int end = Math.min(begin + 10, page.getTotalPages());
+//
+//        if (next <= end) {
+//            model.addAttribute("next", next);
+//        }
+//
+//        model.addAttribute("personLog", page);
+//        model.addAttribute("beginIndex", begin);
+//        model.addAttribute("endIndex", end);
+//        model.addAttribute("currentIndex", current);
+//        model.addAttribute("pagePath", "courses/" + course.getId());
+//    }
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/courses/new")
     public String courseAddForm() {
