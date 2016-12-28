@@ -101,7 +101,41 @@ public class CourseControllerTest {
     }
 
     @Test
+    public void addCourseOk() throws Exception {
+
+        String name = UUID.randomUUID().toString();
+
+        mockMvc.perform(post("/courses/new")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", name)
+                .param("courseStart", "2017-07-07")
+                .param("courseEnd", "2017-08-08")
+                .param("weeks", "3"));
+
+        System.out.println("eep");
+        System.out.println("eep");
+        System.out.println("eep");
+        System.out.println("eep");
+        System.out.println("eep");
+        List<Course> courses = courseRepository.findAll();
+        Course course = null;
+        for (Course course1 : courses) {
+            System.out.println(course1.getName());
+            if (course1.getName().equals(name)) {
+                course = course1;
+            }
+        }
+        
+        assertNotNull(course);
+        assertEquals(name, course.getName());
+        assertEquals(3, course.getNumOfWeeks());
+        assertEquals(3, course.getWeeks().size());
+
+    }
+
+    @Test
     public void getContainsEditedCourse() throws Exception {
+        // naming of this method ???
         Course course = new Course();
         course.setName("Testikurssi");
         courseRepository.save(course);
