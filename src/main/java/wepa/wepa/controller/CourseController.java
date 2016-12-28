@@ -135,15 +135,8 @@ public class CourseController {
         Course course = addedCourse;
         courseRepository.save(course);
 
-        List<Week> weeklist = new ArrayList<>();
-        for (int i = 1; i <= weeks; i++) {
-            Week we = new Week();
-            we.setWeek(i);
-            we.setCourse(course);
-            weeklyExerciseRepository.save(we);
-            weeklist.add(we);
-        }
-        course.setWeeks(weeklist);
+//        List<Week> weeklist = generateWeekList(weeks, course);
+        course.setWeeks(generateWeekList(weeks, course));
 
         courseRepository.save(course);
 
@@ -152,6 +145,18 @@ public class CourseController {
         model.addAttribute("course", addedCourse);
 
         return "redirect:/courses/" + course.getId();
+    }
+
+    private List<Week> generateWeekList(Integer weeks, Course course) {
+        List<Week> weeklist = new ArrayList<>();
+        for (int i = 1; i <= weeks; i++) {
+            Week we = new Week();
+            we.setWeek(i);
+            we.setCourse(course);
+            weeklyExerciseRepository.save(we);
+            weeklist.add(we);
+        }
+        return weeklist;
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
