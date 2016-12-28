@@ -3,7 +3,6 @@ package wepa.wepa.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,10 +21,10 @@ import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
-import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
 import wepa.wepa.service.CourseService;
+import wepa.wepa.service.LogService;
 
 @Controller
 public class CourseController {
@@ -37,7 +36,7 @@ public class CourseController {
     private PersonRepository personRepository;
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @Autowired
     private WeekRepository weeklyExerciseRepository;
@@ -116,7 +115,6 @@ public class CourseController {
             @ModelAttribute Course addedCourse,
             BindingResult bindingResult) {
 
-        System.out.println("----> " + addedCourse.getName());
         if (bindingResult.hasErrors()) {
             return "course/courseAddForm";
         }
@@ -140,17 +138,7 @@ public class CourseController {
 
         courseRepository.save(course);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        Person loggedIn = personRepository.findByName(auth.getName());
-
-        Log log = new Log();
-
-        log.setLogMessage("Course \"" + course.getName() + "\" was added.");
-        log.setPerson(loggedIn);
-        log.setDate(new Date(System.currentTimeMillis()));
-
-        logRepository.save(log);
+        logService.log(course.getLogHandle(), "Course \"" + course.getName() + "\" was added.");
         
         model.addAttribute("course", addedCourse);
 
