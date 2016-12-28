@@ -6,19 +6,21 @@
     </head>
     <body>
         <div class="container">
-        <div th:replace="fragments/navbar :: navbar ">
-            Navbar
-        </div>
-        <div>
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+            <div>
 
-        <h1>Fill the form pls</h1>
+                <h1>Fill the form pls</h1>
 
-        <form th:action="@{/exercises/{idE}/edit(idE=${exercise.id})}" method="POST">
-            <p> Description <input type="text" name="description" th:field="${exercise.description}"/></p>
-            <input type="submit" value="Send"/>
-        </form>
+                <form action="#" th:action="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:object="${exercise}" method="POST">
+                    <div> Description <input type="text" name="description" th:field="*{description}"/></div>
+                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    <input type="submit" value="Send"/>
+                </form>
+            </div>
         </div>
-        </div>
+
 
     </body>
 </html>

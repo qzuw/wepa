@@ -27,6 +27,7 @@ public class ExerciseTest {
     @Test
     public void test1(){
         Week we = new Week();
+        we.setDescription("Test week");
         we.setWeek(1);
         we = weRepo.save(we);
         Exercise ex = new Exercise();

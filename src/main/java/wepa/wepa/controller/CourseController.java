@@ -116,7 +116,6 @@ public class CourseController {
             @ModelAttribute Course addedCourse,
             BindingResult bindingResult) {
 
-        System.out.println("----> " + addedCourse.getName());
         if (bindingResult.hasErrors()) {
             return "course/courseAddForm";
         }

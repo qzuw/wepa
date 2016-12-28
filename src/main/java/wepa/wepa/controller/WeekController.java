@@ -52,6 +52,11 @@ public class WeekController {
         return new SubmissionFormObject();
     }
 
+    @ModelAttribute
+    private Week getWeek() {
+        return new Week();
+    }
+
     @RequestMapping("/courses/{idC}/week/{idW}")
     public String handleDefault(@PathVariable Long idC, @PathVariable Integer idW, Model model) {
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
@@ -67,15 +72,27 @@ public class WeekController {
     }
 
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
-    public String modifyWeek(@RequestParam String description, Model model, @PathVariable Long idC, @PathVariable Integer idW) {
+    public String modifyWeek(Model model,
+            @RequestParam String description,
+            @PathVariable Long idC,
+            @PathVariable Integer idW,
+            @Valid @ModelAttribute Week week,
+            BindingResult bindingResult) {
 
-        Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
+        Week oldWeek = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
 
-        String oldDescription = week.getDescription();
+        week.setWeek(oldWeek.getWeek());
+        week.setCourse(oldWeek.getCourse());
+        
+        String oldDescription = oldWeek.getDescription();
 
-        week.setDescription(description);
+        oldWeek.setDescription(week.getDescription());
 
-        weekRepository.save(week);
+        if (bindingResult.hasErrors()) {
+            return "week/modifyWeek";
+        }
+
+        weekRepository.save(oldWeek);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -83,14 +100,15 @@ public class WeekController {
 
         Log log = new Log();
 
-        log.setLogMessage("\"" + week.getCourse().getName() + "\"-course's week \""
-                + week.getWeek() + "\" was modified. Old description: "
-                + oldDescription + " New description: " + week.getDescription());
+        log.setLogMessage("\"" + oldWeek.getCourse().getName() + "\"-course's week \""
+                + oldWeek.getWeek() + "\" was modified. Old description: "
+                + oldDescription + " New description: " + oldWeek.getDescription());
         log.setPerson(loggedIn);
         log.setDate(new Date(System.currentTimeMillis()));
 
         logRepository.save(log);
-        return "week/modifyWeek";
+
+        return "redirect:/courses/" + oldWeek.getCourse().getId() + "/week/" + oldWeek.getWeek();
     }
 
 }

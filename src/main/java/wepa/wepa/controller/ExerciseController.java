@@ -27,25 +27,32 @@ public class ExerciseController {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
+    @ModelAttribute
+    private Exercise getExercise() {
+        return new Exercise();
+    }
+    
     //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/{idE}/edit", method = RequestMethod.GET)
     public String showExerciseEdit(Model model, @PathVariable Long idE) {
         Exercise exercise = exerciseRepository.findOne(idE);
         model.addAttribute("exercise", exercise);
+        model.addAttribute("id", idE);
         return "exercise/modifyExercise";
     }
 
     //@RolesAllowed({"TEACHER", "ASSISTANT"})
     @RequestMapping(value = "/{idE}/edit", method = RequestMethod.POST)
     public String editExercise(@PathVariable Long idE, @Valid @ModelAttribute Exercise exercise, BindingResult bindingResult) {
+        Exercise oldExercise = exerciseRepository.findOne(idE);
+        oldExercise.setDescription(exercise.getDescription());
+        exercise.setId(oldExercise.getId()); //saattaa sotkea???
         if (bindingResult.hasErrors()) {
             return "exercise/modifyExercise";
         }
-
-        Exercise exercise1 = exerciseRepository.findOne(idE);
-        exercise1.setDescription(exercise.getDescription());
-        exerciseRepository.save(exercise1);
-        return "redirect:/courses/"+ exercise1.getWeek().getCourse().getId() + "/week/" + exercise1.getWeek().getId();
+        
+        exerciseRepository.save(oldExercise);
+        return "redirect:/courses/"+ oldExercise.getWeek().getCourse().getId() + "/week/" + oldExercise.getWeek().getWeek();
     } 
 
 }

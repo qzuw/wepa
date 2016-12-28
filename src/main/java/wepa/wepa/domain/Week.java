@@ -6,12 +6,14 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 public class Week extends AbstractPersistable<Long> {
 
     private int week;
+    @NotBlank
     private String description;
     @ManyToOne
     @JoinColumn

@@ -46,6 +46,7 @@ public class CourseTest {
         List<Week> weeks = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Week we = new Week();
+            we.setDescription("Test week");
             we.setWeek(i);
             we.setCourse(c);
             weekRepository.save(we);
@@ -65,6 +66,7 @@ public class CourseTest {
         List<Week> weeks = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Week we = new Week();
+            we.setDescription("Test week");
             we.setWeek(i);
             we.setCourse(c);
             weekRepository.save(we);
