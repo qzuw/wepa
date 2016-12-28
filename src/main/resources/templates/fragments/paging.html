@@ -5,11 +5,15 @@
     </head>
     <body>
         <div th:fragment="paging"> 
-            <a th:href="@{/persons/page/{page}(page=${beginIndex})}">&lt;&lt;</a> 
-            <a th:if="${previous}" th:href="@{/persons/page/{page}(page=${previous})}">&lt;</a> 
+            <a th:if="${currentIndex} > ${beginIndex}" th:href="@{/{path}/page/{page}(page=${beginIndex}, path=${pagePath})}">&lt;&lt;</a> 
+            <span th:unless="${currentIndex} > ${beginIndex}">&lt;&lt;</span> 
+            <a th:if="${previous}" th:href="@{/{path}/page/{page}(page=${previous}, path=${pagePath})}">&lt;</a> 
+            <span th:if="${previous == null}">&lt;</span> 
             <span th:text="${currentIndex}"></span> 
-            <a th:if="${next}" th:href="@{/persons/page/{page}(page=${next})}">&gt;</a> 
-            <a th:href="@{/persons/page/{page}(page=${endIndex})}">&gt;&gt;</a>
+            <a th:if="${next}" th:href="@{/{path}/page/{page}(page=${next}, path=${pagePath})}">&gt;</a> 
+            <span th:if="${next == null}">&gt;</span> 
+            <a th:if="${endIndex} > ${currentIndex}" th:href="@{/{path}/page/{page}(page=${endIndex}, path=${pagePath})}">&gt;&gt;</a>
+            <span th:unless="${endIndex} > ${currentIndex}">&gt;&gt;</span>
         </div>
     </body>
 </html>

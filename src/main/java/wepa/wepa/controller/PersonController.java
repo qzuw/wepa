@@ -82,6 +82,7 @@ public class PersonController {
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
+        model.addAttribute("pagePath", "persons");
 
         List<Person> persons = page.getContent();
 

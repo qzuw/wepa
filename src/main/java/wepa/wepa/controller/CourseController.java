@@ -99,6 +99,7 @@ public class CourseController {
         model.addAttribute("beginIndex", begin);
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
+        model.addAttribute("pagePath", "courses/" + course.getId());
 
         return "course/showCourse";
     }
