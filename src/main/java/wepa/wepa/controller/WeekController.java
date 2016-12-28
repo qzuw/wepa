@@ -76,7 +76,6 @@ public class WeekController {
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(Model model,
-            @RequestParam String description,
             @PathVariable Long idC,
             @PathVariable Integer idW,
             @Valid @ModelAttribute Week week,
