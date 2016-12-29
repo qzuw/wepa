@@ -8,7 +8,6 @@ package wepa.wepa.controller;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,9 +36,6 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private LogRepository logRepository;

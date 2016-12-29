@@ -20,8 +20,6 @@ public class Submission extends AbstractPersistable<Long>{
     
     @Min(0)
     private int exerciseCount;
-    
-    private boolean present;
 
     private LogHandle logHandle;
     
@@ -41,14 +39,6 @@ public class Submission extends AbstractPersistable<Long>{
 
     public void setWeek(Week week) {
         this.week = week;
-    }
-
-    public boolean isPresent() {
-        return present;
-    }
-
-    public void setPresent(boolean present) {
-        this.present = present;
     }
 
     public int getExerciseCount() {

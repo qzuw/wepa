@@ -5,17 +5,12 @@
  */
 package wepa.wepa.controller;
 
-import org.springframework.stereotype.Controller;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.SubmissionFormObject;
@@ -32,6 +26,7 @@ import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
+import wepa.wepa.service.LogService;
 
 @Controller
 public class WeekController {
@@ -47,6 +42,9 @@ public class WeekController {
 
     @Autowired
     private PersonRepository personRepository;
+    
+    @Autowired
+    private LogService logService;
 
     @ModelAttribute
     private SubmissionFormObject getFormObject() {
@@ -67,7 +65,7 @@ public class WeekController {
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
-        //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
+
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
 
         return "week/modifyWeek";
@@ -95,20 +93,10 @@ public class WeekController {
         }
 
         weekRepository.save(oldWeek);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        Person loggedIn = personRepository.findByName(auth.getName());
-
-        Log log = new Log();
-
-        log.setLogMessage("\"" + oldWeek.getCourse().getName() + "\"-course's week \""
+        
+        logService.info("\"" + oldWeek.getCourse().getName() + "\"-course's week \""
                 + oldWeek.getWeek() + "\" was modified. Old description: "
                 + oldDescription + " New description: " + oldWeek.getDescription());
-        log.setPerson(loggedIn);
-        log.setDate(new Date(System.currentTimeMillis()));
-
-        logRepository.save(log);
 
         return "redirect:/courses/" + oldWeek.getCourse().getId() + "/week/" + oldWeek.getWeek();
     }
