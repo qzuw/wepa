@@ -14,6 +14,8 @@
             <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
             <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
             -->
+            <span ><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
+            <span ><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
             <span sec:authorize="isAuthenticated()" ><a th:href="@{/logout}" th:text="#{message.logout}">Logout</a></span>
         </div>
     </body>
