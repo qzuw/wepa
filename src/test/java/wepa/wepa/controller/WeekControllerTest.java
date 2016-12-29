@@ -5,7 +5,6 @@
  */
 package wepa.wepa.controller;
 
-import java.util.List;
 import java.util.UUID;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,10 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import wepa.wepa.domain.Course;
-import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
-import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.WeekRepository;
 
 @RunWith(SpringRunner.class)
@@ -35,9 +32,6 @@ import wepa.wepa.repository.WeekRepository;
 public class WeekControllerTest {
 
     private MockMvc mock;
-
-    @Autowired
-    private PersonRepository personRepository;
 
     @Autowired
     private CourseRepository courseRepository;
