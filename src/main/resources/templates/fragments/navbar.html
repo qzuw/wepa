@@ -10,8 +10,10 @@
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/persons/page/1}" th:text="#{message.studentlist}">Student listing</a></span>
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/courses}" th:text="#{message.courselist}">Course listing</a></span>
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/submissions}" th:text="#{message.submissionlist}">Submission listing</a></span>
+            <!--
             <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
             <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
+            -->
             <span sec:authorize="isAuthenticated()" ><a th:href="@{/logout}" th:text="#{message.logout}">Logout</a></span>
         </div>
     </body>
