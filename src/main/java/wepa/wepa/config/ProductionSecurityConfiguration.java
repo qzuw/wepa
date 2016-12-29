@@ -36,7 +36,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/");
     }
 
     @Autowired
