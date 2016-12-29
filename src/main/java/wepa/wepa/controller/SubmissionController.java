@@ -54,7 +54,6 @@ public class SubmissionController {
 //    }
 
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
-    @RequestMapping("/")
     public String listSubmissions(Model model) {
         //pagination later
         List<Submission> submissions = submissionRepository.findAll();
