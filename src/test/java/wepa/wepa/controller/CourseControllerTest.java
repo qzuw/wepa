@@ -112,15 +112,9 @@ public class CourseControllerTest {
                 .param("courseEnd", "2017-08-08")
                 .param("weeks", "3"));
 
-        System.out.println("eep");
-        System.out.println("eep");
-        System.out.println("eep");
-        System.out.println("eep");
-        System.out.println("eep");
         List<Course> courses = courseRepository.findAll();
         Course course = null;
         for (Course course1 : courses) {
-            System.out.println(course1.getName());
             if (course1.getName().equals(name)) {
                 course = course1;
             }
