@@ -20,8 +20,6 @@ public class Exercise extends AbstractPersistable<Long> {
     @JoinColumn
     private Week week;
 
-    private LogHandle logHandle;
-    
     public String getDescription() {
         return description;
     }
@@ -36,14 +34,6 @@ public class Exercise extends AbstractPersistable<Long> {
 
     public void setWeek(Week week) {
         this.week = week;
-    }
-
-    public LogHandle getLogHandle() {
-        return logHandle;
-    }
-
-    public void setLogHandle(LogHandle logHandle) {
-        this.logHandle = logHandle;
     }
 
     public Long getId() {

@@ -7,17 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import wepa.wepa.Wepa;
-import wepa.wepa.domain.Log;
-import wepa.wepa.domain.LogHandle;
 import wepa.wepa.domain.Person;
-import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 
 @Service
 public class LogService {
-
-    @Autowired
-    private LogRepository logRepository;
 
     @Autowired
     private PersonRepository personRepository;
@@ -34,23 +28,23 @@ public class LogService {
 
     }
 
-    public void log(LogHandle logHandle, String message) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth != null) {
-            // for testing 
-
-            Person loggedIn = personRepository.findByName(auth.getName());
-
-            Log log = new Log();
-
-            log.setLogMessage(message);
-            log.setPerson(loggedIn);
-            log.setDate(new Date(System.currentTimeMillis()));
-            log.setLogHandle(logHandle);
-
-            logRepository.save(log);
-        }
-    }
+//    public void log(LogHandle logHandle, String message) {
+//
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (auth != null) {
+//            // for testing 
+//
+//            Person loggedIn = personRepository.findByName(auth.getName());
+//
+//            Log log = new Log();
+//
+//            log.setLogMessage(message);
+//            log.setPerson(loggedIn);
+//            log.setDate(new Date(System.currentTimeMillis()));
+//            log.setLogHandle(logHandle);
+//
+//            logRepository.save(log);
+//        }
+//    }
 }

@@ -24,11 +24,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
-import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.service.HelperService;
+import wepa.wepa.service.LogService;
 import wepa.wepa.service.PersonService;
 
 @Controller
@@ -42,10 +41,10 @@ public class PersonController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private LogRepository logRepository;
+    private PersonService personService;
 
     @Autowired
-    private PersonService personService;
+    private LogService logService;
 
     @Autowired
     private HelperService paginationService;
@@ -113,13 +112,9 @@ public class PersonController {
         if (auth != null) {
             Person loggedIn = personRepository.findByName(auth.getName());
 
-            Log log = new Log();
-
-            log.setLogMessage("Person \"" + person.getName() + "\" was added.");
-            log.setPerson(loggedIn);
-            log.setDate(new Date(System.currentTimeMillis()));
-
-            logRepository.save(log);
+            logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
+        } else {
+            logService.info("Person \"" + person.getName() + "\" was added.");
         }
 
         return "redirect:/persons";

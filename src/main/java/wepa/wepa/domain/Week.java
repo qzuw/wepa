@@ -23,8 +23,6 @@ public class Week extends AbstractPersistable<Long> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "week")
     private List<Submission> submissions;
 
-    private LogHandle logHandle;
-    
     public String getDescription() {
         return description;
     }
@@ -72,14 +70,5 @@ public class Week extends AbstractPersistable<Long> {
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
-
-    public LogHandle getLogHandle() {
-        return logHandle;
-    }
-
-    public void setLogHandle(LogHandle logHandle) {
-        this.logHandle = logHandle;
-    }
-    
 
 }

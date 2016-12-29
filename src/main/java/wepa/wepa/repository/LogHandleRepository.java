@@ -1,8 +1,0 @@
-package wepa.wepa.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import wepa.wepa.domain.LogHandle;
-
-public interface LogHandleRepository extends JpaRepository<LogHandle, Long>{
-    
-}

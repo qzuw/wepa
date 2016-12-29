@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Course;
-import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
@@ -134,7 +133,7 @@ public class CourseController {
         
         courseRepository.save(course);
         
-        logService.log(course.getLogHandle(), "Course \"" + course.getName() + "\" was added.");
+        logService.info("Course \"" + course.getName() + "\" was added.");
         
         model.addAttribute("course", addedCourse);
         

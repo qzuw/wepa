@@ -1,9 +1,6 @@
 package wepa.wepa.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,15 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wepa.wepa.domain.SubmissionFormObject;
-import wepa.wepa.domain.Log;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Submission;
 import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
-import wepa.wepa.repository.LogRepository;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.repository.SubmissionRepository;
 import wepa.wepa.repository.WeekRepository;
+import wepa.wepa.service.LogService;
 
 @Controller
 @RequestMapping("/submissions")
@@ -43,7 +39,7 @@ public class SubmissionController {
     private PersonRepository personRepository;
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @ModelAttribute
     private SubmissionFormObject getFormObject() {
@@ -56,18 +52,18 @@ public class SubmissionController {
     }
 
     @RequestMapping("/{id}")
-    public String showSubmission(Model model, @PathVariable Long id){
+    public String showSubmission(Model model, @PathVariable Long id) {
         Submission submission = submissionRepository.findOne(id);
         model.addAttribute("submission", submission);
         return "submission/showSubmission";
     }
-    
+
     @RequestMapping(value = "/courses/{idC}/week/{idW}", method = RequestMethod.POST)
     public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject,
             BindingResult bindingResult,
             Model model,
             @PathVariable Long idC,
-            @PathVariable Integer idW){
+            @PathVariable Integer idW) {
         Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
         model.addAttribute("week", week);
         if (bindingResult.hasErrors()) {
@@ -82,7 +78,6 @@ public class SubmissionController {
             personRepository.save(person);
         }
 
-        
         Submission submission = new Submission();
 
         submission.setStudent(person);
@@ -97,15 +92,11 @@ public class SubmissionController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        Person loggedIn = personRepository.findByName(auth.getName());
+        if (auth != null) {
+            Person loggedIn = personRepository.findByName(auth.getName());
 
-        Log log = new Log();
-
-        log.setLogMessage("Person " + person.getName() + " submitted exercises.");
-        log.setPerson(loggedIn);
-        log.setDate(new Date(System.currentTimeMillis()));
-
-        logRepository.save(log);
+            logService.info("Person " + person.getName() + " (" + person.getStudentNumber() + ") submitted exercises.");
+        }
 
         return "submission/submissionFormFilled";
     }
