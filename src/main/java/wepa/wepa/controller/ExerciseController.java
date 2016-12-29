@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Exercise;
 import wepa.wepa.repository.ExerciseRepository;
 
@@ -37,7 +36,6 @@ public class ExerciseController {
     public String showExerciseEdit(Model model, @PathVariable Long idE) {
         Exercise exercise = exerciseRepository.findOne(idE);
         model.addAttribute("exercise", exercise);
-        model.addAttribute("id", idE);
         return "exercise/modifyExercise";
     }
 

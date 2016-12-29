@@ -40,7 +40,7 @@ public class WeekController {
 
     @Autowired
     private PersonRepository personRepository;
-
+    
     @ModelAttribute
     private SubmissionFormObject getFormObject() {
         return new SubmissionFormObject();
@@ -60,7 +60,7 @@ public class WeekController {
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
-        //model.addAttribute("week", weeklyExerciseRepository.findOne(idW));
+
         model.addAttribute("week", weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW));
 
         return "week/modifyWeek";
