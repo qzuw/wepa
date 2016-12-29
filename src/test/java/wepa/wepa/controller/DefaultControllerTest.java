@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wepa.wepa.controller;
 
 import java.util.Date;
@@ -13,7 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,6 +24,8 @@ import wepa.wepa.repository.CourseRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ContextConfiguration
+@WebAppConfiguration
 public class DefaultControllerTest {
 
     private MockMvc mock;
@@ -42,6 +42,7 @@ public class DefaultControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void getOk() throws Exception {
         mock.perform(get("/index")).andExpect(status().is2xxSuccessful());
     }
