@@ -13,7 +13,7 @@
             </div>
             <div>
 
-                <h1 th:text="#{message.studentinfo}">Student's information</h1>
+                <h1 th:text="#{message.studentinfo}">Person's information</h1>
 
                 <p th:text="${person.studentNumber}">number</p>
                 <p th:text="${person.name}">number</p>
@@ -24,7 +24,11 @@
                         <tr th:each="course : ${person.coursesAssisted}">
                             <td th:text="${course.name}"></td>
                             <td th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></td>
-                            <td sec:authorize="hasAuthority('ROLE_TEACHER')"><a href="">Remove</a></td>
+                            <td sec:authorize="hasAuthority('ROLE_TEACHER')">
+                                <form method="POST" th:action="@{/assistants/courses/{courseId}/remove/{assistantId}(courseId=${course.id}, assistantId=${person.id})}">
+                                    <input type="submit" th:value="#{message.remove}"/>
+                                </form>
+                            </td>
                         </tr>
                     </table>
                 </div>

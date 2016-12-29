@@ -42,8 +42,13 @@ public class AssistantController {
     @Autowired
     private HelperService paginationService;
 
+    @RequestMapping()
+    public String defaultAssistantPage() {
+        return "redirect:/";
+    }
+
     @Secured({"ROLE_TEACHER"})
-    @RequestMapping(value = "/course/{courseId}/add/{personId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/courses/{courseId}/add/{personId}", method = RequestMethod.POST)
     public String addAssistant(@PathVariable Long courseId, @PathVariable Long personId) {
 
         Person person = personRepository.findOne(personId);
@@ -74,12 +79,18 @@ public class AssistantController {
     }
 
     @Secured({"ROLE_TEACHER"})
-    @RequestMapping(value = "/course/{courseId}/delete/{personId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/courses/{courseId}/remove/{personId}", method = RequestMethod.POST)
     public String removeAssistant(@PathVariable Long courseId, @PathVariable Long personId) {
 
         Person person = personRepository.findOne(personId);
         Course course = courseRepository.findOne(courseId);
         if (person != null && course != null) {
+
+            List<Person> assistants = course.getAssistants();
+            assistants.remove(person);
+            course.setAssistants(assistants);
+            courseRepository.save(course);
+
             List<Course> courses = person.getCoursesAssisted();
             courses.remove(course);
             person.setCoursesAssisted(courses);

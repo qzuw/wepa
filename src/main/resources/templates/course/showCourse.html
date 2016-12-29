@@ -15,10 +15,13 @@
                 <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
                 <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
                 <div th:each="assistant : ${course.assistants}">
-                    <div sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"> 
+                    <div sec:authorize="hasAuthority('ROLE_TEACHER')"> 
                         <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
+                        <form method="POST" th:action="@{/assistants/courses/{courseId}/remove/{assistantId}(courseId=${course.id}, assistantId=${assistant.id})}">
+                            <input type="submit" th:value="#{message.remove}"/>
+                        </form>
                     </div>
-                    <div sec:authorize="hasAuthority('ROLE_STUDENT')">
+                    <div sec:authorize="hasAnyAuthority('ROLE_ASSISTANT', 'ROLE_STUDENT')">
                         <a th:text="${assistant.name}"></a>
                     </div>
                 </div>
