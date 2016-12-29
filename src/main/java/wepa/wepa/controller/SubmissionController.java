@@ -1,7 +1,10 @@
 package wepa.wepa.controller;
 
+import java.util.Date;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -44,12 +47,22 @@ public class SubmissionController {
     private SubmissionFormObject getFormObject() {
         return new SubmissionFormObject();
     }
+//
+//    @RequestMapping()
+//    public String handleDefault() {
+//        return "week/showWeek";
+//    }
 
-    @RequestMapping()
-    public String handleDefault() {
-        return "week/showWeek";
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @RequestMapping("/")
+    public String listSubmissions(Model model) {
+        //pagination later
+        List<Submission> submissions = submissionRepository.findAll();
+        model.addAttribute("submissions", submissions);
+        return "submission/listSubmissions";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/{id}")
     public String showSubmission(Model model, @PathVariable Long id) {
         Submission submission = submissionRepository.findOne(id);
@@ -83,6 +96,7 @@ public class SubmissionController {
         submission.setExerciseCount(submissionFormObject.getExerciseCount());
         submission.setExerciseSubmission(submissionFormObject.getExerciseSubmission());
         submission.setWeek(week);
+        submission.setSubmissionTime(new Date(System.currentTimeMillis()));
 
         submissionRepository.save(submission);
 

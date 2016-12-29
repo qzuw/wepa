@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{message.listcourses}">List all submissions</title>
+        <object th:include="fragments/header :: header " th:remove="tag" />
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th th:text="#{message.student}">Name</th>
+                            <th th:text="#{message.studentnumber}">Student number</th>
+                            <th th:text="#{message.coursename}">Course</th>
+                            <th th:text="#{message.date}">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="submission : ${submissions}">
+                            <td><a th:id="'student-' + ${submission.student.id}" th:href="@{/persons/{id}(id=${submission.student.id})}" th:text="${submission.student.name}">Student</a></td>
+                            <td><a th:href="@{/persons/{id}(id=${submission.student.id})}" th:text="${submission.student.name}">number</a></td>
+                            <td><a th:href="@{/courses/{id}(id=${submission.week.course.id})}" th:text="${submission.week.course.name}">course</a></td>
+                            <td><a th:href="@{/submissions/{id}(id=${submission.id})}" th:text="${submission.submissionTime}">date</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
