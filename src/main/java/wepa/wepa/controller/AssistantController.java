@@ -54,6 +54,12 @@ public class AssistantController {
         Person person = personRepository.findOne(personId);
         Course course = courseRepository.findOne(courseId);
         if (person != null && course != null) {
+
+            List<Person> assistants = course.getAssistants();
+            assistants.add(person);
+            course.setAssistants(assistants);
+            courseRepository.save(course);
+
             List<Course> courses = person.getCoursesAssisted();
             courses.add(course);
             person.setCoursesAssisted(courses);
@@ -62,15 +68,7 @@ public class AssistantController {
             person.setAuthorities(authorities);
             personRepository.save(person);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-            if (auth != null) {
-                Person loggedIn = personRepository.findByName(auth.getName());
-
-                logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ") as assistant on course " + course.getName());
-            } else {
-                logService.info("Person \"" + person.getName() + "\" was added as assistant on course " + course.getName() + ".");
-            }
+            logAssistantChange("added", person, course);
 
             return "redirect:/courses/" + course.getId();
         }
@@ -101,20 +99,24 @@ public class AssistantController {
             }
             personRepository.save(person);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-            if (auth != null) {
-                Person loggedIn = personRepository.findByName(auth.getName());
-
-                logService.info("Person \"" + person.getName() + "\" was removed by " + loggedIn.getName() + " (" + loggedIn.getId() + ") as assistant on course " + course.getName());
-            } else {
-                logService.info("Person \"" + person.getName() + "\" was removed as assistant on course " + course.getName() + ".");
-            }
+            logAssistantChange("removed", person, course);
 
             return "redirect:/courses/" + course.getId();
         }
 
         return "redirect:/courses";
+    }
+
+    private void logAssistantChange(String replace, Person person, Course course) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null) {
+            Person loggedIn = personRepository.findByName(auth.getName());
+
+            logService.info("Person \"" + person.getName() + "\" was " + replace + " by " + loggedIn.getName() + " (" + loggedIn.getId() + ") as assistant on course " + course.getName());
+        } else {
+            logService.info("Person \"" + person.getName() + "\" was " + replace + " as assistant on course " + course.getName() + ".");
+        }
     }
 
 }
