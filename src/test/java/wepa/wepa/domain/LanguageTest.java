@@ -29,5 +29,6 @@ public class LanguageTest {
 
         assertEquals(l, languageRepository.findOne(l.getId()));
         assertEquals("Klingon", languageRepository.findOne(l.getId()).getLanguageName());
+        assertEquals("k4", languageRepository.findOne(l.getId()).getLanguageCode());
     }
 }
