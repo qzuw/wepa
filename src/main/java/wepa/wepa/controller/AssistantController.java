@@ -74,7 +74,7 @@ public class AssistantController {
     }
 
     @Secured({"ROLE_TEACHER"})
-    @RequestMapping(value = "/course/{courseId}/add/{personId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/course/{courseId}/delete/{personId}", method = RequestMethod.DELETE)
     public String removeAssistant(@PathVariable Long courseId, @PathVariable Long personId) {
 
         Person person = personRepository.findOne(personId);
