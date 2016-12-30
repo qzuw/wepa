@@ -28,7 +28,7 @@
                             </form>
                         </div>
                         <div sec:authorize="hasAnyAuthority('ROLE_ASSISTANT', 'ROLE_STUDENT')">
-                            <a th:text="${assistant.name}"></a>
+                            <span th:text="${assistant.name}"></span>
                         </div>
                     </div>
                 </div>
