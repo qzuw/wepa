@@ -20,7 +20,7 @@
                         <tr>
                             <!--<th>Exercise #</th>-->
                             <th>Exercise name</th>
-                            <th>Modify</th>
+                            <th sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">Modify</th>
                             <!-- <th>done</th> -->
                         </tr>
                     </thead>
@@ -42,12 +42,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><a href="">c-ko</a></td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td><a href="">d-ko</a></td>
+                        <tr th:each="student : ${week.course.students}">
+                            <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.studentNumber}">Item name</a> </td>
                             <td>6</td>
                         </tr>
                     </tbody>
@@ -70,7 +66,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <p>
+                <p sec:authorize="hasAuthority('ROLE_STUDENT')">
                     <h3>Submit this week's exercises</h3>
                     <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
                           th:object="${submissionFormObject}" 

@@ -28,7 +28,7 @@
                 <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
 
 
-                <div sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
+                <div>
                     <table>
                         <thead>
                             <tr>
@@ -46,7 +46,7 @@
                         </tbody>
                     </table>
 
-                    <div th:if="${students}">
+                    <div th:if="${students}" sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
                         <table>
                             <thead>
                                 <tr>
