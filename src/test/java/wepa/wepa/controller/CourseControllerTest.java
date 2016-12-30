@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -69,6 +70,11 @@ public class CourseControllerTest {
         mockMvc.perform(get("/courses")).andExpect(status().is2xxSuccessful());
     }
 
+//    @Test
+    public void loginTest() throws Exception{
+        mockMvc.perform(formLogin("/login").user("admin").password("pass"));
+    }
+    
     @Test
     public void getContainsCourses() throws Exception {
         mockMvc.perform(get("/courses")).andExpect(model().attributeExists("courses"));

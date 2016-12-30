@@ -25,26 +25,26 @@ import wepa.wepa.repository.PersonRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class wepaTest extends FluentTest {
-    
+
     public WebDriver webDriver = new HtmlUnitDriver();
-    
+
     public WebDriver getDefaultDriver() {
         return webDriver;
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @LocalServerPort
     private Integer port;
-    
+
     @Autowired
     private PersonRepository personRepository;
-    
+
     private String personname;
-    
+
     @Before
     public void setUp() {
         Person oldPerson = personRepository.findByStudentNumber("987654321");
@@ -58,71 +58,63 @@ public class wepaTest extends FluentTest {
         testperson.setStudentNumber("987654321");
         testperson.setAuthorities(Arrays.asList("TEACHER"));
         personRepository.save(testperson);
-        
+
     }
-    
+
     private void login(String s) {
         goTo("http://localhost:" + port + "/login");
-        
+
         fill(find("input")).with(s);
         fill(find("input")).with(s);
         submit(find("form").first());
-        
+
     }
-    
+
     @Test
     public void loginTest() {
-        
+
         login(personname);
-        
+
         goTo("http://localhost:" + port + "/persons/" + personRepository.findByName(personname).getId());
-        
+
         assertFalse(pageSource().contains("555555555"));
         assertFalse(pageSource().contains("Maija"));
         assertTrue(pageSource().contains(personname));
-        
+
     }
-    
+
     @Test
     public void addCourseTest() {
         login(personname);
-        
+
+        assertFalse(pageSource().contains("login"));
+        assertTrue(pageSource().contains("logout"));
+
         String courseName = "c" + UUID.randomUUID().toString();
-        
+
         goTo("http://localhost:" + port + "/courses");
-        
+
         assertFalse(pageSource().contains(courseName));
-        
+
         goTo("http://localhost:" + port + "/courses/new");
-        
+
         fill(find("#name")).with(courseName);
         fill(find("#courseStart")).with("1999-12-12");
         fill(find("#courseEnd")).with("2020-09-09");
         fill(find("#weeks")).with("4");
-        submit(find("form").first());
-        
+
+        submit(find("#addcourse").first());
+
         goTo("http://localhost:" + port + "/courses");
-        
+
         assertTrue(pageSource().contains(courseName));
-        
+
         click(find("#" + courseName).first());
-        
+
         assertTrue(pageSource().contains(courseName));
         assertTrue(pageSource().contains("1999-12-12"));
         assertTrue(pageSource().contains("2020-09-09"));
-        
+
     }
 
-    //        
-//        goTo("http://localhost:" + port + "/exercises");
-//
-//        fill(find("#studentNumber")).with("555555555");
-//        fill(find("#name")).with("Maija");
-//        fill(find("#exercises")).with("4");
-//        submit(find("form").first());
-//
-//        goTo("http://localhost:" + port + "/persons");
-//        
-//        assertTrue(pageSource().contains("555555555"));
-//        assertTrue(pageSource().contains("Maija"));
 }

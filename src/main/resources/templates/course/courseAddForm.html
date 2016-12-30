@@ -11,7 +11,7 @@
             </div>
 
             <div>
-                <form action="#" method="post" th:action="@{/courses/new}" th:object="${course}">
+                <form id="addcourse" name="addcourse" method="post" th:action="@{/courses/new}" th:object="${course}">
                     <div class="form-group">
                         <label th:text="#{message.coursename} + ':'">Course name:</label>
                         <input type="text" name="name" id="name" class="form-control" />
