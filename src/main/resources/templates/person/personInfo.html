@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>ExerciseApplication</title>
+        <title th:text="#{message.studentinfo}"></title>
         <object th:include="fragments/header :: header " th:remove="tag" />
 
     </head>
@@ -16,7 +16,7 @@
                 <h1 th:text="#{message.studentinfo}">Person's information</h1>
 
                 <p th:text="${person.studentNumber}">number</p>
-                <p th:text="${person.name}">number</p>
+                <p th:text="${person.name}">name</p>
 
                 <div th:if="${not #lists.isEmpty(person.coursesAssisted)}">
                     <h3 th:text="#{message.assistantoncourses}"></h3>

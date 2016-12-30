@@ -9,25 +9,28 @@
                 Navbar
             </div>
             <div>
+                <h1 th:text="#{message.allcourses}">All courses</h1>
                 <p><a th:href="@{/courses/new}" th:text="#{message.addnewcourse}">Add new course</a></p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th th:text="#{message.coursename}">Name</th>
-                            <th th:text="#{message.startdate}">Start</th>
-                            <th th:text="#{message.enddate}">End</th>
-                            <th th:text="#{message.coursemanyweeks}">Weeks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="course : ${courses}">
-                            <td><a th:id="${course.name}" th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}">Hello Course</a></td>
-                            <td th:text="${course.courseStart}"></td>
-                            <td th:text="${course.courseEnd}"></td>
-                            <td th:text="${course.numOfWeeks}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div th:if="${not #lists.isEmpty(courses)}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th th:text="#{message.coursename}">Name</th>
+                                <th th:text="#{message.startdate}">Start</th>
+                                <th th:text="#{message.enddate}">End</th>
+                                <th th:text="#{message.coursemanyweeks}">Weeks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="course : ${courses}">
+                                <td><a th:id="${course.name}" th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}">Hello Course</a></td>
+                                <td th:text="${course.courseStart}"></td>
+                                <td th:text="${course.courseEnd}"></td>
+                                <td th:text="${course.numOfWeeks}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>

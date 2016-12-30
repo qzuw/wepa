@@ -12,12 +12,12 @@
             <div>
                 <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
                 <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
-                <span th:text="${#lists.size(week.exercises)}">6 exercises</span>
-                <span th:text="#{message.exercises2}">6 exercises</span>
+                <span th:text="${#lists.size(week.exercises)}">6</span>
+                <span th:text="#{message.exercises2}">exercises</span>
                 <div th:text="${week.description}"></div>
                 <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}" th:text="#{message.modifyweek}">Modify week details</a></p>
 
-                <table>
+                <table th:if="${not #lists.isEmpty(week.exercises)}">
                     <thead>
                         <tr>
                             <!--<th>Exercise #</th>-->
@@ -36,7 +36,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <table sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
+                
+                <table th:if="${not #lists.isEmpty(week.course.students)}" sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
                     <thead>
                         <tr>
                             <th th:text="#{message.student}">Student</th>
@@ -45,11 +46,12 @@
                     </thead>
                     <tbody>
                         <tr th:each="student : ${week.course.students}">
-                            <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.studentNumber}">Item name</a> </td>
+                            <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.studentNumber}">Item name</a> fix </td>
                             <td>6</td>
                         </tr>
                     </tbody>
                 </table>
+                
                 <p sec:authorize="hasAuthority('ROLE_STUDENT')">
                     <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
                     <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 

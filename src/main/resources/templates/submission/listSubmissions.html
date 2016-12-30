@@ -8,7 +8,8 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <h1 th:text="#{message.allsubmissions}">All submissions</h1>
+            <div th:if="${not #lists.isEmpty(submissions)}">
                 <table>
                     <thead>
                         <tr>
@@ -27,6 +28,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div th:if="${#lists.isEmpty(submisisons)}">
+                <span th:text="#{message.nothingtoshow}"></span>
             </div>
         </div>
     </body>
