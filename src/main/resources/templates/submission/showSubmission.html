@@ -11,31 +11,27 @@
                 Navbar
             </div>
 
-            <h1>Submission information</h1>
+            <h1 th:text="#{message.submissioninfo}">Submission information</h1>
             <div>
-                <label>Student number:</label> 
+                <label th:text="#{message.studentnumber}">Student number:</label> 
                 <span th:text="${submission.student.studentNumber}">number</span>
             </div>    
             <div>
-                <label>Name:</label> 
+                <label th:text="#{message.name}">Name:</label> 
                 <span th:text="${submission.student.name}">number</span>  
             </div>
             <div>
-                <label>Week:</label> 
+                <label th:text="#{message.week}">Week:</label> 
                 <span th:text="${submission.week.week}">number</span>
             </div>
             <div>
-                <label>Exercise count:</label> 
+                <label th:text="#{message.exercisecount}">Exercise count:</label> 
                 <span th:text="${submission.exerciseCount}">number</span>
             </div>
             <div>    
-                <label>Exercise Submission:</label> 
+                <label th:text="#{message.exercisesubmission}">Exercise Submission:</label> 
                 <span th:text="${submission.exerciseSubmission}">number</span> 
             </div>
-
-
-            <!--<a th:href="@{/persons}">To the list</a>-->
         </div>
-
     </body>
 </html>

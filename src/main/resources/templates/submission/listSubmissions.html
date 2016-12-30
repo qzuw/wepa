@@ -21,7 +21,7 @@
                     <tbody>
                         <tr th:each="submission : ${submissions}">
                             <td><a th:id="'student-' + ${submission.student.id}" th:href="@{/persons/{id}(id=${submission.student.id})}" th:text="${submission.student.name}">Student</a></td>
-                            <td><a th:href="@{/persons/{id}(id=${submission.student.id})}" th:text="${submission.student.studentnumber}">number</a></td>
+                            <td><a th:href="@{/persons/{id}(id=${submission.student.id})}" th:text="${submission.student.studentNumber}">number</a></td>
                             <td><a th:href="@{/courses/{id}(id=${submission.week.course.id})}" th:text="${submission.week.course.name}">course</a></td>
                             <td><a th:href="@{/submissions/{id}(id=${submission.id})}" th:text="${submission.submissionTime}">date</a></td>
                         </tr>
