@@ -59,10 +59,29 @@ public class DefaultControllerTest {
     }
 
     @Test
+    public void modelHasFutureCourses() throws Exception {
+        mock.perform(get("/")).andExpect(model().attributeExists("upcomingCourses"));
+    }
+
+    @Test
     public void frontPageShowsCourse() throws Exception {
         Course c = new Course();
         c.setCourseStart(new Date(System.currentTimeMillis() - 100000));
         c.setCourseEnd(new Date(System.currentTimeMillis() + 100000));
+        String name = UUID.randomUUID().toString();
+        c.setName(name);
+        courseRepository.save(c);
+
+        MvcResult res = mock.perform(get("/")).andReturn();
+        String content = res.getResponse().getContentAsString();
+        assertTrue(content.contains(name));
+    }
+
+    @Test
+    public void frontPageShowsFutureCourse() throws Exception {
+        Course c = new Course();
+        c.setCourseStart(new Date(System.currentTimeMillis() + 100000));
+        c.setCourseEnd(new Date(System.currentTimeMillis() + 200000));
         String name = UUID.randomUUID().toString();
         c.setName(name);
         courseRepository.save(c);

@@ -120,13 +120,13 @@ public class CourseController {
         return "course/showCourse";
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping("/courses/new")
     public String courseAddForm() {
         return "course/courseAddForm";
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping(value = "/courses/new", method = RequestMethod.POST)
     public String addCourse(Model model,
             @RequestParam Integer weeks,
@@ -151,7 +151,7 @@ public class CourseController {
         return "redirect:/courses/" + course.getId();
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping("/courses/{id}/edit")
     public String courseEditForm(@PathVariable Long id, Model model) {
         Course course = courseRepository.findOne(id);
@@ -159,7 +159,7 @@ public class CourseController {
         return "course/courseEditForm";
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping(value = "/courses/{id}/edit", method = RequestMethod.POST)
     public String editCourse(@PathVariable Long id,
             Model model,

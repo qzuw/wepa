@@ -46,6 +46,7 @@ public class DefaultController {
     @RequestMapping("*")
     public String handleDefault(Model model) {
         model.addAttribute("currentCourses", courseRepository.findCurrentCourses(new Date(System.currentTimeMillis())));
+        model.addAttribute("upcomingCourses", courseRepository.findFutureCourses(new Date(System.currentTimeMillis())));
         return "index";
     }
 }

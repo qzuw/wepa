@@ -1,5 +1,6 @@
 package wepa.wepa.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import wepa.wepa.domain.Course;
+import wepa.wepa.domain.Person;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.PersonRepository;
 
@@ -91,10 +93,10 @@ public class CourseControllerTest {
         Long a = courseRepository.count();
 
         a++;
-        
+
         mockMvc.perform(get("/courses/" + a)).andExpect(status().is3xxRedirection());
     }
-    
+
     @Test
     public void editCourseOk() throws Exception {
         Course course = new Course();
@@ -168,6 +170,54 @@ public class CourseControllerTest {
         res = mockMvc.perform(get("/courses/" + c.getId() + "/page/1")).andReturn();
         content = res.getResponse().getContentAsString();
         assertTrue(content.contains(name));
+
+    }
+
+//    @Test
+    public void addExistingStudentToCourse() throws Exception {
+        Course c = new Course();
+        String name = UUID.randomUUID().toString();
+        c.setName(name);
+        c.setStudents(new ArrayList<Person>());
+        c = courseRepository.save(c);
+
+        Person p = new Person();
+        String pname = UUID.randomUUID().toString();
+        p.setName(pname);
+        p.setStudentNumber("432156789");
+        personRepository.save(p);
+
+        assertFalse(c.getStudents().contains(p));
+
+        mockMvc.perform(post("/courses" + c.getId() + "/addStudent").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("studentNumber", p.getStudentNumber()).param("name", pname));
+
+        Person p2 = personRepository.findByStudentNumber(p.getStudentNumber());
+        assertTrue(p2.getCoursesAttended().contains(c));
+
+    }
+
+//    @Test
+    public void addStudentToCourse() throws Exception {
+        Course c = new Course();
+        String name = UUID.randomUUID().toString();
+        c.setName(name);
+        c.setStudents(new ArrayList<Person>());
+        c = courseRepository.save(c);
+
+        Person p = new Person();
+        String pname = UUID.randomUUID().toString();
+        p.setName(pname);
+        p.setStudentNumber("432226789");
+
+        assertFalse(c.getStudents().contains(p));
+
+        mockMvc.perform(post("/courses" + c.getId() + "/addStudent").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("studentNumber", p.getStudentNumber()).param("name", pname));
+
+        Person p2 = personRepository.findByStudentNumber(p.getStudentNumber());
+        System.out.println("p " + p2);
+        assertTrue(p2.getCoursesAttended().contains(c));
 
     }
 }

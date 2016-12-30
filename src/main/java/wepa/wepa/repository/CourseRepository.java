@@ -12,4 +12,8 @@ public interface CourseRepository extends JpaRepository<Course, Long>{
     @Query("SELECT c from Course c WHERE "
             + "c.courseStart <= :now AND c.courseEnd >= :now")
     List<Course> findCurrentCourses(@Param("now") Date now);
+
+    @Query("SELECT c from Course c WHERE "
+            + "c.courseStart > :now")
+    List<Course> findFutureCourses(@Param("now") Date now);
 }
