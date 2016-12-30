@@ -82,6 +82,40 @@ public class SubmissionController {
             return "week/showWeek";
         }
 
+        Person person = personFromSubmissionFormObject(submissionFormObject);
+
+        Submission submission = submissionFromSubmissionFormObject(person, submissionFormObject, week);
+
+        model.addAttribute("person", person);
+        model.addAttribute("submission", submission);
+
+        logSubmission(person);
+
+        return "submission/submissionFormFilled";
+    }
+
+    private void logSubmission(Person person) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (auth != null) {
+            Person loggedIn = personRepository.findByName(auth.getName());
+
+            logService.info("Person " + person.getName() + " (" + person.getStudentNumber() + ") submitted exercises.");
+        }
+    }
+
+    private Submission submissionFromSubmissionFormObject(Person person, SubmissionFormObject submissionFormObject, Week week) {
+        Submission submission = new Submission();
+        submission.setStudent(person);
+        submission.setExerciseCount(submissionFormObject.getExerciseCount());
+        submission.setExerciseSubmission(submissionFormObject.getExerciseSubmission());
+        submission.setWeek(week);
+        submission.setSubmissionTime(new Date(System.currentTimeMillis()));
+        submissionRepository.save(submission);
+        return submission;
+    }
+
+    private Person personFromSubmissionFormObject(SubmissionFormObject submissionFormObject) {
         Person person = personRepository.findByStudentNumber(submissionFormObject.getStudentNumber());
         if (person == null) {
             person = new Person();
@@ -89,28 +123,6 @@ public class SubmissionController {
             person.setName(submissionFormObject.getName());
             personRepository.save(person);
         }
-
-        Submission submission = new Submission();
-
-        submission.setStudent(person);
-        submission.setExerciseCount(submissionFormObject.getExerciseCount());
-        submission.setExerciseSubmission(submissionFormObject.getExerciseSubmission());
-        submission.setWeek(week);
-        submission.setSubmissionTime(new Date(System.currentTimeMillis()));
-
-        submissionRepository.save(submission);
-
-        model.addAttribute("person", person);
-        model.addAttribute("submission", submission);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth != null) {
-            Person loggedIn = personRepository.findByName(auth.getName());
-
-            logService.info("Person " + person.getName() + " (" + person.getStudentNumber() + ") submitted exercises.");
-        }
-
-        return "submission/submissionFormFilled";
+        return person;
     }
 }
