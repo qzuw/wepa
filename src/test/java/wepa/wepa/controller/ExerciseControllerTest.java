@@ -2,6 +2,7 @@ package wepa.wepa.controller;
 
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.Filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -47,12 +48,20 @@ public class ExerciseControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
+    @Autowired
+    private Filter springSecurityFilterChain;
+
+    @Before
+    public void setUp() {
+        this.mock = MockMvcBuilders.webAppContextSetup(webAppContext).addFilters(springSecurityFilterChain).build();
+    }
+
     public void createExercise(Course course, Week week, Exercise exercise) {
 
         String name = UUID.randomUUID().toString();
         course.setName(name);
         courseRepository.save(course);
-        
+
         String descriptionW = UUID.randomUUID().toString();
         week.setDescription(descriptionW);
         week.setCourse(course);
@@ -63,11 +72,6 @@ public class ExerciseControllerTest {
         exercise.setWeek(week);
         exerciseRepository.save(exercise);
     }
-    
-    @Before
-    public void setUp() {
-        this.mock = MockMvcBuilders.webAppContextSetup(webAppContext).build();
-    }
 
     @Test
     public void getEditOk() throws Exception {
@@ -75,18 +79,18 @@ public class ExerciseControllerTest {
     }
 
     @Test
-     public void editExerciseWrong() throws Exception {
-       Course course = new Course();
+    public void editExerciseWrong() throws Exception {
+        Course course = new Course();
         Week week = new Week();
         Exercise exercise = new Exercise();
         createExercise(course, week, exercise);
         mock.perform(post("/exercises/" + exercise.getId() + "/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("description", ""));
 
         Exercise retrieved = exerciseRepository.findOne(exercise.getId());
-        
+
         assertFalse(retrieved.getDescription().equals(""));
     }
-    
+
     @Test
     public void editExercise() throws Exception {
 
@@ -94,13 +98,13 @@ public class ExerciseControllerTest {
         Week week = new Week();
         Exercise exercise = new Exercise();
         createExercise(course, week, exercise);
-        
+
         String description = UUID.randomUUID().toString();
 
         mock.perform(post("/exercises/" + exercise.getId() + "/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("description", description));
-        
+
         Exercise retrieved = exerciseRepository.findOne(exercise.getId());
-        
+
         assertTrue(retrieved.getDescription().equals(description));
     }
 }

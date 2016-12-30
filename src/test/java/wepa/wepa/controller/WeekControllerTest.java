@@ -1,6 +1,7 @@
 package wepa.wepa.controller;
 
 import java.util.UUID;
+import javax.servlet.Filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -41,9 +42,12 @@ public class WeekControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
+    @Autowired
+    private Filter springSecurityFilterChain;
+
     @Before
     public void setUp() {
-        this.mock = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+        this.mock = MockMvcBuilders.webAppContextSetup(webAppContext).addFilters(springSecurityFilterChain).build();
     }
 
     public void createWeek(Course course, Week week) {
@@ -76,17 +80,17 @@ public class WeekControllerTest {
     }
 
     @Test
-     public void editWeekWrong() throws Exception {
-       Course course = new Course();
+    public void editWeekWrong() throws Exception {
+        Course course = new Course();
         Week week = new Week();
         createWeek(course, week);
         mock.perform(post("/courses/" + course.getId() + "/week/ " + week.getWeek() + "/modifyWeek").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("description", ""));
 
         Week retrieved = weekRepository.findOne(week.getId());
-        
+
         assertFalse(retrieved.getDescription().equals(""));
     }
-    
+
     @Test
     public void editWeek() throws Exception {
         Course course = new Course();
@@ -96,7 +100,7 @@ public class WeekControllerTest {
         mock.perform(post("/courses/" + course.getId() + "/week/ " + week.getWeek() + "/modifyWeek").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("description", description));
 
         Week retrieved = weekRepository.findOne(week.getId());
-        
+
         assertTrue(retrieved.getDescription().equals(description));
     }
 }

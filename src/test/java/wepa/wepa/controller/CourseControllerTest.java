@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.servlet.Filter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,9 +54,12 @@ public class CourseControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
+    @Autowired
+    private Filter springSecurityFilterChain;
+
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).addFilters(springSecurityFilterChain).build();
     }
 
     @Test
@@ -123,7 +127,7 @@ public class CourseControllerTest {
                 course = course1;
             }
         }
-        
+
         assertNotNull(course);
         assertEquals(name, course.getName());
         assertEquals(3, course.getNumOfWeeks());

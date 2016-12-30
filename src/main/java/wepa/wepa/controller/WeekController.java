@@ -40,7 +40,7 @@ public class WeekController {
 
     @Autowired
     private PersonRepository personRepository;
-    
+
     @ModelAttribute
     private SubmissionFormObject getFormObject() {
         return new SubmissionFormObject();
@@ -91,8 +91,9 @@ public class WeekController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null) {
-            Person loggedIn = personRepository.findByName(auth.getName());
+        Person loggedIn = personRepository.findByName(auth.getName());
+        
+        if (loggedIn != null) {
 
             logService.info("\"" + oldWeek.getCourse().getName() + "\"-course's week \""
                     + oldWeek.getWeek() + "\" was modified by " + loggedIn.getName()
