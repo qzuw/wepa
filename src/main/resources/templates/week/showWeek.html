@@ -13,6 +13,7 @@
                 <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
                 <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
                 <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
+                <h3 th:text="${week.description}"></h3>
                 <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
 
                 <table>
