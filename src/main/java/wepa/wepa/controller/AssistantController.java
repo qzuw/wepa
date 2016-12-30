@@ -42,18 +42,33 @@ public class AssistantController {
     @Autowired
     private HelperService paginationService;
 
+    @ModelAttribute
+    private Person getPerson() {
+        return new Person();
+    }
+
     @RequestMapping()
     public String defaultAssistantPage() {
         return "redirect:/";
     }
 
     @Secured({"ROLE_TEACHER"})
-    @RequestMapping(value = "/courses/{courseId}/add/{personId}", method = RequestMethod.POST)
-    public String addAssistant(@PathVariable Long courseId, @PathVariable Long personId) {
+    @RequestMapping(value = "/courses/{courseId}/add", method = RequestMethod.POST)
+    public String addAssistant(Model model, @PathVariable Long courseId,
+            @Valid @ModelAttribute Person assistant, BindingResult bindingResult) {
 
-        Person person = personRepository.findOne(personId);
         Course course = courseRepository.findOne(courseId);
-        if (person != null && course != null) {
+        if (course == null) {
+            return "redirect:/courses";
+        }
+        model.addAttribute("course", course);
+
+        if (bindingResult.hasErrors()) {
+            return "course/showCourse";
+        }
+
+        Person person = personRepository.findByStudentNumber(assistant.getStudentNumber());
+        if (person != null) {
 
             List<Person> assistants = course.getAssistants();
             assistants.add(person);

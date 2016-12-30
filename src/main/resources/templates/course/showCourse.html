@@ -13,12 +13,17 @@
                 <h1 th:text="${course.name}"></h1>
                 <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
                 <h2 th:text="#{message.students} + ': ' + ${course.numOfStudents}"></h2>
+
+                <div>
+                    <p sec:authorize="hasAuthority('ROLE_TEACHER')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
+                </div>
+
                 <div th:if="${not #lists.isEmpty(course.assistants)}">
                     <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
                     <div th:each="assistant : ${course.assistants}">
                         <div sec:authorize="hasAuthority('ROLE_TEACHER')"> 
                             <a th:href="@{/persons/{id}(id=${assistant.id})}" th:text="${assistant.name}"></a>
-                            <form method="POST" th:action="@{/assistants/courses/{courseId}/remove/{assistantId}(courseId=${course.id}, assistantId=${assistant.id})}">
+                            <form method="POST" th:action="@{/assistants/courses/{courseId}/remove/{assistantId}(courseId=${course.id}, assistantId=${assistant.id})}" id="removeassistant">
                                 <input type="submit" th:value="#{message.remove}"/>
                             </form>
                         </div>
@@ -27,8 +32,21 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
+
+                <div sec:authorize="hasAuthority('ROLE_TEACHER')">
+                    <h4 th:text="#{message.addassistant}">Add assistant</h4>
+                    <form method="POST" 
+                          th:action="@{/assistants/courses/{courseId}/add(courseId=${course.id})}" 
+                          th:object="${person}"
+                          id="addassistant">
+                        <input type="hidden" name="name" value="asdf"/>
+
+                        <label th:text="#{message.studentnumber}">Student number</label>
+                        <input type="text" th:field="*{studentNumber}" name="studentNumber" id="assistant-studentnumber"/>
+                        <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+
+                        <input type="submit" th:value="#{message.add}"/>
+                    </form>
                 </div>
 
                 <div th:if="${not #lists.isEmpty(course.weeks)}">
