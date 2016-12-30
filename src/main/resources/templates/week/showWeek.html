@@ -50,24 +50,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>present</th>
-                            <th>with ex</th>
-                            <th>ex done</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>total</th>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>12</td>
-                        </tr>
-                    </tbody>
-                </table>
                 <p sec:authorize="hasAuthority('ROLE_STUDENT')">
                     <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
                     <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
