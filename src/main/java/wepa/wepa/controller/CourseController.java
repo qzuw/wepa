@@ -1,15 +1,10 @@
 package wepa.wepa.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import wepa.wepa.domain.Course;
 import wepa.wepa.domain.Person;
-import wepa.wepa.domain.Week;
 import wepa.wepa.repository.CourseRepository;
 import wepa.wepa.repository.PersonRepository;
-import wepa.wepa.repository.WeekRepository;
-import wepa.wepa.service.CourseService;
 import wepa.wepa.service.LogService;
 import wepa.wepa.service.HelperService;
 import wepa.wepa.service.PersonService;
