@@ -100,8 +100,9 @@ public class PersonController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth != null) {
-            Person loggedIn = personRepository.findByName(auth.getName());
+        Person loggedIn = personRepository.findByName(auth.getName());
+        
+        if (loggedIn != null) {
 
             logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
         } else {

@@ -2,6 +2,7 @@ package wepa.wepa.controller;
 
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.Filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -60,9 +61,12 @@ public class SubmissionControllerTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
+    @Autowired
+    private Filter springSecurityFilterChain;
+
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).addFilters(springSecurityFilterChain).build();
     }
 
     public void createSubmission(Course course, Week week, Person person, Submission submission) {
@@ -159,14 +163,14 @@ public class SubmissionControllerTest {
         person.setStudentNumber("000011111");
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
-        
+
         Person newPerson = new Person();
         newPerson.setStudentNumber("111111110");
         String nameP = UUID.randomUUID().toString();
         newPerson.setName(nameP);
-        
+
         assertNull(personRepository.findByName(nameP));
-        
+
         mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", newPerson.getStudentNumber()).param("name", newPerson.getName()).param("exerciseCount", "5").param("exerciseSubmission", ""));
 
         assertNotNull(personRepository.findByName(nameP));
