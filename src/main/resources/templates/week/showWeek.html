@@ -54,13 +54,11 @@
 
                 <div sec:authorize="hasAuthority('ROLE_STUDENT')">
                     <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
-                    <form action="#" th:action="@{/submissions/add}" 
+                    <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
                           th:object="${submissionFormObject}" 
                           method="POST" 
                           id="subForm">
 
-                        <input type="hidden" name="weekNum" th:value="${week.week}"/>
-                        <input type="hidden" name="courseId" th:value="${week.course.id}"/>
                         <div>
                             <label th:text="#{message.studentnumber}">Student number</label> 
                             <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
@@ -89,13 +87,11 @@
                 </div>
                 <div th:unless="${#authorization.expression('isAuthenticated()')}">
                     <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
-                    <form action="#" th:action="@{/submissions/add}" 
+                    <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
                           th:object="${submissionFormObject}" 
                           method="POST" 
                           id="subForm">
 
-                        <input type="hidden" name="weekNum" th:value="${week.week}"/>
-                        <input type="hidden" name="courseId" th:value="${week.course.id}"/>
                         <div>
                             <label th:text="#{message.studentnumber}">Student number</label> 
                             <input type="text" th:field="*{studentNumber}" name="studentNumber"/>

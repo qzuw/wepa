@@ -20,13 +20,6 @@ public class SubmissionFormObject {
 
     private String exerciseSubmission;
 
-    @Min(0)
-    @NotNull
-    private Integer weekNum;
-    @Min(0)
-    @NotNull
-    private Long courseId;
-
     public String getStudentNumber() {
         return studentNumber;
     }
@@ -57,22 +50,6 @@ public class SubmissionFormObject {
 
     public void setExerciseSubmission(String exerciseSubmission) {
         this.exerciseSubmission = exerciseSubmission;
-    }
-
-    public Integer getWeekNum() {
-        return weekNum;
-    }
-
-    public void setWeekNum(Integer weekNum) {
-        this.weekNum = weekNum;
-    }
-
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
     }
 
 }

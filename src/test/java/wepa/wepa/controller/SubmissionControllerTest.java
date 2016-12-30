@@ -119,11 +119,10 @@ public class SubmissionControllerTest {
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
         String name = UUID.randomUUID().toString();
-        mockMvc.perform(post("/submissions/add")
+        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("studentNumber", "").param("name", name)
-                .param("exerciseCount", "0").param("exerciseSubmission", "")
-                .param("weekNum", "" + week.getWeek()).param("courseId", "" + course.getId()));
+                .param("exerciseCount", "0").param("exerciseSubmission", ""));
 
         List<Submission> submissions = submissionRepository.findAll();
 
@@ -147,14 +146,10 @@ public class SubmissionControllerTest {
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
 
-        String wn = "" + week.getWeek();
-        String ci = "" + course.getId();
-        mockMvc.perform(post("/submissions/add")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("studentNumber", person.getStudentNumber())
                 .param("name", person.getName()).param("exerciseCount", "5")
-                .param("exerciseSubmission", "")
-                .param("weekNum", wn).param("courseId", ci));
+                .param("exerciseSubmission", ""));
 
         List<Submission> submissions = submissionRepository.findAll();
 
@@ -184,15 +179,10 @@ public class SubmissionControllerTest {
 
         assertNull(personRepository.findByName(nameP));
 
-        String wn = "" + week.getWeek();
-        String ci = "" + course.getId();
-
-        mockMvc.perform(post("/submissions/add")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("studentNumber", newPerson.getStudentNumber())
                 .param("name", newPerson.getName()).param("exerciseCount", "5")
-                .param("exerciseSubmission", "")
-                .param("weekNum", wn).param("courseId", ci));
+                .param("exerciseSubmission", ""));
 
         assertNotNull(personRepository.findByName(nameP));
 

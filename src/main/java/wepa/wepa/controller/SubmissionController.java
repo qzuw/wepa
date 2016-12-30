@@ -71,12 +71,12 @@ public class SubmissionController {
         return "submission/showSubmission";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/courses/{idC}/week/{idW}", method = RequestMethod.POST)
     public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject,
-            BindingResult bindingResult,
+            BindingResult bindingResult, @PathVariable Long idC, @PathVariable Integer idW,
             Model model) {
-        Course course = courseRepository.findOne(submissionFormObject.getCourseId());
-        Week week = weekRepository.findByCourseAndWeek(course, submissionFormObject.getWeekNum());
+
+        Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
         model.addAttribute("week", week);
         if (bindingResult.hasErrors()) {
             return "week/showWeek";
