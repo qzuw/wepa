@@ -12,17 +12,23 @@
                 <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/courses}" th:text="#{message.courselist}">Course listing</a></span>
                 <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/submissions}" th:text="#{message.submissionlist}">Submission listing</a></span>
             </div>
-            <div class="three columns">
-                <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
-                <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
-
-                <span sec:authorize="isAuthenticated()" ><a th:href="@{/logout}" th:text="#{message.logout}">Logout</a></span>
-            </div>
 
             <div class="two columns">
                 <span><a href="?lang=fi">Finnish</a></span>
                 <span><a href="?lang=en">English</a></span>
             </div>
+
+            <div class="three columns">
+                <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
+                <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
+
+                <span sec:authorize="isAuthenticated()" >
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" th:value="#{message.logout}"/>
+                    </form>
+                </span>
+            </div>
+
         </div>
     </body>
 </html>
