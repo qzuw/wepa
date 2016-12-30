@@ -10,7 +10,7 @@
             </div>
             <div>
                 <h1 th:text="#{message.allcourses}">All courses</h1>
-                <p sec:authorize="hasAuthority('ROLE_TEACHER')"><a th:href="@{/courses/new}" th:text="#{message.addnewcourse}">Add new course</a></p>
+                <p sec:authorize="hasAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/courses/new}" th:text="#{message.addnewcourse}">Add new course</a></p>
                 <div th:if="${not #lists.isEmpty(courses)}">
                     <table>
                         <thead>

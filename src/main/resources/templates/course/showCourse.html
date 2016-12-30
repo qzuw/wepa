@@ -15,7 +15,7 @@
                 <h2 th:text="#{message.students} + ': ' + ${course.numOfStudents}"></h2>
 
                 <div>
-                    <p sec:authorize="hasAuthority('ROLE_TEACHER')"><a th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
+                    <p sec:authorize="hasAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/courses/{id}/edit(id=${course.id})}" th:text="#{message.modifycourse}">Modify course details</a></p>
                 </div>
 
                 <div th:if="${not #lists.isEmpty(course.assistants)}">

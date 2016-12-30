@@ -15,14 +15,14 @@
                 <span th:text="${#lists.size(week.exercises)}">6</span>
                 <span th:text="#{message.exercises2}">exercises</span>
                 <div th:text="${week.description}"></div>
-                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}" th:text="#{message.modifyweek}">Modify week details</a></p>
+                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}" th:text="#{message.modifyweek}">Modify week details</a></p>
 
                 <table th:if="${not #lists.isEmpty(week.exercises)}">
                     <thead>
                         <tr>
                             <!--<th>Exercise #</th>-->
                             <th th:text="#{message.exercisename}">Exercise name</th>
-                            <th sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')" th:text="#{message.modify}">Modify</th>
+                            <th sec:authorize="hasAnyAuthority('ROLE_TEACHER')" th:text="#{message.modify}">Modify</th>
                             <!-- <th>done</th> -->
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                             <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
                             <td th:text="${exercise.description}"></td>
                             <td>
-                                <a sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="#{message.modify}"></a>
+                                <a sec:authorize="hasAnyAuthority('ROLE_TEACHER')" class="button" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="#{message.modify}"></a>
                             </td>
                         </tr>
                     </tbody>
