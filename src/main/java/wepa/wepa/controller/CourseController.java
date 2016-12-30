@@ -5,6 +5,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,11 +61,19 @@ public class CourseController {
 
     @RequestMapping("/courses/{id}")
     public String showCourse(Model model, @PathVariable Long id) {
-        if (false) {
-            // redirect teacher/assistant
-            return "redirect:/courses/" + id + "/page/1";
+
+        // This is ugly but at least it works
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        for (GrantedAuthority role : auth.getAuthorities()) {
+            if (role.getAuthority().equals("ROLE_TEACHER") || role.getAuthority().equals("ROLE_ASSISTANT")) {
+                // redirect teacher/assistant to paginated address
+                return "redirect:/courses/" + id + "/page/1";
+            }
         }
         Course course = courseRepository.findOne(id);
+        if (course == null) {
+            return "redirect:/courses";
+        }
         model.addAttribute("course", course);
 
         return "course/showCourse";
@@ -108,27 +120,6 @@ public class CourseController {
         return "course/showCourse";
     }
 
-//    private void pagination(Page<Person> page, Model model, Course course) {
-//        int current = page.getNumber() + 1;
-//        int previous = current - 1;
-//        int next = current + 1;
-//        if (previous >= 1) {
-//            model.addAttribute("previous", previous);
-//        }
-//
-//        int begin = Math.max(1, current - 5);
-//        int end = Math.min(begin + 10, page.getTotalPages());
-//
-//        if (next <= end) {
-//            model.addAttribute("next", next);
-//        }
-//
-//        model.addAttribute("personLog", page);
-//        model.addAttribute("beginIndex", begin);
-//        model.addAttribute("endIndex", end);
-//        model.addAttribute("currentIndex", current);
-//        model.addAttribute("pagePath", "courses/" + course.getId());
-//    }
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping("/courses/new")
     public String courseAddForm() {
@@ -149,7 +140,6 @@ public class CourseController {
         Course course = addedCourse;
         courseRepository.save(course);
 
-//        List<Week> weeklist = generateWeekList(weeks, course);
         course.setWeeks(helperService.generateWeekList(weeks, course));
 
         courseRepository.save(course);
