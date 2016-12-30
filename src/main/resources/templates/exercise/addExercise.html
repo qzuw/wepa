@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fill the form</title>
+        <object th:include="fragments/header :: header " th:remove="tag" />
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="fragments/navbar :: navbar ">
+                Navbar
+            </div>
+            <div>
+
+                <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
+
+                <form action="#" th:action="@{/exercises/add/{id}(id=${week.id})}" th:object="${exercise}" method="POST">
+                    <div> 
+                        <span th:text="#{message.description}"></span>
+                        <input type="text" name="description" th:field="*{description}"/>
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <input type="submit" th:value="#{message.send}"/>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
