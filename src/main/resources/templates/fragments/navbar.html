@@ -6,7 +6,7 @@
     <body>
 
         <div class="navbar" th:fragment="navbar"> 
-            <span><a th:href="@{/}">Home</a></span>
+            <span><a th:text="#{message.home}" th:href="@{/}">Home</a></span>
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/persons/page/1}" th:text="#{message.studentlist}">Student listing</a></span>
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/courses}" th:text="#{message.courselist}">Course listing</a></span>
             <span sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a  th:href="@{/submissions}" th:text="#{message.submissionlist}">Submission listing</a></span>

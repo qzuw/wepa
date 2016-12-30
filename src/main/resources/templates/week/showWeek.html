@@ -12,16 +12,17 @@
             <div>
                 <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
                 <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
-                <h2 th:text="${#lists.size(week.exercises) + ' exercises'}">6 exercises</h2>
-                <h3 th:text="${week.description}"></h3>
-                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}">Modify week details</a></p>
+                <span th:text="${#lists.size(week.exercises)}">6 exercises</span>
+                <span th:text="#{message.exercises2}">6 exercises</span>
+                <div th:text="${week.description}"></div>
+                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')"><a th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}" th:text="#{message.modifyweek}">Modify week details</a></p>
 
                 <table>
                     <thead>
                         <tr>
                             <!--<th>Exercise #</th>-->
                             <th th:text="#{message.exercisename}">Exercise name</th>
-                            <th sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">Modify</th>
+                            <th sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')" th:text="#{message.modify}">Modify</th>
                             <!-- <th>done</th> -->
                         </tr>
                     </thead>
@@ -30,7 +31,7 @@
                             <!--<td><a href="@{/exercise/{idE}" th:text=""></a></td>-->
                             <td th:text="${exercise.description}"></td>
                             <td>
-                                <a sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="Modify"></a>
+                                <a sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')" th:href="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:text="#{message.modify}"></a>
                             </td>
                         </tr>
                     </tbody>
@@ -95,7 +96,7 @@
                             <label th:text="#{message.exercises}">Exercises</label> 
                             <textarea name="exerciseSubmission" form="subForm"></textarea>
                         </div>
-                        <input type="submit" value="Send"/>
+                        <input type="submit" th:value="#{message.send}"/>
                     </form>
 
                 </p>

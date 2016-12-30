@@ -16,7 +16,7 @@
                 <form action="#" th:action="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:object="${exercise}" method="POST">
                     <div> <span th:text="#{message.description}"></span><input type="text" name="description" th:field="*{description}"/></div>
                     <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
-                    <input type="submit" value="Send"/>
+                    <input type="submit" th:value="#{message.send}"/>
                 </form>
             </div>
         </div>
