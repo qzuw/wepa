@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import wepa.wepa.domain.Password;
 import wepa.wepa.domain.Person;
 import wepa.wepa.repository.PersonRepository;
 import wepa.wepa.service.HelperService;
@@ -40,9 +41,17 @@ public class PersonController {
     @Autowired
     private HelperService paginationService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @ModelAttribute
     private Person getPerson() {
         return new Person();
+    }
+
+    @ModelAttribute
+    private Password getPassword() {
+        return new Password();
     }
 
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
@@ -101,7 +110,7 @@ public class PersonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         Person loggedIn = personRepository.findByName(auth.getName());
-        
+
         if (loggedIn != null) {
 
             logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
@@ -111,4 +120,43 @@ public class PersonController {
 
         return "redirect:/persons";
     }
+
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @RequestMapping(value = "/{id}/passwd", method = RequestMethod.GET)
+    public String showPasswdForm(Model model, @PathVariable Long id) {
+        Person person = personRepository.findOne(id);
+        model.addAttribute("person", person);
+        return "person/passwd";
+    }
+
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @RequestMapping(value = "/{id}/passwd", method = RequestMethod.POST)
+    public String postPasswd(Model model,
+            @PathVariable Long id,
+            @Valid @ModelAttribute Password passwd,
+            BindingResult bindingResult) {
+
+        Person person = personRepository.findOne(id);
+        model.addAttribute("person", person);
+        if (bindingResult.hasErrors()) {
+            return "person/passwd";
+        }
+
+        person.setPassword(passwordEncoder.encode(passwd.getPassword()));
+        personRepository.save(person);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Person loggedIn = personRepository.findByName(auth.getName());
+
+        if (loggedIn != null) {
+
+            logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
+        } else {
+            logService.info("Person \"" + person.getName() + "\" was added.");
+        }
+
+        return "redirect:/persons/" + person.getId();
+    }
+
 }

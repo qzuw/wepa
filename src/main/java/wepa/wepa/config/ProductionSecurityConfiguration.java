@@ -30,7 +30,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**", "/css/**", "/images/**", "/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").hasAnyAuthority("ROLE_ASSISTANT", "ROLE_TEACHER")
-                .antMatchers(HttpMethod.POST, "/persons/add").hasAnyAuthority("ROLE_ASSISTANT", "ROLE_TEACHER")
+                .antMatchers(HttpMethod.POST, "/persons/add", "/persons/*/passwd").hasAnyAuthority("ROLE_ASSISTANT", "ROLE_TEACHER")
                 .antMatchers(HttpMethod.POST, "/submission/**", "/register").permitAll()
                 .anyRequest().hasAuthority("ROLE_TEACHER");
         http.formLogin()

@@ -18,6 +18,7 @@
                 <p th:text="${person.studentNumber}">number</p>
                 <p th:text="${person.name}">name</p>
 
+                <a class="button" th:href="@{/persons/{id}/passwd(id=${person.id})}" th:text="#{message.changepassword}"></a>
                 <div th:if="${not #lists.isEmpty(person.coursesAssisted)}">
                     <h3 th:text="#{message.assistantoncourses}"></h3>
                     <table>
