@@ -87,6 +87,15 @@ public class CourseControllerTest {
     }
 
     @Test
+    public void getRedirectFromWrong() throws Exception {
+        Long a = courseRepository.count();
+
+        a++;
+        
+        mockMvc.perform(get("/courses/" + a)).andExpect(status().is3xxRedirection());
+    }
+    
+    @Test
     public void editCourseOk() throws Exception {
         Course course = new Course();
         course.setName("Testikurssii");
