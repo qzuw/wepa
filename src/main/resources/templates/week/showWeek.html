@@ -36,7 +36,7 @@
                         </tr>
                     </tbody>
                 </table>
-                
+
                 <table th:if="${not #lists.isEmpty(week.course.students)}" sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
                     <thead>
                         <tr>
@@ -51,13 +51,16 @@
                         </tr>
                     </tbody>
                 </table>
-                
-                <p sec:authorize="hasAuthority('ROLE_STUDENT')">
+
+                <div sec:authorize="hasAuthority('ROLE_STUDENT')">
                     <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
-                    <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
+                    <form action="#" th:action="@{/submissions/add}" 
                           th:object="${submissionFormObject}" 
                           method="POST" 
                           id="subForm">
+
+                        <input type="hidden" name="weekNum" th:value="${week.week}"/>
+                        <input type="hidden" name="courseId" th:value="${week.course.id}"/>
                         <div>
                             <label th:text="#{message.studentnumber}">Student number</label> 
                             <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
@@ -83,7 +86,42 @@
                         <input type="submit" th:value="#{message.send}"/>
                     </form>
 
-                </p>
+                </div>
+                <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
+                    <form action="#" th:action="@{/submissions/add}" 
+                          th:object="${submissionFormObject}" 
+                          method="POST" 
+                          id="subForm">
+
+                        <input type="hidden" name="weekNum" th:value="${week.week}"/>
+                        <input type="hidden" name="courseId" th:value="${week.course.id}"/>
+                        <div>
+                            <label th:text="#{message.studentnumber}">Student number</label> 
+                            <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
+                            <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+                        </div>
+
+                        <div>
+                            <label th:text="#{message.name}">Name</label> 
+                            <input type="text" th:field="*{name}" name="name"/>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
+                        </div>
+
+                        <div>
+                            <label th:text="#{message.madeexercisesnumb}">Number of made exercises</label> 
+                            <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
+                            <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
+                        </div>
+
+                        <div>
+                            <label th:text="#{message.exercises}">Exercises</label> 
+                            <textarea name="exerciseSubmission" form="subForm"></textarea>
+                        </div>
+                        <input type="submit" th:value="#{message.send}"/>
+                    </form>
+
+                </div>
             </div>
         </div>
     </body>

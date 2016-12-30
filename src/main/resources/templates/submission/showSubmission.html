@@ -18,12 +18,18 @@
             </div>    
             <div>
                 <label th:text="#{message.name}">Name:</label> 
-                <span th:text="${submission.student.name}">number</span>  
+                <span th:text="${submission.student.name}">name</span>  
             </div>
             <div>
                 <label th:text="#{message.week}">Week:</label> 
                 <span th:text="${submission.week.week}">number</span>
             </div>
+
+            <div>
+                <label th:text="#{message.returned}">returned:</label> 
+                <span th:text="${submission.submissionTime}">time</span>
+            </div>
+
             <div>
                 <label th:text="#{message.exercisecount}">Exercise count:</label> 
                 <span th:text="${submission.exerciseCount}">number</span>

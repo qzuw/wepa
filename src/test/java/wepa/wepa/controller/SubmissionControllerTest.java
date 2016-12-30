@@ -1,5 +1,6 @@
 package wepa.wepa.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.Filter;
@@ -88,13 +89,14 @@ public class SubmissionControllerTest {
         weekRepository.save(week);
 
         submission.setWeek(week);
+        submission.setSubmissionTime(new Date(System.currentTimeMillis()));
         submission.setStudent(person);
         submission.setExerciseCount(3);
     }
 
     @Test
     public void getOk() throws Exception {
-        mockMvc.perform(get("/exercises")).andExpect(status().is2xxSuccessful());
+        mockMvc.perform(get("/submissions")).andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -105,7 +107,6 @@ public class SubmissionControllerTest {
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
         submissionRepository.save(submission);
-
         mockMvc.perform(get("/submissions/" + submission.getId())).andExpect(status().is2xxSuccessful());
     }
 
@@ -118,7 +119,11 @@ public class SubmissionControllerTest {
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
         String name = UUID.randomUUID().toString();
-        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", "").param("name", name).param("exerciseCount", "0").param("exerciseSubmission", ""));
+        mockMvc.perform(post("/submissions/add")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("studentNumber", "").param("name", name)
+                .param("exerciseCount", "0").param("exerciseSubmission", "")
+                .param("weekNum", "" + week.getWeek()).param("courseId", "" + course.getId()));
 
         List<Submission> submissions = submissionRepository.findAll();
 
@@ -141,7 +146,15 @@ public class SubmissionControllerTest {
         person.setStudentNumber("000000111");
         Submission submission = new Submission();
         createSubmission(course, week, person, submission);
-        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", person.getStudentNumber()).param("name", person.getName()).param("exerciseCount", "5").param("exerciseSubmission", ""));
+
+        String wn = "" + week.getWeek();
+        String ci = "" + course.getId();
+        mockMvc.perform(post("/submissions/add")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("studentNumber", person.getStudentNumber())
+                .param("name", person.getName()).param("exerciseCount", "5")
+                .param("exerciseSubmission", "")
+                .param("weekNum", wn).param("courseId", ci));
 
         List<Submission> submissions = submissionRepository.findAll();
 
@@ -171,7 +184,15 @@ public class SubmissionControllerTest {
 
         assertNull(personRepository.findByName(nameP));
 
-        mockMvc.perform(post("/submissions/courses/" + course.getId() + "/week/ " + week.getWeek()).contentType(MediaType.APPLICATION_FORM_URLENCODED).param("studentNumber", newPerson.getStudentNumber()).param("name", newPerson.getName()).param("exerciseCount", "5").param("exerciseSubmission", ""));
+        String wn = "" + week.getWeek();
+        String ci = "" + course.getId();
+
+        mockMvc.perform(post("/submissions/add")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("studentNumber", newPerson.getStudentNumber())
+                .param("name", newPerson.getName()).param("exerciseCount", "5")
+                .param("exerciseSubmission", "")
+                .param("weekNum", wn).param("courseId", ci));
 
         assertNotNull(personRepository.findByName(nameP));
 

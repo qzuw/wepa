@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wepa.wepa.domain.Course;
 import wepa.wepa.domain.SubmissionFormObject;
 import wepa.wepa.domain.Person;
 import wepa.wepa.domain.Submission;
@@ -70,13 +71,12 @@ public class SubmissionController {
         return "submission/showSubmission";
     }
 
-    @RequestMapping(value = "/courses/{idC}/week/{idW}", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String postExercises(@Valid @ModelAttribute SubmissionFormObject submissionFormObject,
             BindingResult bindingResult,
-            Model model,
-            @PathVariable Long idC,
-            @PathVariable Integer idW) {
-        Week week = weekRepository.findByCourseAndWeek(courseRepository.findOne(idC), idW);
+            Model model) {
+        Course course = courseRepository.findOne(submissionFormObject.getCourseId());
+        Week week = weekRepository.findByCourseAndWeek(course, submissionFormObject.getWeekNum());
         model.addAttribute("week", week);
         if (bindingResult.hasErrors()) {
             return "week/showWeek";
@@ -96,7 +96,7 @@ public class SubmissionController {
 
     private void logSubmission(Person person) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (auth != null) {
             Person loggedIn = personRepository.findByName(auth.getName());
 
