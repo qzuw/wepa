@@ -79,6 +79,7 @@ public class CourseController {
         return "course/showCourse";
     }
 
+    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping(value = "/courses/{id}/addStudent", method = RequestMethod.POST)
     public String joinCourse(@PathVariable Long id,
             Model model,

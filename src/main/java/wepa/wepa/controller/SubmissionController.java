@@ -48,11 +48,6 @@ public class SubmissionController {
     private SubmissionFormObject getFormObject() {
         return new SubmissionFormObject();
     }
-//
-//    @RequestMapping()
-//    public String handleDefault() {
-//        return "week/showWeek";
-//    }
 
     @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
     @RequestMapping()

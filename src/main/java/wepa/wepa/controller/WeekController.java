@@ -52,7 +52,7 @@ public class WeekController {
         return "week/showWeek";
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.GET)
     public String modify(Model model, @PathVariable Long idC, @PathVariable Integer idW) {
 
@@ -61,7 +61,7 @@ public class WeekController {
         return "week/modifyWeek";
     }
 
-    @Secured({"ROLE_TEACHER", "ROLE_ASSISTANT"})
+    @Secured({"ROLE_TEACHER"})
     @RequestMapping(value = "/courses/{idC}/week/{idW}/modifyWeek", method = RequestMethod.POST)
     public String modifyWeek(Model model,
             @PathVariable Long idC,
