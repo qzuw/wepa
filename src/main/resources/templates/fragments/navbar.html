@@ -23,8 +23,8 @@
                 <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
 
                 <span sec:authorize="isAuthenticated()" >
-                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-                        <input hidden type="submit" th:value="#{message.logout}"/>
+                    <form name="logoutForm" th:action="@{/logout}" method="post">
+                        <input type="submit" th:value="#{message.logout}"/>
                     </form>
                 </span>
             </div>
