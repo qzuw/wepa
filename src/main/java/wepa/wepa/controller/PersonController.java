@@ -151,9 +151,7 @@ public class PersonController {
 
         if (loggedIn != null) {
 
-            logService.info("Person \"" + person.getName() + "\" was added by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
-        } else {
-            logService.info("Person \"" + person.getName() + "\" was added.");
+            logService.info("Person \"" + person.getName() + "\" had password changed by " + loggedIn.getName() + " (" + loggedIn.getId() + ")");
         }
 
         return "redirect:/persons/" + person.getId();
