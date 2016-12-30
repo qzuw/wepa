@@ -43,7 +43,7 @@ public class wepaTest extends FluentTest {
     @Autowired
     private PersonRepository personRepository;
 
-    private String personname;
+    private String studentnumber;
 
     @Before
     public void setUp() {
@@ -51,11 +51,12 @@ public class wepaTest extends FluentTest {
         if (oldPerson != null) {
             personRepository.delete(oldPerson);
         }
-        personname = UUID.randomUUID().toString();
+        String personname = UUID.randomUUID().toString();
+        studentnumber = "987654321";
         Person testperson = new Person();
         testperson.setName(personname);
-        testperson.setPassword(passwordEncoder().encode(personname));
-        testperson.setStudentNumber("987654321");
+        testperson.setPassword(passwordEncoder().encode(studentnumber));
+        testperson.setStudentNumber(studentnumber);
         testperson.setAuthorities(Arrays.asList("TEACHER"));
         personRepository.save(testperson);
 
@@ -73,19 +74,19 @@ public class wepaTest extends FluentTest {
     @Test
     public void loginTest() {
 
-        login(personname);
+        login(studentnumber);
 
-        goTo("http://localhost:" + port + "/persons/" + personRepository.findByName(personname).getId());
+        goTo("http://localhost:" + port + "/persons/" + personRepository.findByStudentNumber(studentnumber).getId());
 
         assertFalse(pageSource().contains("555555555"));
         assertFalse(pageSource().contains("Maija"));
-        assertTrue(pageSource().contains(personname));
+        assertTrue(pageSource().contains(studentnumber));
 
     }
 
     @Test
     public void addCourseTest() {
-        login(personname);
+        login(studentnumber);
 
         assertFalse(pageSource().contains("login"));
         assertTrue(pageSource().contains("logout"));

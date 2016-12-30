@@ -16,7 +16,7 @@
                 <span th:text="#{message.exercises2}">exercises</span>
                 <div th:text="${week.description}"></div>
                 <p sec:authorize="hasAnyAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/courses/{id}/week/{week}/modifyWeek(id=${week.course.id}, week=${week.week})}" th:text="#{message.modifyweek}">Modify week details</a></p>
-                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/exercises/add/{week}(week=${week.week})}" th:text="#{message.addexercise}">Add exercise</a></p>
+                <p sec:authorize="hasAnyAuthority('ROLE_TEACHER')"><a class="button" th:href="@{/exercises/add/{week}(week=${week.id})}" th:text="#{message.addexercise}">Add exercise</a></p>
 
                 <table th:if="${not #lists.isEmpty(week.exercises)}">
                     <thead>

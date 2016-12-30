@@ -19,10 +19,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private PersonRepository personRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Person user = personRepository.findByName(username);
+    public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException {
+        Person user = personRepository.findByStudentNumber(studentNumber);
         if (user == null) {
-            throw new UsernameNotFoundException("No such user: " + username);
+            throw new UsernameNotFoundException("No such user: " + studentNumber);
         }
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
