@@ -28,14 +28,14 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**", "/css/**", "/images/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/submission/**").permitAll()
-                .anyRequest().hasAnyAuthority("ROLE_TEACHER", "ROLE_ASSISTANT");
+                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/exercises/**", "/css/**", "/images/**", "/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").hasAuthority("ROLE_ASSISTANT")
+                .antMatchers(HttpMethod.POST, "/submission/**", "/register").permitAll()
+                .anyRequest().hasAuthority("ROLE_TEACHER");
         http.formLogin()
                 .permitAll()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true)
+                .and()
+                .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
     }

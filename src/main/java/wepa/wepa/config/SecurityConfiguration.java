@@ -31,9 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/submissions/**", "/css/**", "/images/**", "/h2-console/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/submissions/**", "/h2-console/**").permitAll()
-                .anyRequest().hasAnyAuthority("ROLE_TEACHER", "ROLE_ASSISTANT");
+                .antMatchers(HttpMethod.GET, "/", "/courses/**", "/submissions/**", "/css/**", "/images/**", "/h2-console/**", "/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").hasAuthority("ROLE_ASSISTANT")
+                .antMatchers(HttpMethod.POST, "/submissions/**", "/h2-console/**", "/register").permitAll()
+                .anyRequest().hasAuthority("ROLE_TEACHER");
         http.formLogin()
                 .permitAll()
                 .and()
