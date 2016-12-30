@@ -44,7 +44,20 @@
                     </table>
                 </div>
 
-                <a th:href="@{/persons}" th:text="#{message.studentlist}">To the list</a>
+                <div th:if="${not #lists.isEmpty(person.submissions)}">
+                    <h3 th:text="#{message.submissions}"></h3>
+                    <table>
+                        <tr th:each="submission : ${person.submissions}">
+                            <td th:text="${submission.week.course.name}"></td>
+                            <td th:text="${submission.week.week}"></td>
+                            <td><a th:href="@{/submissions/{id}(id=${submission.id})}" th:text="${submission.submissionTime}"></a></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <a th:href="@{/persons}" th:text="#{message.studentlist}">To the list</a>
+                </div>
             </div>
         </div>
 

@@ -1,5 +1,6 @@
 package wepa.wepa.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -33,8 +35,25 @@ public class Person extends AbstractPersistable<Long> {
     @ManyToMany(mappedBy = "assistants")
     private List<Course> coursesAssisted;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    private List<Submission> submissions;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> authorities;
+
+    public Person() {
+        coursesAttended = new ArrayList<>();
+        coursesAssisted = new ArrayList<>();
+        submissions = new ArrayList<>();
+    }
+
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
+    }
 
     public String getStudentNumber() {
         return studentNumber;
