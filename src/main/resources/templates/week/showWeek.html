@@ -20,7 +20,7 @@
                     <thead>
                         <tr>
                             <!--<th>Exercise #</th>-->
-                            <th>Exercise name</th>
+                            <th th:text="#{message.exercisename}">Exercise name</th>
                             <th sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">Modify</th>
                             <!-- <th>done</th> -->
                         </tr>
@@ -38,8 +38,8 @@
                 <table sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Exercises done</th>
+                            <th th:text="#{message.student}">Student</th>
+                            <th th:text="#{message.exercisesdone}">Exercises done</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,31 +68,31 @@
                     </tbody>
                 </table>
                 <p sec:authorize="hasAuthority('ROLE_STUDENT')">
-                    <h3>Submit this week's exercises</h3>
+                    <h3 th:text="#{message.submitexercises}">Submit this week's exercises</h3>
                     <form action="#" th:action="@{/submissions/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" 
                           th:object="${submissionFormObject}" 
                           method="POST" 
                           id="subForm">
                         <div>
-                            <label>Student number</label> 
+                            <label th:text="#{message.studentnumber}">Student number</label> 
                             <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
                             <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
                         </div>
 
                         <div>
-                            <label>Name</label> 
+                            <label th:text="#{message.name}">Name</label> 
                             <input type="text" th:field="*{name}" name="name"/>
                             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
                         </div>
 
                         <div>
-                            <label>Number of made exercises</label> 
+                            <label th:text="#{message.madeexercisesnumb}">Number of made exercises</label> 
                             <input type="text" th:field="*{exerciseCount}" name="exerciseCount"/>
                             <div th:if="${#fields.hasErrors('exerciseCount')}" th:errors="*{exerciseCount}"></div> 
                         </div>
 
                         <div>
-                            <label>Exercises</label> 
+                            <label th:text="#{message.exercises}">Exercises</label> 
                             <textarea name="exerciseSubmission" form="subForm"></textarea>
                         </div>
                         <input type="submit" value="Send"/>

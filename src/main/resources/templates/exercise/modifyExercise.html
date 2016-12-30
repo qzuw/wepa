@@ -11,16 +11,14 @@
             </div>
             <div>
 
-                <h1>Fill the form pls</h1>
+                <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
                 <form action="#" th:action="@{/exercises/{idE}/edit(idE=${exercise.id})}" th:object="${exercise}" method="POST">
-                    <div> Description <input type="text" name="description" th:field="*{description}"/></div>
+                    <div> <span th:text="#{message.description}"></span><input type="text" name="description" th:field="*{description}"/></div>
                     <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                     <input type="submit" value="Send"/>
                 </form>
             </div>
         </div>
-
-
     </body>
 </html>

@@ -12,7 +12,7 @@
 
                 <h1 th:text="${course.name}"></h1>
                 <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
-                <h2 th:text="'Students: ' + ${course.numOfStudents}"></h2>
+                <h2 th:text="#{message.students} + ': ' + ${course.numOfStudents}"></h2>
                 <h3 th:text="#{message.assistants} + ':'">Course Assistants: </h3>
                 <div th:each="assistant : ${course.assistants}">
                     <div sec:authorize="hasAuthority('ROLE_TEACHER')"> 
@@ -66,6 +66,26 @@
                         <div th:replace="fragments/paging :: paging ">
                             Paging
                         </div>
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
+                        <h3 th:text="#{message.addstudent}"></h3>
+                        <form action="#" th:action="@{/courses/{id}/addStudent(id=${course.id})}" 
+                              th:object="${person}" 
+                              method="POST" 
+                              id="joinCourseForm">
+                            <div>
+                                <label th:text="#{message.studentnumber}">Student number</label> 
+                                <input type="text" th:field="*{studentNumber}" name="studentNumber"/>
+                                <div th:if="${#fields.hasErrors('studentNumber')}" th:errors="*{studentNumber}"></div>
+                            </div>
+
+                            <div>
+                                <label th:text="#{message.name}">Name</label> 
+                                <input type="text" th:field="*{name}" name="name"/>
+                                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>               
+                            </div>
+                            <input type="submit" value="Send"/>
+                        </form>
                     </div>
                 </div>
             </div>

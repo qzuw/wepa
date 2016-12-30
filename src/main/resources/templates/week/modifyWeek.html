@@ -10,10 +10,10 @@
                 Navbar
             </div>
 
-            <h1>Fill the form pls</h1>
+            <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
             <form action="#" th:action="@{/courses/{idC}/week/{idW}/modifyWeek (idC=${week.course.id}, idW=${week.week})}" th:object="${week}" method="POST">
-                <div> Description <input type="text" th:field="*{description}" name="description"/></div>
+                <div> <span th:text="#{message.description}"></span> <input type="text" th:field="*{description}" name="description"/></div>
                 <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                 <input type="submit" value="Send"/>
             </form>
