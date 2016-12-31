@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException {
         Person user = personRepository.findByStudentNumber(studentNumber);
-        if (user == null) {
+        if (user == null || user.getPassword() == null) {
             throw new UsernameNotFoundException("No such user: " + studentNumber);
         }
 
