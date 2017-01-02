@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title th:text="'Details for student ' + ${student.name}"></title>
+        <title th:text="${student.name} + ' ' + ${student.studentnumber}"></title>
         <object th:include="fragments/header :: header " th:remove="tag" />
     </head>
     <body>
