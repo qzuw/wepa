@@ -16,12 +16,18 @@
                     <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
                 </div>
             </div>
+            <div th:if="${#lists.isEmpty(currentCourses)}">
+                <span th:text="#{message.noactivecourses}"></span>
+            </div>
             <div th:if="${not #lists.isEmpty(upcomingCourses)}">
                 <h1 th:text="#{message.upcomingcourses} + ':'"></h1>
                 <div th:each="course : ${upcomingCourses}">
                     <h2><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.name}"></a></h2>
                     <div th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></div>
                 </div>
+            </div>
+            <div th:if="${#lists.isEmpty(upcomingCourses)}">
+                <span th:text="#{message.noupcomingcourses}"></span>
             </div>
         </div>
     </body>

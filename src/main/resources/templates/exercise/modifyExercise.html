@@ -9,7 +9,7 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <div th:if="${exercise}">
 
                 <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
@@ -18,6 +18,9 @@
                     <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                     <input type="submit" th:value="#{message.send}"/>
                 </form>
+            </div>
+            <div th:unless="${exercise}">
+                <span th:text="#{message.nosuchexercise}"></span>
             </div>
         </div>
     </body>

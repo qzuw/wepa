@@ -9,7 +9,7 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <div th:if="${week}">
 
                 <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
@@ -21,6 +21,9 @@
                     </div>
                     <input type="submit" th:value="#{message.send}"/>
                 </form>
+            </div>
+            <div th:unless="${week}">
+                <span th:text="#{message.nosuchweek}"></span>
             </div>
         </div>
     </body>

@@ -8,7 +8,7 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <div th:if="${course}">
 
                 <h1 th:text="${course.name}"></h1>
                 <h2 th:text="${course.courseStart} + ' - ' + ${course.courseEnd}"></h2>
@@ -66,20 +66,20 @@
                         </tbody>
                     </table>
 
-                    <div th:if="${students}" sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
+                    <div th:if="${not #lists.isEmpty(students)}" sec:authorize="hasAnyAuthority('ROLE_TEACHER', 'ROLE_ASSISTANT')">
                         <table>
                             <thead>
                                 <tr>
                                     <th th:text="#{message.student}">Student</th>
                                     <th th:text="#{message.studentnumber}">Student number</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="student : ${students}">
                                     <td><a th:href="@{/persons/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
                                     <td th:text="${student.studentNumber}"></td>
-                                    
+
                                 </tr>
                             </tbody>
                         </table>
@@ -108,6 +108,9 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div th:unless="${course}">
+                <span th:text="#{message.nosuchcourse}"></span>
             </div>
         </div>
     </body>

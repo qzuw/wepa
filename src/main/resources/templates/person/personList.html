@@ -16,16 +16,21 @@
 
                 <p><a class="button" th:href="@{/persons/add}" th:text="#{message.addperson}">Add person</a></p>
 
-                <table>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                <div th:if="${not #lists.isEmpty(persons)}">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
 
-                    <tr th:each="person : ${persons}">
-                        <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
-                    </tr>
-                </table> 
+                        <tr th:each="person : ${persons}">
+                            <td><a th:href="@{/persons/{id}(id=${person.id})}" th:text="${person.studentNumber}">Item name</a> : <span th:text="${person.name}">name</span> </td>
+                        </tr>
+                    </table> 
+                </div>
+                <div th:if="${#lists.isEmpty(persons)}">
+                    <span th:text="#{message.nopersons}"></span>
+                </div>
                 <div th:replace="fragments/paging :: paging ">
                     Paging
                 </div>

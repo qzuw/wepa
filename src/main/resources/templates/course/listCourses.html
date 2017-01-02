@@ -31,6 +31,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div th:if="${#lists.isEmpty(courses)}">
+                    <span th:text="#{message.nocourses}"></span>
+                </div>
             </div>
         </div>
     </body>

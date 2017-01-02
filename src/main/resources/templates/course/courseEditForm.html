@@ -9,7 +9,7 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <div th:if=""${course}>
                 <form method="post" th:action="@{/courses/{id}/edit(id=${course.id})}">
                     <div class="form-group">
                         <label th:text="#{message.coursename}">Course name:</label>
@@ -28,6 +28,9 @@
                     </div>
                     <input type="submit" th:value="#{message.send}"/>
                 </form>
+            </div>
+            <div th:unless=""${course}>
+                <span th:text="#{message.nosuchcourse}"></span>
             </div>
         </div>
 

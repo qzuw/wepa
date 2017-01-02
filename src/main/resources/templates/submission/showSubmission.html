@@ -11,36 +11,41 @@
                 Navbar
             </div>
 
-            <h1 th:text="#{message.submissioninfo}">Submission information</h1>
-            <div>
-                <label th:text="#{message.studentnumber}">Student number:</label> 
-                <span th:text="${submission.student.studentNumber}">number</span>
-            </div>    
-            <div>
-                <label th:text="#{message.name}">Name:</label> 
-                <span th:text="${submission.student.name}">name</span>  
-            </div>
-            <div>
-                <label th:text="#{message.coursename}">Course:</label> 
-                <span th:text="${submission.week.course.name}">course</span>
-            </div>
-            <div>
-                <label th:text="#{message.week}">Week:</label> 
-                <a th:href="@{/courses/{cid}/week/{wid}(cid=${submission.week.course.id}, wid=${submission.week.week})}" th:text="${submission.week.week}">week</a>
-            </div>
+            <div th:if="${submission}">
+                <h1 th:text="#{message.submissioninfo}">Submission information</h1>
+                <div>
+                    <label th:text="#{message.studentnumber}">Student number:</label> 
+                    <span th:text="${submission.student.studentNumber}">number</span>
+                </div>    
+                <div>
+                    <label th:text="#{message.name}">Name:</label> 
+                    <span th:text="${submission.student.name}">name</span>  
+                </div>
+                <div>
+                    <label th:text="#{message.coursename}">Course:</label> 
+                    <span th:text="${submission.week.course.name}">course</span>
+                </div>
+                <div>
+                    <label th:text="#{message.week}">Week:</label> 
+                    <a th:href="@{/courses/{cid}/week/{wid}(cid=${submission.week.course.id}, wid=${submission.week.week})}" th:text="${submission.week.week}">week</a>
+                </div>
 
-            <div>
-                <label th:text="#{message.returned}">returned:</label> 
-                <span th:text="${submission.submissionTime}">time</span>
-            </div>
+                <div>
+                    <label th:text="#{message.returned}">returned:</label> 
+                    <span th:text="${submission.submissionTime}">time</span>
+                </div>
 
-            <div>
-                <label th:text="#{message.exercisecount}">Exercise count:</label> 
-                <span th:text="${submission.exerciseCount}">number</span>
+                <div>
+                    <label th:text="#{message.exercisecount}">Exercise count:</label> 
+                    <span th:text="${submission.exerciseCount}">number</span>
+                </div>
+                <div>    
+                    <label th:text="#{message.exercisesubmission}">Exercise Submission:</label> 
+                    <span th:text="${submission.exerciseSubmission}">number</span> 
+                </div>
             </div>
-            <div>    
-                <label th:text="#{message.exercisesubmission}">Exercise Submission:</label> 
-                <span th:text="${submission.exerciseSubmission}">number</span> 
+            <div th:unless="${submission}">
+                <span th:text="#{message.nosuchsubmission}"></span>
             </div>
         </div>
     </body>

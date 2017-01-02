@@ -11,7 +11,7 @@
             <div th:replace="fragments/navbar :: navbar ">
                 Navbar
             </div>
-            <div>
+            <div th:if="${person}">
 
                 <h1 th:text="#{message.studentinfo}">Person's information</h1>
 
@@ -58,6 +58,9 @@
                 <div>
                     <a th:href="@{/persons}" th:text="#{message.studentlist}">To the list</a>
                 </div>
+            </div>
+            <div th:unless="${person}">
+                <span th:text="#{message.nosuchperson}"></span>               
             </div>
         </div>
 

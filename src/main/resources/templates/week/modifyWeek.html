@@ -10,15 +10,21 @@
                 Navbar
             </div>
 
-            <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
+            <div th:if="${week}">
 
-            <form action="#" th:action="@{/courses/{idC}/week/{idW}/modifyWeek (idC=${week.course.id}, idW=${week.week})}" th:object="${week}" method="POST">
-                <div> <span th:text="#{message.description}"></span> <input type="text" th:field="*{description}" name="description"/></div>
-                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
-                <input type="submit" th:value="#{message.send}"/>
-            </form>
+                <h1 th:text="#{message.fillpls}">Fill the form pls</h1>
 
-            <a th:href="@{/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" th:text="#{message.back}">Back</a>
+                <form action="#" th:action="@{/courses/{idC}/week/{idW}/modifyWeek (idC=${week.course.id}, idW=${week.week})}" th:object="${week}" method="POST">
+                    <div> <span th:text="#{message.description}"></span> <input type="text" th:field="*{description}" name="description"/></div>
+                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                    <input type="submit" th:value="#{message.send}"/>
+                </form>
+
+                <a th:href="@{/courses/{id}/week/{week}(id=${week.course.id}, week=${week.week})}" th:text="#{message.back}">Back</a>
+            </div>
+            <div th:unless="${week}">
+                <span th:text="#{message.nosuchweek}"></span>
+            </div>
         </div>
     </body>
 </html>

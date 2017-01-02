@@ -9,7 +9,7 @@
                 Navbar
             </div>
 
-            <div>
+            <div th:if="${week}">
                 <h1 th:text="${week.course.name} + ' Week: ' + ${week.week}"></h1>
                 <h2 th:text="${week.course.courseStart} + ' - ' + ${week.course.courseEnd}"></h2>
                 <span th:text="${#lists.size(week.exercises)}">6</span>
@@ -123,6 +123,9 @@
                     </form>
 
                 </div>
+            </div>
+            <div th:unless="${week}">
+                <span th:text="#{message.nosuchweek}"></span>
             </div>
         </div>
     </body>
