@@ -19,7 +19,7 @@
             </div>
 
             <div class="three columns">
-                <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
+                <span class="button" th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/login}" th:text="#{message.login}">Login</a></span>
                 <!--
                 <span th:unless="${#authorization.expression('isAuthenticated()')}"><a th:href="@{/register}" th:text="#{message.register}">Sign Up</a></span>
                 -->
