@@ -110,9 +110,9 @@ public class CourseController {
             return "redirect:/courses/" + id + "/page/1";
         }
         Course course = courseRepository.findOne(id);
-        if (course == null){
+        if (course == null) {
             return "redirect:/courses";
-        }        
+        }
         model.addAttribute("course", course);
 
         Page<Person> page = personService.findPageByCourse(pageNumber - 1, id);
